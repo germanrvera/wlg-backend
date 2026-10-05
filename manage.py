@@ -6,7 +6,11 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wlg_backend.settings.dev')
+    # Use render settings if DATABASE_URL is set (Render environment)
+    if 'DATABASE_URL' in os.environ:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wlg_backend.settings.render')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wlg_backend.settings.dev')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
