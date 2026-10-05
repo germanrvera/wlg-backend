@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn wlg_backend.wsgi:application --bind 0.0.0.0:$PORT
+web: bash start.sh
