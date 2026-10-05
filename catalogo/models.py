@@ -6,10 +6,29 @@ class FamiliaProducto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)
     descripcion = models.TextField()
-    imagen = models.ImageField(upload_to='familias/')
-    tipo = models.CharField(max_length=60)  # ej: "Sistemas de riel"
+    imagen = models.ImageField(upload_to='familias/', blank=True)
+    photo = models.URLField(blank=True)
+    tipo = models.CharField(max_length=60)
+    macro = models.CharField(max_length=60, blank=True)
+    skus = models.PositiveSmallIntegerField(default=0)
     orden = models.PositiveSmallIntegerField(default=0)
     activo = models.BooleanField(default=True)
+
+    # Filter fields
+    filter_ct = models.JSONField(default=list)
+    filter_ip = models.JSONField(default=list)
+    filter_dim_sys = models.JSONField(default=list)
+    filter_cri = models.JSONField(default=list)
+    filter_v = models.JSONField(default=list)
+    filter_w = models.JSONField(default=list)
+    filter_ubicacion = models.JSONField(default=list)
+    filter_aplicacion = models.JSONField(default=list)
+    filter_montaje = models.JSONField(default=list)
+    has_dim = models.BooleanField(default=False)
+    w_range = models.JSONField(default=list)
+
+    productos = models.JSONField(default=list)
+
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 
