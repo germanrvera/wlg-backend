@@ -100,8 +100,15 @@ REST_FRAMEWORK = {
 }
 
 # Security headers
-SECURE_SSL_REDIRECT = True
+# Render terminates TLS at the edge — tell Django the connection is HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False  # Render already redirects HTTP → HTTPS
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://wlg-backend.onrender.com',
+    'https://wlgled.com.ar',
+    'https://www.wlgled.com.ar',
+]
