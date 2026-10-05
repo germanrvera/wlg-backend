@@ -1,8 +1,15 @@
 import os
+import sys
 from pathlib import Path
 
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Ensure we don't import other settings
+if 'wlg_backend.settings.base' in sys.modules:
+    del sys.modules['wlg_backend.settings.base']
+if 'wlg_backend.settings.prod' in sys.modules:
+    del sys.modules['wlg_backend.settings.prod']
 
 # Security
 DEBUG = False
