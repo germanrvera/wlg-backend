@@ -39,6 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wlg_backend.middleware.ExceptionTraceback',
 ]
 
 ROOT_URLCONF = 'wlg_backend.urls'
