@@ -12,9 +12,10 @@ if 'wlg_backend.settings.prod' in sys.modules:
     del sys.modules['wlg_backend.settings.prod']
 
 # Security
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', 'false').lower() == 'true'
+DEBUG_PROPAGATE_EXCEPTIONS = os.environ.get('DJANGO_DEBUG_PROPAGATE', 'false').lower() == 'true'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-key-change-me')
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,wlg-backend.onrender.com').split(',')
 
 # Apps
 INSTALLED_APPS = [
@@ -112,3 +113,38 @@ CSRF_TRUSTED_ORIGINS = [
     'https://wlgled.com.ar',
     'https://www.wlgled.com.ar',
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'stdout': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stdout',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['stdout'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['stdout'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['stdout'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
