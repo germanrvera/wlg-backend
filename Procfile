@@ -1,2 +1,1 @@
-web: gunicorn wlg_backend.wsgi:application --bind 0.0.0.0:$PORT
-release: python manage.py init_db
+web: python manage.py migrate && gunicorn wlg_backend.wsgi:application --bind 0.0.0.0:$PORT
