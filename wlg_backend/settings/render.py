@@ -120,7 +120,10 @@ CSRF_TRUSTED_ORIGINS = [
 # CORS — allow Vercel frontend and production domain to call the API
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS',
-    'https://wlgled.com.ar,https://www.wlgled.com.ar'
+    'https://wlgled.com.ar,https://www.wlgled.com.ar,'
+    'https://wlg-frontend.vercel.app,'
+    'https://wlg-frontend-germanrveras-projects.vercel.app,'
+    'https://wlg-frontend-git-main-germanrveras-projects.vercel.app'
 ).split(',')
 CORS_ALLOW_METHODS = ['GET', 'POST', 'OPTIONS']
 
