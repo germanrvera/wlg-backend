@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'catalogo',
 ]
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -114,6 +116,13 @@ CSRF_TRUSTED_ORIGINS = [
     'https://wlgled.com.ar',
     'https://www.wlgled.com.ar',
 ]
+
+# CORS — allow Vercel frontend and production domain to call the API
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    'CORS_ALLOWED_ORIGINS',
+    'https://wlgled.com.ar,https://www.wlgled.com.ar'
+).split(',')
+CORS_ALLOW_METHODS = ['GET', 'POST', 'OPTIONS']
 
 LOGGING = {
     'version': 1,
