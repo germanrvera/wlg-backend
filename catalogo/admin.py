@@ -4,20 +4,30 @@ from .models import FamiliaProducto, Proyecto
 
 @admin.register(FamiliaProducto)
 class FamiliaProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'tipo', 'orden', 'activo']
-    list_filter = ['activo', 'tipo', 'creado']
-    search_fields = ['nombre', 'descripcion']
+    list_display = ['nombre', 'tipo', 'macro', 'skus', 'orden', 'activo']
+    list_filter = ['activo', 'tipo', 'has_dim']
+    search_fields = ['nombre', 'descripcion', 'macro']
     prepopulated_fields = {'slug': ('nombre',)}
     ordering = ['orden', 'nombre']
     fieldsets = (
         ('Información básica', {
-            'fields': ('nombre', 'slug', 'tipo')
+            'fields': ('nombre', 'slug', 'tipo', 'macro', 'skus', 'orden', 'activo')
         }),
         ('Contenido', {
-            'fields': ('descripcion', 'imagen')
+            'fields': ('descripcion', 'imagen', 'photo')
         }),
-        ('Configuración', {
-            'fields': ('orden', 'activo')
+        ('Productos', {
+            'fields': ('productos',),
+            'description': 'Lista de SKUs/productos de esta familia (JSON array)'
+        }),
+        ('Filtros — Ubicación y aplicación', {
+            'fields': ('filter_ubicacion', 'filter_aplicacion', 'filter_montaje'),
+            'classes': ('collapse',),
+        }),
+        ('Filtros — Especificaciones técnicas', {
+            'fields': ('filter_ct', 'filter_ip', 'filter_dim_sys', 'filter_cri',
+                       'filter_v', 'filter_w', 'has_dim', 'w_range'),
+            'classes': ('collapse',),
         }),
     )
 
