@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Iluminación | World Leds Go</title>
+  <meta name="description" content="Experimentá en tiempo real con diferentes zonas de luz, temperaturas de color y ambientes. El Laboratorio de Iluminación de World Leds Go para proyectistas y arquitectos.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://wlgled.com.ar/experiencia">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Laboratorio de Iluminación | World Leds Go">
+  <meta property="og:description" content="Controlá zonas, temperatura de color y ambientes en tiempo real. Una herramienta interactiva para proyectistas de iluminación.">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="World Leds Go">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://wlgled.com.ar/experiencia#webpage",
+        "url": "https://wlgled.com.ar/experiencia",
+        "name": "Laboratorio de Iluminación | World Leds Go",
+        "isPartOf": { "@id": "https://wlgled.com.ar/#website" },
+        "about": { "@id": "https://wlgled.com.ar/#organization" },
+        "description": "Simulador interactivo de iluminación arquitectónica: control de zonas, temperatura de color y ambientes preconfigurados.",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://wlgled.com.ar/" },
+            { "@type": "ListItem", "position": 2, "name": "Laboratorio", "item": "https://wlgled.com.ar/experiencia" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #080808;
+      --white: #ede9e2;
+      --dim:   rgba(237,233,226,.45);
+      --dim2:  rgba(237,233,226,.18);
+      --gold:  #c9a96e;
+      --gray2: #b3aea5;
+      --panel: rgba(10,9,7,.9);
+      --sans:  'Urbanist', system-ui, sans-serif;
+    }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      cursor: none;
+    }
+
+    /* ── CANVAS ── */
+    #canvas-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* ── GRAIN ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      width: 200%; height: 200%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: .018;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain .9s steps(1) infinite;
+    }
+    @keyframes grain {
+      0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,2%)}
+      30%{transform:translate(-1%,4%)}40%{transform:translate(4%,-1%)}50%{transform:translate(-3%,3%)}
+      60%{transform:translate(1%,-4%)}70%{transform:translate(-4%,1%)}80%{transform:translate(2%,3%)}90%{transform:translate(-2%,-2%)}
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 72px;
+      background: rgba(8,8,8,.72);
+      backdrop-filter: blur(18px);
+      border-bottom: .5px solid rgba(237,233,226,.05);
+    }
+    .nav-logo {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .nav-logo-sub {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .32em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gray2);
+      text-decoration: none;
+      transition: color .25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: .5px;
+      background: var(--gold);
+      transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active {
+      color: var(--gold);
+    }
+    .nav-links a.active::after { width: 100%; }
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--white);
+      padding: 10px 24px;
+      text-decoration: none;
+      transition: background .25s, color .25s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+    /* ── SCENE TITLE ── */
+    .scene-title {
+      position: fixed;
+      top: 108px;
+      left: 72px;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .scene-title h1 {
+      font-family: var(--sans);
+      font-size: clamp(32px, 3.6vw, 52px);
+      font-weight: 200;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -.01em;
+    }
+    .scene-title h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+    }
+    .scene-title p {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-top: 12px;
+    }
+
+    /* ── HINT (first visit) ── */
+    .interact-hint {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 10;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity .8s;
+    }
+    .interact-hint.hide { opacity: 0; }
+    .hint-circle {
+      width: 64px;
+      height: 64px;
+      border: .5px solid rgba(201,169,110,.3);
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse-ring 2.4s ease infinite;
+    }
+    @keyframes pulse-ring {
+      0%,100% { transform: scale(1); opacity: .7; }
+      50%      { transform: scale(1.12); opacity: 1; }
+    }
+    .hint-circle svg { opacity: .7; }
+    .interact-hint span {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    /* ── CONTROL PANEL ── */
+    .ctrl-panel {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 72px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Presets */
+    .presets {
+      display: flex;
+      gap: 6px;
+    }
+    .preset-btn {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: none;
+      border: .5px solid rgba(237,233,226,.1);
+      padding: 7px 18px;
+      cursor: none;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .preset-btn:hover {
+      color: var(--white);
+      border-color: rgba(201,169,110,.4);
+      background: rgba(201,169,110,.04);
+    }
+    .preset-btn.active {
+      color: var(--gold);
+      border-color: rgba(201,169,110,.5);
+      background: rgba(201,169,110,.06);
+    }
+
+    /* Sliders container */
+    .sliders-wrap {
+      display: flex;
+      align-items: flex-end;
+      background: var(--panel);
+      border: .5px solid rgba(237,233,226,.07);
+      backdrop-filter: blur(24px);
+    }
+
+    .zone-ctrl {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 28px 16px;
+      border-right: .5px solid rgba(237,233,226,.05);
+      position: relative;
+      min-width: 120px;
+    }
+    .zone-ctrl:last-child { border-right: none; }
+
+    /* Vertical slider */
+    .zone-ctrl input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      writing-mode: vertical-lr;
+      direction: rtl;
+      width: 4px;
+      height: 76px;
+      background: transparent;
+      outline: none;
+      cursor: none;
+    }
+    .zone-ctrl input[type=range]::-webkit-slider-runnable-track {
+      width: 2px;
+      background: rgba(237,233,226,.1);
+      border-radius: 2px;
+    }
+    .zone-ctrl input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-left: -5px;
+      box-shadow: 0 0 10px rgba(201,169,110,.5);
+      cursor: none;
+      transition: box-shadow .2s;
+    }
+    .zone-ctrl input[type=range]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 18px rgba(201,169,110,.85);
+    }
+    .zone-ctrl input[type=range]::-moz-range-thumb {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: none;
+      cursor: none;
+    }
+    .zone-ctrl input[type=range]::-moz-range-track {
+      width: 2px;
+      background: rgba(237,233,226,.1);
+    }
+
+    /* Slider fill */
+    .slider-track {
+      position: absolute;
+      top: 20px;
+      width: 2px;
+      height: 76px;
+      background: rgba(237,233,226,.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .slider-fill {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: var(--gold);
+      opacity: .45;
+      transition: height .07s;
+    }
+
+    /* Zone label */
+    .zone-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .zone-label strong {
+      font-weight: 300;
+      color: var(--dim2);
+      display: block;
+      font-size: 9px;
+      letter-spacing: .1em;
+      margin-top: 2px;
+    }
+
+    /* Zone value */
+    .zone-val {
+      font-size: 12px;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+
+    /* CCT selector */
+    .cct-ctrl {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 24px 16px;
+      min-width: 148px;
+    }
+    .cct-label {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .cct-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cct-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      cursor: none;
+      padding: 3px 0;
+    }
+    .cct-swatch {
+      width: 20px; height: 3px;
+      border-radius: 2px;
+    }
+    .cct-btn span {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .1em;
+      color: var(--dim);
+      transition: color .2s;
+    }
+    .cct-btn.active span { color: var(--white); }
+
+    .lux-readout {
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: var(--dim2);
+      margin-top: 2px;
+    }
+    .lux-val {
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Link to products */
+    .back-link {
+      position: fixed;
+      bottom: 32px;
+      right: 72px;
+      z-index: 110;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border-bottom: .5px solid rgba(237,233,226,.12);
+      padding-bottom: 3px;
+      transition: color .2s, border-color .2s;
+    }
+    .back-link:hover { color: var(--white); border-color: var(--gold); }
+
+    /* ── CURSOR ── */
+    .cursor-dot {
+      position: fixed; top: 0; left: 0;
+      width: 5px; height: 5px;
+      background: var(--white);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0;
+      width: 32px; height: 32px;
+      border: .5px solid rgba(237,233,226,.35);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      z-index: 9998;
+      transition: width .28s, height .28s, border-color .28s;
+    }
+    body:has(button:hover) .cursor-ring,
+    body:has(a:hover) .cursor-ring {
+      width: 48px; height: 48px;
+      border-color: var(--gold);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (hover: none) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+      .zone-ctrl input[type=range] { cursor: default; }
+      .preset-btn { cursor: default; }
+      .cct-btn { cursor: default; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .scene-title { left: 20px; top: 80px; }
+      .scene-title h1 { font-size: 30px; }
+      .ctrl-panel { padding: 0 8px 16px; }
+      .zone-ctrl { padding: 14px 12px 12px; min-width: 72px; }
+      .zone-ctrl input[type=range] { height: 56px; }
+      .slider-track { height: 56px; top: 14px; }
+      .cct-ctrl { display: none; }
+      .back-link { display: none; }
+      .interact-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="canvas-wrap"></div>
+
+<!-- Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="wlg_v8.html" class="nav-logo">
+    World Leds Go
+    <span class="nav-logo-sub">The Professional Space</span>
+  </a>
+  <div class="nav-links">
+    <a href="familias.html">Productos</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="experiencia.html" class="active">Laboratorio</a>
+    <a href="recursos.html">Recursos</a>
+  </div>
+  <a class="nav-cta" href="contactar.html">Contactar</a>
+</nav>
+
+<!-- Scene title -->
+<div class="scene-title">
+  <h1>Diseñá<br>tu <em>ambiente</em></h1>
+  <p>Zonas · Temperatura de color · Intensidad</p>
+</div>
+
+<!-- First-use hint -->
+<div class="interact-hint" id="interactHint">
+  <div class="hint-circle">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(201,169,110,.8)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+    </svg>
+  </div>
+  <span>Mové los controles</span>
+</div>
+
+<!-- CONTROL PANEL -->
+<div class="ctrl-panel">
+
+  <!-- Presets -->
+  <div class="presets">
+    <button class="preset-btn" data-preset="off">Apagado</button>
+    <button class="preset-btn active" data-preset="noche">Noche</button>
+    <button class="preset-btn" data-preset="lectura">Lectura</button>
+    <button class="preset-btn" data-preset="trabajo">Trabajo</button>
+    <button class="preset-btn" data-preset="presentacion">Presentación</button>
+  </div>
+
+  <!-- Sliders + CCT -->
+  <div class="sliders-wrap">
+
+    <!-- Zone 0: Galuy Linear -->
+    <div class="zone-ctrl" data-zone="0">
+      <span class="zone-val" id="val0">40%</span>
+      <div class="slider-track"><div class="slider-fill" id="fill0"></div></div>
+      <input type="range" id="sl0" min="0" max="100" value="40" aria-label="Galuy Lineal">
+      <div class="zone-label">
+        Galuy<br>Lineal
+        <strong>Tira LED</strong>
+      </div>
+    </div>
+
+    <!-- Zone 1: Cetus Down -->
+    <div class="zone-ctrl" data-zone="1">
+      <span class="zone-val" id="val1">25%</span>
+      <div class="slider-track"><div class="slider-fill" id="fill1"></div></div>
+      <input type="range" id="sl1" min="0" max="100" value="25" aria-label="Empotrados">
+      <div class="zone-label">
+        Cetus<br>Down
+        <strong>Empotrado</strong>
+      </div>
+    </div>
+
+    <!-- Zone 2: Petra Wall -->
+    <div class="zone-ctrl" data-zone="2">
+      <span class="zone-val" id="val2">0%</span>
+      <div class="slider-track"><div class="slider-fill" id="fill2"></div></div>
+      <input type="range" id="sl2" min="0" max="100" value="0" aria-label="Bañadores de pared">
+      <div class="zone-label">
+        Petra<br>Wall
+        <strong>Bañador</strong>
+      </div>
+    </div>
+
+    <!-- Zone 3: Ambiente -->
+    <div class="zone-ctrl" data-zone="3">
+      <span class="zone-val" id="val3">15%</span>
+      <div class="slider-track"><div class="slider-fill" id="fill3"></div></div>
+      <input type="range" id="sl3" min="0" max="100" value="15" aria-label="Ambiente general">
+      <div class="zone-label">
+        General<br>Ambiente
+        <strong>Fill</strong>
+      </div>
+    </div>
+
+    <!-- CCT -->
+    <div class="cct-ctrl">
+      <span class="cct-label">Temperatura</span>
+      <div class="cct-btns">
+        <button class="cct-btn" data-cct="2700">
+          <div class="cct-swatch" style="background:linear-gradient(90deg,#ffb347,#ffd590)"></div>
+          <span>2700K  Cálida</span>
+        </button>
+        <button class="cct-btn active" data-cct="3000">
+          <div class="cct-swatch" style="background:linear-gradient(90deg,#ffcc80,#ffe4b0)"></div>
+          <span>3000K  Neutra cálida</span>
+        </button>
+        <button class="cct-btn" data-cct="4000">
+          <div class="cct-swatch" style="background:linear-gradient(90deg,#fff0c0,#fffaf0)"></div>
+          <span>4000K  Neutra fría</span>
+        </button>
+      </div>
+      <div class="lux-readout">
+        Lux estimado &nbsp;<span class="lux-val" id="luxVal">320</span>
+      </div>
+    </div>
+
+  </div><!-- /sliders-wrap -->
+</div><!-- /ctrl-panel -->
+
+<a href="familias.html" class="back-link">Ver todos los productos →</a>
+
+<script>
+// ──────────────────────────────────────────────────────────────────────────────
+// THREE.JS SCENE
+// ──────────────────────────────────────────────────────────────────────────────
+
+var renderer, scene, cam;
+var spotLineal, spotsDown = [], spotsWall = [], fillLight, ambient;
+var fixturesMats = [];
+var CCT_COLORS = {
+  2700: new THREE.Color(0xffb870),
+  3000: new THREE.Color(0xffd090),
+  4000: new THREE.Color(0xfff4d0)
+};
+var currentCCT = 3000;
+var zones = [0.40, 0.25, 0.00, 0.15];
+var interacted = false;
+
+function init() {
+  var wrap = document.getElementById('canvas-wrap');
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.85;
+  renderer.setClearColor(0x080808);
+  wrap.appendChild(renderer.domElement);
+
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x080808, 0.052);
+
+  cam = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.1, 80);
+  cam.position.set(-1.0, 0.3, 5.8);
+  cam.lookAt(0.5, -0.3, -2.0);
+
+  buildRoom();
+  buildFixtures();
+  buildLights();
+
+  window.addEventListener('resize', onResize);
+}
+
+function buildRoom() {
+  var W = 9, H = 4.2, D = 12;
+
+  var floorMat = new THREE.MeshStandardMaterial({ color: 0x1a1611, roughness: 0.38, metalness: 0.08 });
+  var wallMat  = new THREE.MeshStandardMaterial({ color: 0x1d1a16, roughness: 0.9, metalness: 0.0 });
+  var ceilMat  = new THREE.MeshStandardMaterial({ color: 0x0d0b09, roughness: 1.0, metalness: 0.0 });
+
+  // Floor
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(W, D), floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -H / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  // Back wall
+  var bw = new THREE.Mesh(new THREE.PlaneGeometry(W, H), wallMat);
+  bw.position.z = -D / 2;
+  bw.receiveShadow = true;
+  scene.add(bw);
+
+  // Left wall
+  var lw = new THREE.Mesh(new THREE.PlaneGeometry(D, H), wallMat);
+  lw.rotation.y = Math.PI / 2;
+  lw.position.x = -W / 2;
+  lw.receiveShadow = true;
+  scene.add(lw);
+
+  // Right wall
+  var rw = new THREE.Mesh(new THREE.PlaneGeometry(D, H), wallMat);
+  rw.rotation.y = -Math.PI / 2;
+  rw.position.x = W / 2;
+  rw.receiveShadow = true;
+  scene.add(rw);
+
+  // Ceiling
+  var ceil = new THREE.Mesh(new THREE.PlaneGeometry(W, D), ceilMat);
+  ceil.rotation.x = Math.PI / 2;
+  ceil.position.y = H / 2;
+  scene.add(ceil);
+
+  // Skirting
+  var skirting = new THREE.Mesh(
+    new THREE.BoxGeometry(W, 0.06, 0.04),
+    new THREE.MeshStandardMaterial({ color: 0x221e18, roughness: 0.7, metalness: 0.05 })
+  );
+  skirting.position.set(0, -H / 2 + 0.03, -D / 2 + 0.02);
+  scene.add(skirting);
+
+  // Architectural panels on back wall
+  [-2.5, 0, 2.5].forEach(function(x) {
+    var panel = new THREE.Mesh(
+      new THREE.BoxGeometry(1.4, H * 0.7, 0.025),
+      new THREE.MeshStandardMaterial({ color: 0x22201b, roughness: 0.8, metalness: 0.02 })
+    );
+    panel.position.set(x, 0, -D / 2 + 0.015);
+    panel.receiveShadow = true;
+    scene.add(panel);
+  });
+
+  // Bench
+  var benchMat = new THREE.MeshStandardMaterial({ color: 0x1a1612, roughness: 0.6, metalness: 0.15 });
+  var bench = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.5), benchMat);
+  bench.position.set(0, -H / 2 + 0.56, -D / 2 + 0.4);
+  bench.castShadow = true;
+  bench.receiveShadow = true;
+  scene.add(bench);
+
+  [-1.1, 1.1].forEach(function(x) {
+    var leg = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.52, 0.05), benchMat);
+    leg.position.set(x, -H / 2 + 0.26, -D / 2 + 0.4);
+    scene.add(leg);
+  });
+}
+
+function buildFixtures() {
+  var H = 4.2;
+  var ceilY = H / 2;
+  var col = CCT_COLORS[currentCCT];
+
+  var metalMat = new THREE.MeshStandardMaterial({ color: 0xb0aba4, metalness: 0.8, roughness: 0.15 });
+
+  // ── Galuy Linear ──────────────────────────
+  var linMat = new THREE.MeshStandardMaterial({
+    color: 0xc8c3bc, metalness: 0.7, roughness: 0.2,
+    emissive: col, emissiveIntensity: 0
+  });
+  var fixtureLineal = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.032, 2.0), linMat);
+  fixtureLineal.position.set(0, ceilY - 0.03, -2.0);
+  scene.add(fixtureLineal);
+  fixturesMats.push({ mesh: fixtureLineal, mat: linMat, isBody: true });
+
+  var lensMat = new THREE.MeshStandardMaterial({
+    color: 0xfffff8, emissive: col, emissiveIntensity: 0,
+    transparent: true, opacity: 0.9
+  });
+  var lensLineal = new THREE.Mesh(new THREE.BoxGeometry(0.036, 0.003, 1.92), lensMat);
+  lensLineal.position.set(0, ceilY - 0.047, -2.0);
+  scene.add(lensLineal);
+  fixturesMats.push({ mat: lensMat, isLens: true, zone: 0 });
+
+  // Cables
+  [-0.7, 0.7].forEach(function(z) {
+    var cable = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.003, 0.003, 0.22, 6), metalMat
+    );
+    cable.position.set(0, ceilY - 0.14, -2.0 + z);
+    scene.add(cable);
+  });
+
+  // ── Cetus Downlights ──────────────────────
+  [-2.2, 0, 2.2].forEach(function(x) {
+    var housing = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.09, 0.08, 0.06, 16),
+      new THREE.MeshStandardMaterial({ color: 0x1a1815, roughness: 0.5, metalness: 0.3 })
+    );
+    housing.position.set(x, ceilY - 0.04, -1.0);
+    scene.add(housing);
+
+    var dlLensMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff, emissive: col, emissiveIntensity: 0,
+      transparent: true, opacity: 0.8
+    });
+    var dlLens = new THREE.Mesh(new THREE.CircleGeometry(0.07, 16), dlLensMat);
+    dlLens.rotation.x = Math.PI / 2;
+    dlLens.position.set(x, ceilY - 0.07, -1.0);
+    scene.add(dlLens);
+    fixturesMats.push({ mat: dlLensMat, isLens: true, zone: 1 });
+  });
+
+  // ── Petra Wall Washers ────────────────────
+  [-2.0, 2.0].forEach(function(x) {
+    var ww = new THREE.Mesh(
+      new THREE.BoxGeometry(0.06, 0.04, 0.12),
+      new THREE.MeshStandardMaterial({ color: 0x2a2620, roughness: 0.5, metalness: 0.5 })
+    );
+    ww.position.set(x, ceilY - 0.05, -5.5);
+    scene.add(ww);
+
+    var wwLensMat = new THREE.MeshStandardMaterial({
+      color: 0xfff5e0, emissive: col, emissiveIntensity: 0,
+      transparent: true, opacity: 0.85
+    });
+    var wwLens = new THREE.Mesh(new THREE.PlaneGeometry(0.04, 0.08), wwLensMat);
+    wwLens.position.set(x, ceilY - 0.05, -5.56);
+    scene.add(wwLens);
+    fixturesMats.push({ mat: wwLensMat, isLens: true, zone: 2 });
+  });
+}
+
+function buildLights() {
+  var H = 4.2;
+  var ceilY = H / 2;
+  var col = CCT_COLORS[currentCCT];
+
+  ambient = new THREE.AmbientLight(0x0d0a07, 0.04);
+  scene.add(ambient);
+
+  // Zone 0 — Linear
+  spotLineal = new THREE.SpotLight(col.clone(), 0, 14, Math.PI / 6, 0.42, 1.2);
+  spotLineal.position.set(0, ceilY - 0.06, -2.0);
+  spotLineal.target.position.set(0, -ceilY, -2.0);
+  spotLineal.castShadow = true;
+  spotLineal.shadow.mapSize.width = 1024;
+  spotLineal.shadow.mapSize.height = 1024;
+  spotLineal.shadow.bias = -0.001;
+  scene.add(spotLineal);
+  scene.add(spotLineal.target);
+
+  // Zone 1 — Downlights
+  [-2.2, 0, 2.2].forEach(function(x) {
+    var sp = new THREE.SpotLight(col.clone(), 0, 10, Math.PI / 10, 0.25, 1.5);
+    sp.position.set(x, ceilY - 0.08, -1.0);
+    sp.target.position.set(x, -ceilY, -1.0);
+    sp.castShadow = false;
+    scene.add(sp);
+    scene.add(sp.target);
+    spotsDown.push(sp);
+  });
+
+  // Zone 2 — Wall washers
+  [-2.0, 2.0].forEach(function(x) {
+    var sp = new THREE.SpotLight(col.clone(), 0, 8, Math.PI / 9, 0.6, 1.5);
+    sp.position.set(x, ceilY - 0.08, -5.5);
+    sp.target.position.set(x, -ceilY + 1.5, -6.0);
+    sp.castShadow = false;
+    scene.add(sp);
+    scene.add(sp.target);
+    spotsWall.push(sp);
+  });
+
+  // Zone 3 — Fill
+  fillLight = new THREE.PointLight(col.clone(), 0, 12, 2);
+  fillLight.position.set(0, 0.5, 1.5);
+  scene.add(fillLight);
+}
+
+function updateLights() {
+  var col = CCT_COLORS[currentCCT];
+  var z = zones;
+
+  spotLineal.intensity = z[0] * 12;
+  spotLineal.color.copy(col);
+
+  spotsDown.forEach(function(sp) {
+    sp.intensity = z[1] * 10;
+    sp.color.copy(col);
+  });
+
+  spotsWall.forEach(function(sp) {
+    sp.intensity = z[2] * 8;
+    sp.color.copy(col);
+  });
+
+  fillLight.intensity = z[3] * 1.5;
+  fillLight.color.copy(col);
+
+  var totalBrightness = (z[0] + z[1] + z[2] + z[3]) / 4;
+  ambient.intensity = 0.03 + totalBrightness * 0.12;
+  renderer.toneMappingExposure = 0.85 - totalBrightness * 0.15;
+
+  fixturesMats.forEach(function(f) {
+    if (f.isLens) {
+      f.mat.emissive.copy(col);
+      f.mat.emissiveIntensity = zones[f.zone] * 2.2;
+    } else if (f.isBody) {
+      f.mat.emissive.copy(col);
+      f.mat.emissiveIntensity = z[0] * 1.4;
+    }
+  });
+
+  var lux = Math.round((z[0]*0.4 + z[1]*0.35 + z[2]*0.15 + z[3]*0.1) * 1200);
+  document.getElementById('luxVal').textContent = lux;
+}
+
+// ── Render loop ──────────────────────────────────────────────────────────────
+var lastT = Date.now();
+var camTime = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  var now = Date.now();
+  var dt = (now - lastT) / 1000;
+  lastT = now;
+  camTime += dt * 0.18;
+  cam.position.y = 0.3 + Math.sin(camTime) * 0.018;
+  renderer.render(scene, cam);
+}
+
+// ── Slider controls ──────────────────────────────────────────────────────────
+for (var i = 0; i < 4; i++) {
+  (function(idx) {
+    var sl   = document.getElementById('sl' + idx);
+    var val  = document.getElementById('val' + idx);
+    var fill = document.getElementById('fill' + idx);
+
+    sl.addEventListener('input', function() {
+      var v = parseInt(this.value);
+      zones[idx] = v / 100;
+      val.textContent = v + '%';
+      fill.style.height = v + '%';
+      clearActivePreset();
+      updateLights();
+      dismissHint();
+    });
+
+    fill.style.height = parseInt(sl.value) + '%';
+  })(i);
+}
+
+// ── Presets ──────────────────────────────────────────────────────────────────
+var presets = {
+  off:          [0,   0,   0,  0],
+  noche:        [40,  25,  0,  15],
+  lectura:      [70,  80,  0,  20],
+  trabajo:      [100, 100, 30, 30],
+  presentacion: [60,  40,  100, 10]
+};
+
+function applyPreset(name) {
+  var vals = presets[name];
+  if (!vals) return;
+  vals.forEach(function(v, i) {
+    zones[i] = v / 100;
+    document.getElementById('sl' + i).value = v;
+    document.getElementById('val' + i).textContent = v + '%';
+    document.getElementById('fill' + i).style.height = v + '%';
+  });
+  updateLights();
+  dismissHint();
+}
+
+document.querySelectorAll('.preset-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    applyPreset(btn.dataset.preset);
+  });
+});
+
+function clearActivePreset() {
+  document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+}
+
+// ── CCT ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.cct-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.cct-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentCCT = parseInt(btn.dataset.cct);
+    updateLights();
+    dismissHint();
+  });
+});
+
+// ── Hint ─────────────────────────────────────────────────────────────────────
+function dismissHint() {
+  if (interacted) return;
+  interacted = true;
+  var hint = document.getElementById('interactHint');
+  if (hint) hint.classList.add('hide');
+  setTimeout(function() { if (hint) hint.style.display = 'none'; }, 900);
+}
+
+// Auto-dismiss hint after 4s
+setTimeout(dismissHint, 4000);
+
+// ── Resize ────────────────────────────────────────────────────────────────────
+function onResize() {
+  cam.aspect = window.innerWidth / window.innerHeight;
+  cam.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// ── Custom cursor ─────────────────────────────────────────────────────────────
+(function() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  var dot  = document.getElementById('cursorDot');
+  var ring = document.getElementById('cursorRing');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+  window.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+  });
+  (function loop() {
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+// ── Start ─────────────────────────────────────────────────────────────────────
+init();
+updateLights();
+animate();
+</script>
+</body>
+</html>

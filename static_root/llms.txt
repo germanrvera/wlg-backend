@@ -1,0 +1,98 @@
+# World Leds Go
+
+> Marca argentina de iluminación LED arquitectónica para el mercado profesional. Especializada en soluciones de iluminación para arquitectos, proyectistas, interioristas y especificadores de iluminación en Argentina.
+
+World Leds Go (WLG) diseña y comercializa luminarias LED de alta performance para proyectos de arquitectura, diseño de interiores, gastronomía, retail, cultura y uso residencial premium. Todos sus productos están orientados al segmento profesional y cuentan con soporte técnico completo, fotometría IES y recursos de especificación (fichas técnicas, archivos CAD y plugins para software de simulación lumínica).
+
+La marca es miembro Silver de DIALux, garantizando compatibilidad y soporte técnico para simulación fotométrica profesional con el software estándar de la industria.
+
+## Datos de la empresa
+
+- **Nombre:** World Leds Go
+- **Abreviatura:** WLG
+- **País:** Argentina
+- **Ciudad:** Buenos Aires
+- **Sitio web:** https://wlgled.com.ar
+- **Segmento:** Iluminación LED arquitectónica profesional
+- **Público objetivo:** Arquitectos, proyectistas de iluminación, diseñadores de interiores, especificadores técnicos
+
+## Catálogo de productos — 17 familias
+
+### Sistemas de riel
+- **Micro Runner** — sistema de riel magnético compacto, alta flexibilidad de diseño
+- **Runner X Pro** — sistema de riel magnético profesional de alta performance
+- **Track LV** — sistema de riel de baja tensión, seguro y eficiente
+- **Tracklights** — luminarias para riel intercambiables
+
+### Iluminación lineal
+- **Linear** — luminarias lineales LED para iluminación arquitectónica
+- **Tiras LED ARQ** — tiras LED de alta densidad CRI 90+ para uso arquitectónico
+- **Tiras LED Hogar** — tiras LED para uso residencial
+- **Perfiles PortaLED** — perfiles de aluminio anodizado para montaje de tiras LED
+
+### Sistemas especiales
+- **Jenny** — sistema de iluminación modular, versátil y escalable
+- **Fuentes** — drivers y fuentes de alimentación LED de alta eficiencia
+- **Sistemas de Control** — regulación DALI, 0-10V y control inteligente de iluminación
+
+### Artefactos y apliques
+- **Wally** — apliques de pared LED para iluminación decorativa y funcional
+- **Katan** — luminaria de diseño arquitectónico
+- **Artefactos GU/AR** — artefactos para lámparas GU10 y AR
+- **Lámparas** — lámparas LED de reemplazo eficientes
+
+### Exterior
+- **Exterior** — luminarias LED para exteriores, IP65+, resistentes a la intemperie
+
+### Módulos
+- **Módulos LED** — módulos LED para integración en sistemas custom
+
+## Proyectos realizados (portfolio seleccionado)
+
+- **La Rural Buenos Aires** — centro de exposiciones, iluminación cultural, Palermo, 2026
+- **Movistar Arena VIP** — espacio premium en venue de entretenimiento, Buenos Aires, 2026
+- **Torre Bella** — edificio residencial premium, Palermo CABA, 2026
+- **Parfumerie** — retail de lujo, iluminación de joyería y perfumería, Recoleta CABA, 2025
+- **MG** — espacio comercial, Belgrano CABA, 2026
+- **La Rando** — restaurante gastronómico, San Telmo CABA, 2025
+
+## Recursos técnicos disponibles
+
+- Fichas técnicas PDF por producto
+- Archivos IES (fotometría) para simulación en DIALux y Relux
+- Archivos CAD 2D y 3D de luminarias
+- Plugins BIM para software de arquitectura
+- Asesoría técnica gratuita para proyectos
+
+## Certificaciones y membresías
+
+- **DIALux Silver Member** — compatibilidad certificada con software DIALux para simulación fotométrica
+- Productos con certificación CE y estándares argentinos de calidad eléctrica
+
+## Páginas principales
+
+- [Inicio](https://wlgled.com.ar/) — presentación de la marca, productos destacados y proyectos
+- [Familias / Catálogo](https://wlgled.com.ar/familias) — catálogo completo de las 17 familias con filtros por tipo y aplicación
+- [Proyectos](https://wlgled.com.ar/proyectos) — portfolio de proyectos realizados con casos de uso reales
+- [Recursos Técnicos](https://wlgled.com.ar/recursos) — fichas PDF, CAD, IES y plugins de simulación
+- [Contacto](https://wlgled.com.ar/contacto) — asesoría profesional y buscador de distribuidores
+
+## Preguntas frecuentes
+
+**¿Quién es el público de World Leds Go?**
+Proyectistas de iluminación, arquitectos, diseñadores de interiores e interioristas que trabajan en proyectos de arquitectura profesional en Argentina. También diseñadores y especificadores que trabajan en gastronomía, retail premium, cultura y residencial de alta gama.
+
+**¿Dónde conseguir productos World Leds Go?**
+A través de la red de distribuidores autorizados en toda Argentina. El buscador de distribuidores está disponible en la sección Contacto del sitio.
+
+**¿Tienen recursos para especificación técnica?**
+Sí. Fichas técnicas en PDF, archivos CAD, fotometría IES y plugins para software de simulación lumínica (DIALux, Relux) disponibles gratuitamente en la sección Recursos.
+
+**¿Son miembros de DIALux?**
+Sí. World Leds Go es miembro Silver de DIALux, garantizando compatibilidad con el software estándar de la industria para simulación fotométrica.
+
+**¿Hacen proyectos custom?**
+Sí. El equipo técnico de WLG puede asesorar y especificar soluciones personalizadas para proyectos complejos. Contactar a través de la sección Contacto.
+
+**¿Cuál es la temperatura de color de sus productos?**
+WLG ofrece productos en 2700K (cálida), 3000K (neutra cálida) y 4000K (neutra fría), con CRI 90+ en sus líneas premium para máxima fidelidad cromática en proyectos de calidad.
