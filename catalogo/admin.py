@@ -41,15 +41,23 @@ class ProyectoAdmin(admin.ModelAdmin):
     ordering = ['-año', 'nombre']
     fieldsets = (
         ('Información básica', {
-            'fields': ('nombre', 'slug', 'año')
+            'fields': ('nombre', 'slug', 'año', 'ubicacion', 'tipo_espacio', 'activo')
         }),
-        ('Ubicación y tipo', {
-            'fields': ('ubicacion', 'tipo_espacio')
+        ('Imágenes', {
+            'fields': ('imagen_principal', 'galeria'),
+            'description': 'galeria: lista de URLs ["url1", "url2", ...]'
         }),
-        ('Contenido', {
-            'fields': ('descripcion', 'imagen_principal')
+        ('Texto', {
+            'fields': ('descripcion', 'lead', 'quote', 'quote_autor')
         }),
-        ('Configuración', {
-            'fields': ('activo',)
+        ('Bloques narrativos', {
+            'fields': ('bloques',),
+            'classes': ('collapse',),
+            'description': 'Lista de [{num, title, img, text}]'
+        }),
+        ('Ficha técnica', {
+            'fields': ('ficha_tecnica',),
+            'classes': ('collapse',),
+            'description': 'Dict de {Clave: Valor} — lighting designer, comercializador, registro, etc.'
         }),
     )

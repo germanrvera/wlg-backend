@@ -55,6 +55,15 @@ class Proyecto(models.Model):
     tipo_espacio = models.CharField(max_length=80)
     imagen_principal = models.ImageField(upload_to='proyectos/')
     activo = models.BooleanField(default=True)
+
+    # Detalle de proyecto
+    lead = models.TextField(blank=True, help_text='Párrafo introductorio largo')
+    quote = models.CharField(max_length=300, blank=True)
+    quote_autor = models.CharField(max_length=120, blank=True)
+    galeria = models.JSONField(default=list, help_text='Lista de URLs de imágenes de la galería')
+    bloques = models.JSONField(default=list, help_text='Lista de {num, title, img, text}')
+    ficha_tecnica = models.JSONField(default=dict, help_text='Dict de {clave: valor} — lighting designer, comercializador, etc.')
+
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 

@@ -396,146 +396,7 @@ document.documentElement.classList.add("js-cursor");
 <script>
 document.documentElement.classList.add("js-cursor");
 // ─── DATOS DE PROYECTOS ─────────────────────────────────────────
-const PROYECTOS_DETAIL = {
-  "La Rural": {
-    type: "Cultura",
-    location: "La Rural, Palermo — Buenos Aires",
-    year: "2026",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-11.jpg",
-    lead: "En uno de los predios feriales más antiguos de Buenos Aires, la luz tuvo que adaptarse a escalas que cambian semana a semana: de un stand de diseño a una nave completa de exposición. El desafío no fue iluminar un espacio, sino sostener una identidad lumínica coherente a través de decenas de configuraciones distintas.",
-    quote: "La luz como infraestructura, no como decorado.",
-    quoteAttr: "Pablo Pizarro — Lighting Designer",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-11.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-18.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-12.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-5-1.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-7-1.jpg"
-    ],
-    blocks: [
-      {num:"01", title:"Una escala que cambia constantemente", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-12.jpg", text:"Cada feria reconfigura el predio: stands, pasillos, naves completas. La solución no podía ser un proyecto fijo, sino un criterio de iluminación capaz de adaptarse a la duración y el tamaño de cada evento sin perder coherencia visual de un montaje a otro."},
-      {num:"02", title:"Calidez técnica en un espacio histórico", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/06/La-Rural-17.jpg", text:"Las naves de La Rural combinan estructura patrimonial con uso intensivo de eventos contemporáneos. El criterio de iluminación buscó respetar esa arquitectura, aportando temperaturas de color cálidas y una distribución que no compite con el diseño original del predio."}
-    ],
-    info: {
-      "Comercializador": "New Light",
-      "Lighting designer": "Pablo Pizarro",
-      "Registro": "Ana Grucki"
-    },
-    products: [],
-    productsTbd: true
-  },
-  "Movistar Arena VIP": {
-    type: "Cultura",
-    location: "Hotel Hilton — Buenos Aires",
-    year: "2026",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305137-HDR.jpg",
-    lead: "El área VIP del Movistar Arena pedía una luz que sostenga una experiencia premium antes y después del show, sin interferir con la energía del evento principal.",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305137-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305113-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305170-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305346-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/05/AG-5F-305361-HDR.jpg"
-    ],
-    blocks: [],
-    info: { "Registro": "Ana Grucki" },
-    products: ["Track LV", "Cinor"]
-  },
-  "Torre Bella": {
-    type: "Residencial",
-    location: "Palermo, CABA",
-    year: "2026",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298658-HDR.jpg",
-    lead: "El proyecto de iluminación de los espacios comunes de Torre Bella, diseñado por la lighting designer Romina Teplitzky, acompaña la arquitectura con una estrategia luminosa precisa y contemporánea, donde cada luminaria contribuye a definir la identidad de los distintos ambientes.",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298658-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298799-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298697-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298661-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298676-HDR.jpg"
-    ],
-    blocks: [
-      {num:"01", title:"Lobby y recepción", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298697-HDR.jpg", text:"En el lobby de la torre, los Runner X Pro embutidos estructuran el espacio con una iluminación técnica y elegante que guía el recorrido de acceso. Sobre el sector de recepción, la tira Jenny Magic suspendida introduce un gesto lumínico protagonista, aportando carácter al punto de bienvenida."},
-      {num:"02", title:"Amenities y SUM", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-298751-HDR.jpg", text:"En el sector de la pileta, las luminarias Jenny y los perfiles Linear Slim suspendidos generan una iluminación homogénea, acompañando la arquitectura con líneas de luz limpias y definidas. En el SUM, los Linear Slim continúan esta lógica, mientras que las tiras LED de la línea ARQ integradas en perfiles Portaled iluminan los estantes de la barra. El resultado es una iluminación equilibrada que articula funcionalidad y atmósfera."}
-    ],
-    info: {
-      "Proyecto de iluminación": "Romina Teplitzky",
-      "Comercializador": "Paraná 201",
-      "Interiorismo": "Vang Studios",
-      "Registro": "Ana Grucki"
-    },
-    products: ["Runner X Pro", "Jenny Magic", "Jenny", "Linear Slim", "Tiras LED ARQ", "Portaled"]
-  },
-  "Parfumerie": {
-    type: "Retail",
-    location: "Recoleta, CABA",
-    year: "2025",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294931.jpg",
-    lead: "En este local comercial de Parfumerie, la iluminación se convierte en un elemento clave para definir la atmósfera y acompañar la experiencia del recorrido. El proyecto, desarrollado por el estudio Hitzig Militello, encuentra en la luz un recurso expresivo que realza la identidad del espacio y jerarquiza el producto.",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294931.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294972-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294975-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294862-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294913-HDR.jpg"
-    ],
-    blocks: [
-      {num:"01", title:"Precisión y sensibilidad", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294868-HDR.jpg", text:"El diseño lumínico, a cargo de Cota Lighting (Celeste Albertini), combina precisión y sensibilidad: spots orientables Cinor integrados a rieles 220V Powergear embutidos permiten dirigir la luz con exactitud, mientras que los artefactos Katan sobre los displays generan acentos sutiles. Mote, tiras LED y fuentes de alimentación completan una propuesta equilibrada, donde la luz construye una experiencia visual envolvente."}
-    ],
-    info: {
-      "Lighting designer": "Celeste Albertini (Cota Lighting)",
-      "Comercializador": "Luminarias Urbanas",
-      "Proyecto de arquitectura": "Hitzig Militello",
-      "Colaboración": "Estudio Nous",
-      "Registro": "Ana Grucki"
-    },
-    products: ["Cinor", "Powergear", "Katan", "Mote", "Tiras LED", "Fuentes de alimentación"]
-  },
-  "MG": {
-    type: "Comercial",
-    location: "Belgrano, CABA",
-    year: "2026",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297850-HDR.jpg",
-    lead: "Ubicado en Belgrano, Ciudad de Buenos Aires, el concesionario MG presenta un esquema de iluminación pensado para dar protagonismo a los vehículos en exhibición y acompañar la arquitectura del espacio con una luz precisa y eficiente.",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297850-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297826-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297793-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297962-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297898-HDR.jpg"
-    ],
-    blocks: [
-      {num:"01", title:"Showroom y oficinas", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/03/AG-5F-297962-HDR.jpg", text:"En el showroom se instalaron artefactos embutidos orientables Tsipor, equipados con módulo LED Shishi de 40W, que permiten dirigir la luz con exactitud sobre cada automóvil. La iluminación de acento destaca volúmenes, superficies y detalles. En las oficinas se utilizaron luminarias Linear Slim suspendidas en acabado negro, que proporcionan una iluminación uniforme y confortable para las áreas de trabajo."}
-    ],
-    info: {
-      "Lighting designer": "Rosana Milanesi",
-      "Registro": "Ana Grucki"
-    },
-    products: ["Tsipor", "Shishi", "Linear Slim"]
-  },
-  "La Rando": {
-    type: "Hospitality",
-    location: "San Telmo, CABA",
-    year: "2025",
-    heroImg: "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294546-HDR.jpg",
-    lead: "El proyecto lumínico de La Rando, diseñado por Pablo Pizarro, fue concebido como parte esencial de la arquitectura interior, buscando realzar materiales, ordenar visualmente los espacios y construir una atmósfera equilibrada entre iluminación general y acentos puntuales.",
-    images: [
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294546-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294474-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294476-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294486-HDR.jpg",
-      "https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294490-HDR.jpg"
-    ],
-    blocks: [
-      {num:"01", title:"Sistemas lineales y direccionables", img:"https://www.wlgled.com.ar/wp-content/uploads/2026/01/AG-5F-294504-HDR.jpg", text:"Se utilizaron artefactos Runner X Pro para iluminación general, junto con el sistema Track LV con spots Cinor LV, que aportan flexibilidad y control para destacar elementos específicos. Las luminarias Jenny y las Tiras ARQ se incorporaron como recursos lineales continuos para enfatizar bordes, nichos y transiciones arquitectónicas. El resultado es una escena lumínica que jerarquiza planos y potencia la identidad del proyecto."}
-    ],
-    info: {
-      "Proyecto de iluminación": "Pablo Pizarro",
-      "Fotografía": "Ana Grucki"
-    },
-    products: ["Runner X Pro", "Track LV", "Cinor LV", "Jenny", "Tiras ARQ"]
-  }
-};
+const PROYECTOS_DETAIL = {};
 
 function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
@@ -571,36 +432,49 @@ function buildGalleryHTML(images){
   return '<div class="proj-gallery">'+out+'</div>';
 }
 
-(function init(){
-  const param = new URLSearchParams(window.location.search).get('proyecto') || '';
-  const key = Object.keys(PROYECTOS_DETAIL).find(k => k.toLowerCase() === param.toLowerCase());
-  if(!key){
-    window.location.href = 'proyectos.html';
+(async function init(){
+  var API = '/api/proyectos/?page_size=100';
+  var param = new URLSearchParams(window.location.search).get('proyecto') || '';
+  var allProjects = [];
+  try {
+    var url = API;
+    while(url){
+      var res = await fetch(url);
+      var data = await res.json();
+      allProjects = allProjects.concat(data.results != null ? data.results : data);
+      url = data.next != null ? data.next : null;
+    }
+  } catch(e) {
+    console.error('Error cargando proyectos:', e);
+    window.location.href = 'proyectos';
     return;
   }
-  const p = PROYECTOS_DETAIL[key];
-  document.getElementById('pageTitle').textContent = key + ' | Proyecto | World Leds Go';
-  document.getElementById('heroImg').src = p.heroImg;
-  document.getElementById('heroImg').alt = key;
-  document.getElementById('heroType').textContent = p.type || '';
-  document.getElementById('heroTitle').textContent = key;
-  document.getElementById('heroLocation').textContent = p.location || '';
-  document.getElementById('heroYear').textContent = p.year || '';
-  document.getElementById('leadText').textContent = p.lead || '';
+  var p = allProjects.find(function(proj){ return proj.nombre.toLowerCase() === param.toLowerCase(); });
+  if(!p){ window.location.href = 'proyectos'; return; }
+
+  document.getElementById('pageTitle').textContent = p.nombre + ' | Proyecto | World Leds Go';
+  document.getElementById('heroImg').src = p.imagen_principal;
+  document.getElementById('heroImg').alt = p.nombre;
+  document.getElementById('heroType').textContent = p.tipo_espacio || '';
+  document.getElementById('heroTitle').textContent = p.nombre;
+  document.getElementById('heroLocation').textContent = p.ubicacion || '';
+  document.getElementById('heroYear').textContent = p.ano || '';
+  document.getElementById('leadText').textContent = p.lead || p.descripcion || '';
 
   if(p.quote){
     document.getElementById('quoteWrap').innerHTML =
       '<section class="proj-quote"><blockquote class="reveal">'+escapeHtml(p.quote)+'</blockquote>'+
-      '<div class="proj-quote-attr reveal">'+escapeHtml(p.quoteAttr||'')+'</div></section>';
+      '<div class="proj-quote-attr reveal">'+escapeHtml(p.quote_autor||'')+'</div></section>';
   }
 
-  document.getElementById('galleryWrap').innerHTML = buildGalleryHTML(p.images);
+  var galSrc = (p.galeria && p.galeria.length) ? p.galeria : [p.imagen_principal];
+  document.getElementById('galleryWrap').innerHTML = buildGalleryHTML(galSrc);
 
-  const blocksWrap = document.getElementById('blocksWrap');
-  if(p.blocks && p.blocks.length){
-    blocksWrap.innerHTML = p.blocks.map(function(b, i){
+  var blocksWrap = document.getElementById('blocksWrap');
+  if(p.bloques && p.bloques.length){
+    blocksWrap.innerHTML = p.bloques.map(function(b, i){
       return '<section class="proj-block'+(i%2===1?' reverse':'')+'">'
-        + '<div class="proj-block-img"><img src="'+(b.img||p.heroImg)+'" alt="" loading="lazy"></div>'
+        + '<div class="proj-block-img"><img src="'+(b.img||p.imagen_principal)+'" alt="" loading="lazy"></div>'
         + '<div class="proj-block-text"><div class="proj-block-num reveal">'+b.num+'</div>'
         + '<h2 class="proj-block-title reveal">'+escapeHtml(b.title)+'</h2>'
         + '<p class="reveal">'+escapeHtml(b.text)+'</p></div>'
@@ -608,30 +482,24 @@ function buildGalleryHTML(images){
     }).join('');
   }
 
-  const infoGrid = document.getElementById('infoGrid');
-  var infoFields = Object.assign({}, {"Ubicación": p.location, "Año": p.year}, p.info || {});
+  var infoGrid = document.getElementById('infoGrid');
+  var base = {}; base['Ubicacion'] = p.ubicacion; base['Ano'] = String(p.ano || p.year || '');
+  var infoFields = Object.assign(base, p.ficha_tecnica || {});
   infoGrid.innerHTML = Object.keys(infoFields).map(function(lbl){
-    return '<div class="proj-info-item reveal"><div class="proj-info-lbl">'+escapeHtml(lbl)+'</div><div class="proj-info-val">'+escapeHtml(infoFields[lbl])+'</div></div>';
+    return '<div class="proj-info-item reveal"><div class="proj-info-lbl">'+escapeHtml(lbl)+'</div><div class="proj-info-val">'+escapeHtml(String(infoFields[lbl]))+'</div></div>';
   }).join('');
 
-  const chipsWrap = document.getElementById('chipsWrap');
-  if(p.productsTbd || !p.products || !p.products.length){
-    chipsWrap.innerHTML = '<span class="proj-chip tbd">A confirmar con el equipo comercial</span>';
-  } else {
-    chipsWrap.innerHTML = p.products.map(function(prod){
-      return '<a class="proj-chip" href="familias.html?familia='+encodeURIComponent(prod)+'">'+escapeHtml(prod)+'</a>';
-    }).join('');
-  }
+  var chipsWrap = document.getElementById('chipsWrap');
+  chipsWrap.innerHTML = '<span class="proj-chip tbd">A confirmar con el equipo comercial</span>';
 
-  const relatedWrap = document.getElementById('relatedWrap');
-  var others = Object.keys(PROYECTOS_DETAIL).filter(function(k){ return k !== key; });
+  var relatedWrap = document.getElementById('relatedWrap');
+  var others = allProjects.filter(function(proj){ return proj.nombre !== p.nombre; });
   others.sort(function(){ return 0.5 - Math.random(); });
-  relatedWrap.innerHTML = others.slice(0,3).map(function(k){
-    var rp = PROYECTOS_DETAIL[k];
-    return '<a class="proj-r-card" href="proyecto.html?proyecto='+encodeURIComponent(k)+'">'
-      + '<img src="'+rp.heroImg+'" alt="'+escapeHtml(k)+'" loading="lazy">'
+  relatedWrap.innerHTML = others.slice(0,3).map(function(rp){
+    return '<a class="proj-r-card" href="proyecto?proyecto='+encodeURIComponent(rp.nombre)+'">'
+      + '<img src="'+rp.imagen_principal+'" alt="'+escapeHtml(rp.nombre)+'" loading="lazy">'
       + '<div class="proj-r-overlay"></div>'
-      + '<div class="proj-r-info"><div class="proj-r-type">'+escapeHtml(rp.type||'')+'</div><div class="proj-r-name">'+escapeHtml(k)+'</div></div>'
+      + '<div class="proj-r-info"><div class="proj-r-type">'+escapeHtml(rp.tipo_espacio||'')+'</div><div class="proj-r-name">'+escapeHtml(rp.nombre)+'</div></div>'
       + '</a>';
   }).join('');
 

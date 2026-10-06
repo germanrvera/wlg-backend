@@ -17,4 +17,8 @@ class FamiliaProductoSerializer(serializers.ModelSerializer):
 class ProyectoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proyecto
-        fields = ['id', 'nombre', 'slug', 'descripcion', 'ubicacion', 'año', 'tipo_espacio', 'imagen_principal']
+        fields = [
+            'id', 'nombre', 'slug', 'descripcion', 'ubicacion', 'año', 'tipo_espacio',
+            'imagen_principal', 'lead', 'quote', 'quote_autor',
+            'galeria', 'bloques', 'ficha_tecnica',
+        ]
