@@ -17,6 +17,8 @@ urlpatterns = [
     path('recursos', TemplateView.as_view(template_name='recursos.html'), name='recursos'),
     path('experiencia', TemplateView.as_view(template_name='experiencia.html'), name='experiencia'),
     path('proyecto', TemplateView.as_view(template_name='proyecto.html'), name='proyecto'),
+    path('novedades', TemplateView.as_view(template_name='novedades.html'), name='novedades'),
+    path('historia', TemplateView.as_view(template_name='historia.html'), name='historia'),
 ]
 
 if settings.DEBUG:
