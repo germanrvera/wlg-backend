@@ -1444,7 +1444,7 @@ function buildCards() {
       </div>
       <div class="fam-body">
         <div class="fam-name">${fam.nombre}</div>
-        <div class="fam-desc">${fam.desc}</div>
+        <div class="fam-desc">${fam.descripcion || fam.desc || ''}</div>
         <div class="fam-footer">
           <span class="fam-sku">${prodCount} ${prodCount === 1 ? 'producto' : 'productos'}</span>
           <button class="fam-cta" onclick="openDetail('${fam.nombre}')">
