@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/", "destination": "/wlg_v8.html" },
+    { "source": "/familias", "destination": "/familias.html" },
+    { "source": "/proyectos", "destination": "/proyectos.html" },
+    { "source": "/contacto", "destination": "/contactar.html" },
+    { "source": "/recursos", "destination": "/recursos.html" },
+    { "source": "/experiencia", "destination": "/experiencia.html" },
+    { "source": "/proyecto", "destination": "/proyecto.html" },
+    { "source": "/novedades", "destination": "/novedades.html" },
+    { "source": "/historia", "destination": "/historia.html" }
+  ]
+}
