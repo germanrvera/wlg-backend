@@ -1,7 +1,7 @@
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
-from .models import FamiliaProducto, Proyecto
-from .serializers import FamiliaProductoSerializer, ProyectoSerializer
+from .models import FamiliaProducto, Proyecto, HeroSlide
+from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer
 
 
 class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -11,6 +11,11 @@ class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['nombre', 'tipo', 'descripcion']
     ordering_fields = ['orden', 'nombre']
+
+
+class HeroSlideViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = HeroSlide.objects.filter(activo=True).order_by('orden')
+    serializer_class = HeroSlideSerializer
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):

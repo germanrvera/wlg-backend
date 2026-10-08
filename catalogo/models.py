@@ -64,6 +64,27 @@ class Producto(models.Model):
         return self.codigo
 
 
+class HeroSlide(models.Model):
+    categoria = models.CharField(max_length=60, help_text='Etiqueta pequeña encima del título')
+    titulo = models.CharField(max_length=120, help_text='Título principal (\\n para salto de línea)')
+    descripcion = models.CharField(max_length=300)
+    cta_texto = models.CharField(max_length=60, default='Descubrir')
+    cta_url = models.CharField(max_length=200, default='/familias')
+    imagen = models.ImageField(upload_to='hero/', blank=True)
+    photo = models.URLField(blank=True, help_text='URL externa (tiene prioridad sobre imagen subida)')
+    alt = models.CharField(max_length=120, blank=True)
+    orden = models.PositiveSmallIntegerField(default=0)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['orden']
+        verbose_name = 'Slide Hero'
+        verbose_name_plural = 'Slides Hero'
+
+    def __str__(self):
+        return self.titulo
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)

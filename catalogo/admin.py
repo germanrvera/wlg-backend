@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from .models import FamiliaProducto, Producto, Proyecto
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide
 
 
 class ProductoResource(resources.ModelResource):
@@ -59,6 +59,25 @@ class FamiliaProductoAdmin(admin.ModelAdmin):
             'fields': ('filter_ct', 'filter_ip', 'filter_dim_sys', 'filter_cri',
                        'filter_v', 'filter_w', 'has_dim', 'w_range'),
             'classes': ('collapse',),
+        }),
+    )
+
+
+@admin.register(HeroSlide)
+class HeroSlideAdmin(admin.ModelAdmin):
+    list_display = ['titulo', 'categoria', 'orden', 'activo']
+    list_editable = ['orden', 'activo']
+    ordering = ['orden']
+    fieldsets = (
+        ('Contenido', {
+            'fields': ('categoria', 'titulo', 'descripcion', 'cta_texto', 'cta_url')
+        }),
+        ('Imagen', {
+            'fields': ('imagen', 'photo', 'alt'),
+            'description': 'photo (URL externa) tiene prioridad. Si no hay URL, se usa la imagen subida.'
+        }),
+        ('Configuración', {
+            'fields': ('orden', 'activo')
         }),
     )
 

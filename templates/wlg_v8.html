@@ -563,56 +563,10 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 </div>
 
 <div class="hero">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active">
-      <img src="https://www.wlgled.com.ar/wp-content/uploads/2026/01/slider_galuy3.jpg" alt="Galuy" onerror="this.style.opacity='0';this.parentElement.style.background='var(--bg3)'">
-      <div class="hero-slide-overlay"></div>
-      <div class="hero-slide-content">
-        <div class="hero-cat">Lineal ARQ</div>
-        <div class="hero-title">Galuy</div>
-        <div class="hero-desc">Luz que acompaña el recorrido. Sistema de iluminación lineal diseñado para arquitecturas que demandan precisión y continuidad.</div>
-        <a class="hero-btn" href="familias.html?familia=TIRAS%20LED%20ARQ">Descubrir</a>
-      </div>
-    </div>
-    <div class="hero-slide">
-      <img src="https://www.wlgled.com.ar/wp-content/uploads/2025/12/tracklights_cover.prueba.jpg" alt="Track LV" onerror="this.style.opacity='0';this.parentElement.style.background='var(--bg3)'">
-      <div class="hero-slide-overlay"></div>
-      <div class="hero-slide-content">
-        <div class="hero-cat">Sistema de riel</div>
-        <div class="hero-title">Track LV</div>
-        <div class="hero-desc">Sistema de iluminación en riel de bajo voltaje. Flexibilidad total para espacios comerciales y residenciales de alta gama.</div>
-        <a class="hero-btn" href="familias.html?familia=TRACK%20LV">Descubrir</a>
-      </div>
-    </div>
-    <div class="hero-slide">
-      <img src="https://www.wlgled.com.ar/wp-content/uploads/2025/12/cover_micro_runner7.prueba.jpg" alt="Micro Runner" onerror="this.style.opacity='0';this.parentElement.style.background='var(--bg3)'">
-      <div class="hero-slide-overlay"></div>
-      <div class="hero-slide-content">
-        <div class="hero-cat">Embutido magnético</div>
-        <div class="hero-title">Micro<br>Runner</div>
-        <div class="hero-desc">Sistema de tamaño reducido para montaje embutido. Precisión óptica en el mínimo espacio posible.</div>
-        <a class="hero-btn" href="familias.html?familia=MICRO%20RUNNER">Descubrir</a>
-      </div>
-    </div>
-    <div class="hero-slide">
-      <img src="https://www.wlgled.com.ar/wp-content/uploads/2025/12/cover_jennyxpro.prueba-1.jpg" alt="Jenny X Pro" onerror="this.style.opacity='0';this.parentElement.style.background='var(--bg3)'">
-      <div class="hero-slide-overlay"></div>
-      <div class="hero-slide-content">
-        <div class="hero-cat">Lineal embutido</div>
-        <div class="hero-title">Jenny<br>X Pro</div>
-        <div class="hero-desc">Lineal de máxima eficiencia para integración arquitectónica. Luz continua, sin interrupciones.</div>
-        <a class="hero-btn" href="familias.html?familia=JENNY">Descubrir</a>
-      </div>
-    </div>
-  </div>
+  <div class="hero-slides" id="heroSlides"></div>
   <div class="hero-nav">
-    <div class="hero-dots">
-      <button class="hero-dot active" onclick="goSlide(0)"></button>
-      <button class="hero-dot" onclick="goSlide(1)"></button>
-      <button class="hero-dot" onclick="goSlide(2)"></button>
-      <button class="hero-dot" onclick="goSlide(3)"></button>
-    </div>
-    <div class="hero-counter" id="heroCounter">01 / 04</div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-counter" id="heroCounter">— / —</div>
     <button class="hero-arrow" onclick="nextSlide()">→</button>
   </div>
 </div>
@@ -763,18 +717,50 @@ if(_mq){
   },{threshold:.25});
   _mio.observe(_mq);
 }
-var TOTAL=4,cur=0,timer=null;
+var TOTAL=0,cur=0,timer=null;
 function goSlide(n){
+  if(!TOTAL)return;
   document.querySelectorAll('.hero-slide')[cur].classList.remove('active');
   cur=n;
   document.querySelectorAll('.hero-slide')[cur].classList.add('active');
   document.getElementById('heroSlides').style.transform='translateX(-'+(n*100)+'%)';
   document.querySelectorAll('.hero-dot').forEach(function(d,i){d.classList.toggle('active',i===n);});
-  document.getElementById('heroCounter').textContent='0'+(n+1)+' / 0'+TOTAL;
+  var pad=function(x){return x<10?'0'+x:String(x);};
+  document.getElementById('heroCounter').textContent=pad(n+1)+' / '+pad(TOTAL);
   clearInterval(timer);timer=setInterval(nextSlide,5500);
 }
-function nextSlide(){goSlide((cur+1)%TOTAL);}
-timer=setInterval(nextSlide,5500);
+function nextSlide(){if(TOTAL)goSlide((cur+1)%TOTAL);}
+(function loadHeroSlides(){
+  fetch('https://wlg-backend.onrender.com/api/hero-slides/')
+    .then(function(r){return r.json();})
+    .then(function(slides){
+      if(!slides||!slides.length)return;
+      var sl=document.getElementById('heroSlides');
+      var dt=document.getElementById('heroDots');
+      sl.innerHTML=slides.map(function(s,i){
+        var src=s.photo||(s.imagen?s.imagen:'');
+        var tit=s.titulo.replace(/\n/g,'<br>');
+        return '<div class="hero-slide'+(i===0?' active':'')+'">'+
+          '<img src="'+src+'" alt="'+(s.alt||s.titulo)+'" onerror="this.style.opacity=\'0\';this.parentElement.style.background=\'var(--bg3)\'">'+
+          '<div class="hero-slide-overlay"></div>'+
+          '<div class="hero-slide-content">'+
+            '<div class="hero-cat">'+s.categoria+'</div>'+
+            '<div class="hero-title">'+tit+'</div>'+
+            '<div class="hero-desc">'+s.descripcion+'</div>'+
+            '<a class="hero-btn" href="'+s.cta_url+'">'+s.cta_texto+'</a>'+
+          '</div></div>';
+      }).join('');
+      dt.innerHTML=slides.map(function(_,i){
+        return '<button class="hero-dot'+(i===0?' active':'')+'" onclick="goSlide('+i+')"></button>';
+      }).join('');
+      TOTAL=slides.length;
+      var pad=function(x){return x<10?'0'+x:String(x);};
+      document.getElementById('heroCounter').textContent='01 / '+pad(TOTAL);
+      clearInterval(timer);
+      timer=setInterval(nextSlide,5500);
+    })
+    .catch(function(){});
+})();
 var CARDS=8,VISIBLE=3.5,MAX=CARDS-Math.floor(VISIBLE),pos=0;
 function slide(dir){
   pos=Math.max(0,Math.min(MAX,pos+dir));

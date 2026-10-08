@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FamiliaProducto, Producto, Proyecto
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide
 
 
 class ProductoSerializer(serializers.ModelSerializer):
@@ -31,6 +31,13 @@ class FamiliaProductoSerializer(serializers.ModelSerializer):
 
     def get_skus(self, obj):
         return obj.items.filter(activo=True).count()
+
+
+class HeroSlideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HeroSlide
+        fields = ['id', 'categoria', 'titulo', 'descripcion', 'cta_texto', 'cta_url',
+                  'imagen', 'photo', 'alt', 'orden']
 
 
 class ProyectoSerializer(serializers.ModelSerializer):
