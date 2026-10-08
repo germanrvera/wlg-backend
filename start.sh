@@ -12,7 +12,11 @@ python manage.py load_initial_data
 echo "3. Creating admin user..."
 python manage.py create_admin
 
-echo "4. Collecting static files..."
+echo "4. Populating productos and proyectos..."
+python manage.py populate_productos
+python manage.py populate_proyectos
+
+echo "5. Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "5. Starting gunicorn..."
