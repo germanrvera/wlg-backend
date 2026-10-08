@@ -1,24 +1,55 @@
 from django.contrib import admin
-from .models import FamiliaProducto, Proyecto
+from import_export import resources, fields
+from import_export.admin import ImportExportModelAdmin
+from import_export.widgets import ForeignKeyWidget
+from .models import FamiliaProducto, Producto, Proyecto
+
+
+class ProductoResource(resources.ModelResource):
+    familia = fields.Field(
+        column_name='familia',
+        attribute='familia',
+        widget=ForeignKeyWidget(FamiliaProducto, 'nombre')
+    )
+
+    class Meta:
+        model = Producto
+        import_id_fields = ['codigo']
+        fields = ['familia', 'codigo', 'descripcion', 'precio', 'orden', 'activo']
+        export_order = ['familia', 'codigo', 'descripcion', 'precio', 'orden', 'activo']
+
+
+class ProductoInline(admin.TabularInline):
+    model = Producto
+    extra = 0
+    fields = ['codigo', 'descripcion', 'imagen', 'precio', 'orden', 'activo']
+    ordering = ['orden', 'codigo']
+
+
+@admin.register(Producto)
+class ProductoAdmin(ImportExportModelAdmin):
+    resource_classes = [ProductoResource]
+    list_display = ['codigo', 'descripcion', 'familia', 'precio', 'activo']
+    list_filter = ['activo', 'familia__tipo', 'familia']
+    search_fields = ['codigo', 'descripcion']
+    list_editable = ['activo', 'precio']
+    ordering = ['familia__orden', 'orden', 'codigo']
 
 
 @admin.register(FamiliaProducto)
 class FamiliaProductoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'tipo', 'macro', 'skus', 'orden', 'activo']
+    list_display = ['nombre', 'tipo', 'macro', 'orden', 'activo']
     list_filter = ['activo', 'tipo', 'has_dim']
     search_fields = ['nombre', 'descripcion', 'macro']
     prepopulated_fields = {'slug': ('nombre',)}
     ordering = ['orden', 'nombre']
+    inlines = [ProductoInline]
     fieldsets = (
         ('Información básica', {
-            'fields': ('nombre', 'slug', 'tipo', 'macro', 'skus', 'orden', 'activo')
+            'fields': ('nombre', 'slug', 'tipo', 'macro', 'orden', 'activo')
         }),
         ('Contenido', {
             'fields': ('descripcion', 'imagen', 'photo')
-        }),
-        ('Productos', {
-            'fields': ('productos',),
-            'description': 'Lista de SKUs/productos de esta familia (JSON array)'
         }),
         ('Filtros — Ubicación y aplicación', {
             'fields': ('filter_ubicacion', 'filter_aplicacion', 'filter_montaje'),
@@ -58,6 +89,6 @@ class ProyectoAdmin(admin.ModelAdmin):
         ('Ficha técnica', {
             'fields': ('ficha_tecnica',),
             'classes': ('collapse',),
-            'description': 'Dict de {Clave: Valor} — lighting designer, comercializador, registro, etc.'
+            'description': 'Dict de {Clave: Valor}'
         }),
     )

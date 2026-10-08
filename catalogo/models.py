@@ -27,8 +27,6 @@ class FamiliaProducto(models.Model):
     has_dim = models.BooleanField(default=False)
     w_range = models.JSONField(default=list)
 
-    productos = models.JSONField(default=list)
-
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 
@@ -44,6 +42,27 @@ class FamiliaProducto(models.Model):
         if not self.slug:
             self.slug = slugify(self.nombre)
         super().save(*args, **kwargs)
+
+
+class Producto(models.Model):
+    familia = models.ForeignKey(
+        FamiliaProducto, on_delete=models.CASCADE,
+        related_name='items', verbose_name='Familia'
+    )
+    codigo = models.CharField(max_length=80, unique=True, verbose_name='Código SKU')
+    descripcion = models.CharField(max_length=250, verbose_name='Descripción')
+    imagen = models.ImageField(upload_to='productos/', blank=True, verbose_name='Imagen')
+    precio = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name='Precio (ARS)')
+    activo = models.BooleanField(default=True)
+    orden = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
+        ordering = ['familia__orden', 'orden', 'codigo']
+
+    def __str__(self):
+        return self.codigo
 
 
 class Proyecto(models.Model):

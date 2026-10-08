@@ -1,8 +1,20 @@
 from rest_framework import serializers
-from .models import FamiliaProducto, Proyecto
+from .models import FamiliaProducto, Producto, Proyecto
+
+
+class ProductoSerializer(serializers.ModelSerializer):
+    cod = serializers.CharField(source='codigo')
+    desc = serializers.CharField(source='descripcion')
+
+    class Meta:
+        model = Producto
+        fields = ['cod', 'desc', 'imagen', 'precio']
 
 
 class FamiliaProductoSerializer(serializers.ModelSerializer):
+    productos = serializers.SerializerMethodField()
+    skus = serializers.SerializerMethodField()
+
     class Meta:
         model = FamiliaProducto
         fields = [
@@ -12,6 +24,13 @@ class FamiliaProductoSerializer(serializers.ModelSerializer):
             'filter_v', 'filter_w', 'filter_ubicacion', 'filter_aplicacion',
             'filter_montaje', 'has_dim', 'w_range', 'productos',
         ]
+
+    def get_productos(self, obj):
+        qs = obj.items.filter(activo=True).order_by('orden', 'codigo')
+        return ProductoSerializer(qs, many=True).data
+
+    def get_skus(self, obj):
+        return obj.items.filter(activo=True).count()
 
 
 class ProyectoSerializer(serializers.ModelSerializer):

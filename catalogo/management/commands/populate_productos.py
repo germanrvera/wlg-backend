@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from catalogo.models import FamiliaProducto
+from catalogo.models import FamiliaProducto, Producto
 
 
 # SKUs por familia — formato: {"cod": "CODIGO-SKU", "desc": "Descripción comercial"}
@@ -199,21 +199,32 @@ PRODUCTOS = {
 
 
 class Command(BaseCommand):
-    help = 'Populate productos field for all FamiliaProducto records'
+    help = 'Populate Producto table from PRODUCTOS dict (idempotent via update_or_create)'
 
     def handle(self, *args, **options):
         updated = 0
+        created = 0
         skipped = 0
         for nombre, productos in PRODUCTOS.items():
             try:
                 fam = FamiliaProducto.objects.get(nombre=nombre)
-                fam.productos = productos
-                fam.skus = len(productos)
-                fam.save(update_fields=['productos', 'skus'])
+                for i, p in enumerate(productos):
+                    obj, was_created = Producto.objects.update_or_create(
+                        codigo=p['cod'],
+                        defaults={
+                            'familia': fam,
+                            'descripcion': p['desc'],
+                            'orden': i,
+                            'activo': True,
+                        }
+                    )
+                    if was_created:
+                        created += 1
+                    else:
+                        updated += 1
                 self.stdout.write(self.style.SUCCESS(
-                    f'  {nombre}: {len(productos)} SKUs cargados'
+                    f'  {nombre}: {len(productos)} productos procesados'
                 ))
-                updated += 1
             except FamiliaProducto.DoesNotExist:
                 self.stdout.write(self.style.WARNING(
                     f'  {nombre}: familia no encontrada en DB — omitida'
@@ -221,5 +232,5 @@ class Command(BaseCommand):
                 skipped += 1
 
         self.stdout.write(self.style.SUCCESS(
-            f'\nListo: {updated} familias actualizadas, {skipped} omitidas.'
+            f'\nListo: {created} creados, {updated} actualizados, {skipped} familias omitidas.'
         ))
