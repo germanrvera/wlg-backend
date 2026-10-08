@@ -7,7 +7,7 @@ SLIDES = [
         'titulo': 'Galuy',
         'descripcion': 'Luz que acompaña el recorrido. Sistema de iluminación lineal diseñado para arquitecturas que demandan precisión y continuidad.',
         'cta_texto': 'Descubrir',
-        'cta_url': '/familias/galuy',
+        'cta_url': '/familias',
         'photo': 'https://www.wlgled.com.ar/wp-content/uploads/2026/01/slider_galuy3.jpg',
         'alt': 'Galuy — Sistema Lineal ARQ',
         'orden': 10,
