@@ -52,7 +52,6 @@ class Producto(models.Model):
     codigo = models.CharField(max_length=80, unique=True, verbose_name='Código SKU')
     descripcion = models.CharField(max_length=250, verbose_name='Descripción')
     imagen = models.ImageField(upload_to='productos/', blank=True, verbose_name='Imagen')
-    precio = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name='Precio (ARS)')
     activo = models.BooleanField(default=True)
     orden = models.PositiveSmallIntegerField(default=0)
 

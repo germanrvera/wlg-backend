@@ -15,24 +15,24 @@ class ProductoResource(resources.ModelResource):
     class Meta:
         model = Producto
         import_id_fields = ['codigo']
-        fields = ['familia', 'codigo', 'descripcion', 'precio', 'orden', 'activo']
-        export_order = ['familia', 'codigo', 'descripcion', 'precio', 'orden', 'activo']
+        fields = ['familia', 'codigo', 'descripcion', 'orden', 'activo']
+        export_order = ['familia', 'codigo', 'descripcion', 'orden', 'activo']
 
 
 class ProductoInline(admin.TabularInline):
     model = Producto
     extra = 0
-    fields = ['codigo', 'descripcion', 'imagen', 'precio', 'orden', 'activo']
+    fields = ['codigo', 'descripcion', 'imagen', 'orden', 'activo']
     ordering = ['orden', 'codigo']
 
 
 @admin.register(Producto)
 class ProductoAdmin(ImportExportModelAdmin):
     resource_classes = [ProductoResource]
-    list_display = ['codigo', 'descripcion', 'familia', 'precio', 'activo']
+    list_display = ['codigo', 'descripcion', 'familia', 'activo']
     list_filter = ['activo', 'familia__tipo', 'familia']
     search_fields = ['codigo', 'descripcion']
-    list_editable = ['activo', 'precio']
+    list_editable = ['activo']
     ordering = ['familia__orden', 'orden', 'codigo']
 
 
