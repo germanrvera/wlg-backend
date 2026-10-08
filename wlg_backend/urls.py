@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/', include('catalogo.urls')),
     # Site pages
     path('', TemplateView.as_view(template_name='wlg_v8.html'), name='home'),
+    path('familias/<slug:slug>', TemplateView.as_view(template_name='familia.html'), name='familia-detail'),
     path('familias', TemplateView.as_view(template_name='familias.html'), name='familias'),
     path('proyectos', TemplateView.as_view(template_name='proyectos.html'), name='proyectos'),
     path('contacto', TemplateView.as_view(template_name='contactar.html'), name='contacto'),

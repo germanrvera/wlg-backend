@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Familia | World Leds Go</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+button,input,select,textarea{font-family:inherit;}
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--bg3:#141414;--bg4:#1a1a1a;
+  --white:#ede9e2;--dim:rgba(237,233,226,.45);--dim2:rgba(237,233,226,.18);
+  --gray2:#b3aea5;--gold:#c9a96e;--panel:rgba(10,9,7,.9);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Urbanist',sans-serif;font-weight:300;overflow-x:hidden;padding-top:89px;}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 72px;border-bottom:.5px solid rgba(237,233,226,.06);position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(8,8,8,.94);backdrop-filter:blur(20px);transition:padding .4s;}
+nav.scrolled{padding:12px 72px;}
+.logo-wrap{display:flex;flex-direction:column;gap:4px;align-items:center;text-decoration:none;}
+.logo-img{height:48px;width:auto;display:block;mix-blend-mode:screen;opacity:.95;}
+.logo-sub{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-family:'Urbanist',sans-serif;font-weight:400;}
+.nav-links{display:flex;gap:40px;flex:1;justify-content:center;}
+.nav-links a{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);text-decoration:none;transition:color .3s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:.5px;background:var(--gold);transition:width .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:4px;}
+.nav-icons{display:flex;align-items:center;margin-right:16px;}
+.nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .3s;}
+.nav-icon:hover{color:var(--white);}
+.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}
+.nav-cta:hover{background:var(--gold);color:var(--bg);}
+.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:all .3s;margin-right:10px;cursor:pointer;}
+.nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+.nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white);}
+
+/* MEGA MENU */
+.mega-wrap{position:fixed;left:0;right:0;z-index:498;opacity:0;pointer-events:none;transition:opacity .22s ease;border-top:.5px solid rgba(237,233,226,.08);}
+.mega-wrap.open{opacity:1;pointer-events:all;}
+.mega-inner{display:flex;gap:0;background:var(--panel);backdrop-filter:blur(24px);padding:36px 72px 40px;border-bottom:.5px solid rgba(237,233,226,.06);}
+.mega-col-links{display:flex;flex-direction:column;gap:4px;min-width:220px;padding-right:48px;border-right:.5px solid var(--dim2);}
+.mega-col-links + .mega-col-links{padding-left:48px;border-right:none;padding-right:0;}
+.mega-col-label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500;}
+.mega-link{display:block;font-size:14px;font-weight:300;letter-spacing:.06em;color:var(--dim);text-decoration:none;padding:7px 0;border-bottom:.5px solid transparent;transition:color .2s,border-color .2s;}
+.mega-link:hover{color:var(--white);border-color:var(--dim2);}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,8,.98);z-index:600;flex-direction:column;padding:28px 24px;overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.m-close{background:none;border:none;color:var(--white);font-size:22px;cursor:pointer;align-self:flex-end;padding:4px 8px;margin-bottom:32px;}
+.m-links{display:flex;flex-direction:column;gap:0;}
+.m-link{display:block;font-size:22px;font-weight:200;letter-spacing:.06em;color:var(--white);text-decoration:none;padding:18px 0;border-bottom:.5px solid var(--dim2);}
+.m-link:hover{color:var(--gold);}
+.m-cta{display:block;margin-top:32px;text-align:center;padding:16px;background:var(--gold);color:var(--bg);font-size:13px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;font-weight:400;}
+
+/* BACK */
+.fam-back{display:inline-flex;align-items:center;gap:10px;padding:28px 72px 0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);text-decoration:none;transition:color .25s;}
+.fam-back:hover{color:var(--white);}
+.fam-back span{display:block;width:18px;height:.5px;background:var(--gold);}
+
+/* HERO */
+.fam-hero{position:relative;height:74vh;min-height:480px;margin:20px 0 0;overflow:hidden;display:flex;align-items:flex-end;}
+.fam-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.fam-hero-bg{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,8,8,.15),transparent 40%),linear-gradient(180deg,transparent 35%,rgba(8,8,8,.95) 100%);}
+.fam-hero-content{position:relative;z-index:2;padding:0 72px 56px;}
+.fam-tipo{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.fam-tipo-sep{display:block;width:28px;height:.5px;background:var(--gold);}
+.fam-nombre{font-size:clamp(52px,9vw,108px);font-weight:200;line-height:.92;letter-spacing:-.01em;}
+.fam-skus{margin-top:18px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+
+/* DESCRIPCION */
+.fam-desc{max-width:760px;margin:0 auto;padding:90px 72px 60px;text-align:center;}
+.fam-desc p{font-size:20px;font-weight:300;line-height:1.7;color:var(--dim);}
+
+/* PRODUCTOS */
+.fam-prods{padding:0 72px 120px;}
+.fam-prods-title{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:40px;padding-bottom:16px;border-bottom:.5px solid var(--dim2);}
+.fam-prods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--dim2);}
+.fam-prod-card{background:var(--bg);padding:28px 24px;display:flex;flex-direction:column;gap:8px;transition:background .2s;}
+.fam-prod-card:hover{background:var(--bg3);}
+.fam-prod-code{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:400;}
+.fam-prod-desc{font-size:14px;font-weight:300;color:var(--dim);line-height:1.5;}
+
+/* EMPTY */
+.fam-empty{padding:80px 72px;text-align:center;color:var(--gray2);font-size:15px;letter-spacing:.06em;}
+
+/* LOADING */
+.fam-loading{display:flex;align-items:center;justify-content:center;min-height:40vh;color:var(--gray2);font-size:13px;letter-spacing:.2em;text-transform:uppercase;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:.5px solid var(--dim2);padding:60px 72px 40px;}
+.footer-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-col-title{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:14px;font-weight:300;color:var(--dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:.5px solid var(--dim2);}
+.footer-copy{font-size:12px;color:var(--dim);letter-spacing:.06em;}
+.footer-social{display:flex;gap:20px;}
+.footer-social a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.footer-social a:hover{color:var(--gold);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .nav-hamburger{display:flex;}
+  .fam-back,.fam-hero-content,.fam-desc,.fam-prods{padding-left:24px;padding-right:24px;}
+  .fam-prods-grid{grid-template-columns:1fr;}
+  .footer-inner{grid-template-columns:1fr;}
+}
+@media(min-width:901px){
+  .mobile-menu{display:none !important;}
+  .nav-hamburger{display:none !important;}
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav" onmouseenter="keepMega()">
+  <a href="/" class="logo-wrap">
+    <img src="https://www.wlgled.com.ar/wp-content/uploads/2025/12/logo-wlg-blanco.png" alt="World Leds Go" class="logo-img">
+    <span class="logo-sub">World Leds Go</span>
+  </a>
+  <div class="nav-links" onmouseleave="closeMega()">
+    <a href="/familias" class="active" onmouseenter="openMega('megaProductos')">Productos</a>
+    <a href="/proyectos" onmouseenter="closeMega()">Proyectos</a>
+    <a href="/novedades" onmouseenter="closeMega()">Novedades</a>
+    <a href="/experiencia" onmouseenter="closeMega()">Laboratorio</a>
+    <a href="/recursos" onmouseenter="closeMega()">Recursos</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-right">
+    <div class="nav-icons">
+      <button class="nav-icon" onclick="openSearch()" aria-label="Buscar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+    </div>
+    <button class="nav-cta-outline" onclick="openBuyModal()">Comprar</button>
+    <a class="nav-cta" href="/contacto">Contactar</a>
+  </div>
+</nav>
+
+<div class="mega-wrap" id="megaProductos" onmouseenter="keepMega()" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <div class="mega-col-links">
+      <div class="mega-col-label">Sistemas de riel</div>
+      <a class="mega-link" href="/familias/galuy">Galuy</a>
+      <a class="mega-link" href="/familias/cetus">Cetus</a>
+      <a class="mega-link" href="/familias/lira">Lira</a>
+      <a class="mega-link" href="/familias/orion">Orion</a>
+    </div>
+    <div class="mega-col-links">
+      <div class="mega-col-label">Iluminación lineal</div>
+      <a class="mega-link" href="/familias/petra">Petra</a>
+      <a class="mega-link" href="/familias/sirio">Sirio</a>
+      <a class="mega-link" href="/familias/vega">Vega</a>
+      <div class="mega-col-label" style="margin-top:20px;">Sistemas especiales</div>
+      <a class="mega-link" href="/familias/nova">Nova</a>
+      <a class="mega-link" href="/familias/altair">Altair</a>
+    </div>
+    <div class="mega-col-links">
+      <div class="mega-col-label">Artefactos y apliques</div>
+      <a class="mega-link" href="/familias/lyra">Lyra</a>
+      <a class="mega-link" href="/familias/deneb">Deneb</a>
+      <a class="mega-link" href="/familias/castor">Castor</a>
+      <div class="mega-col-label" style="margin-top:20px;">Exterior</div>
+      <a class="mega-link" href="/familias/rigel">Rigel</a>
+      <a class="mega-link" href="/familias/mira">Mira</a>
+    </div>
+    <div class="mega-col-links">
+      <div class="mega-col-label">Módulos</div>
+      <a class="mega-link" href="/familias/canopus">Canopus</a>
+      <a class="mega-link" href="/familias/pollux">Pollux</a>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="m-close" onclick="closeMobileMenu()">✕</button>
+  <div class="m-links">
+    <a href="/familias" class="m-link" onclick="closeMobileMenu()">Productos</a>
+    <a href="/proyectos" class="m-link" onclick="closeMobileMenu()">Proyectos</a>
+    <a href="/novedades" class="m-link" onclick="closeMobileMenu()">Novedades</a>
+    <a href="/experiencia" class="m-link" onclick="closeMobileMenu()">Laboratorio</a>
+    <a href="/recursos" class="m-link" onclick="closeMobileMenu()">Recursos</a>
+  </div>
+  <a href="/contacto" class="m-cta" onclick="closeMobileMenu()">Contactar</a>
+</nav>
+
+<a href="/familias" class="fam-back"><span></span> Todas las familias</a>
+
+<div id="famContent" class="fam-loading">Cargando…</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-col-title">Navegación</div>
+      <div class="footer-links">
+        <a href="/familias">Productos</a>
+        <a href="/proyectos">Proyectos</a>
+        <a href="/novedades">Novedades</a>
+        <a href="/experiencia">Laboratorio</a>
+        <a href="/recursos">Recursos</a>
+        <a href="/contacto">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Empresa</div>
+      <div class="footer-links">
+        <a href="/historia">Historia</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <div class="footer-links">
+        <a href="mailto:info@wlgled.com.ar">info@wlgled.com.ar</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 World Leds Go. Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/worldledsgo" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/company/worldledsgo" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var _megaTimer=null;
+function openMega(id){
+  clearTimeout(_megaTimer);
+  var nav=document.getElementById('mainNav');
+  var h=nav?nav.offsetHeight-1:64;
+  document.querySelectorAll('.mega-wrap').forEach(function(m){m.style.top=h+'px';m.classList.remove('open');});
+  document.getElementById(id).classList.add('open');
+}
+function closeMega(){
+  _megaTimer=setTimeout(function(){
+    document.querySelectorAll('.mega-wrap').forEach(function(m){m.classList.remove('open');});
+  },300);
+}
+function keepMega(){clearTimeout(_megaTimer);}
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+function openSearch(){}
+function openBuyModal(){}
+
+window.addEventListener('scroll',function(){
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+document.querySelectorAll('.reveal').forEach(function(el){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.15});
+  io.observe(el);
+});
+
+(function loadFamilia(){
+  var slug=window.location.pathname.replace(/\/+$/,'').split('/').pop();
+  if(!slug){window.location.href='/familias';return;}
+  fetch('https://wlg-backend.onrender.com/api/familias/'+slug+'/')
+    .then(function(r){
+      if(!r.ok){window.location.href='/familias';return null;}
+      return r.json();
+    })
+    .then(function(f){
+      if(!f)return;
+      document.title=f.nombre+' | World Leds Go';
+      var imgSrc=f.photo||(f.imagen?f.imagen:'');
+      var heroImg=imgSrc
+        ?'<img src="'+imgSrc+'" alt="'+f.nombre+'">'
+        :'<div style="position:absolute;inset:0;background:linear-gradient(135deg,#141414,#0e0e0e);"></div>';
+      var prods='';
+      if(f.productos&&f.productos.length){
+        prods='<div class="fam-prods reveal"><div class="fam-prods-title">SKUs disponibles — '+f.productos.length+' referencias</div>'+
+          '<div class="fam-prods-grid">'+
+          f.productos.map(function(p){
+            return '<div class="fam-prod-card"><div class="fam-prod-code">'+p.cod+'</div><div class="fam-prod-desc">'+p.desc+'</div></div>';
+          }).join('')+
+          '</div></div>';
+      }else{
+        prods='<div class="fam-empty reveal">Productos disponibles próximamente.</div>';
+      }
+      document.getElementById('famContent').outerHTML=
+        '<div class="fam-hero reveal">'+heroImg+'<div class="fam-hero-bg"></div>'+
+        '<div class="fam-hero-content">'+
+          '<div class="fam-tipo"><span class="fam-tipo-sep"></span>'+f.macro+'</div>'+
+          '<div class="fam-nombre">'+f.nombre+'</div>'+
+          (f.skus?'<div class="fam-skus">'+f.skus+' referencias disponibles</div>':'')+
+        '</div></div>'+
+        '<div class="fam-desc reveal"><p>'+f.descripcion+'</p></div>'+
+        prods;
+      document.querySelectorAll('.reveal').forEach(function(el){
+        var io=new IntersectionObserver(function(entries){
+          entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+        },{threshold:.1});
+        io.observe(el);
+      });
+    })
+    .catch(function(){window.location.href='/familias';});
+})();
+</script>
+</body>
+</html>
