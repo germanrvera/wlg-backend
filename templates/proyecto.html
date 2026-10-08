@@ -232,8 +232,9 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
     <a href="/familias" onmouseenter="openMega('megaProductos')">Productos</a>
     <a href="/proyectos" class="active" onmouseenter="closeMega()">Proyectos</a>
     <a href="/novedades" onmouseenter="closeMega()">Novedades</a>
+    <a href="/experiencia" onmouseenter="closeMega()">Laboratorio</a>
     <a href="/recursos" onmouseenter="closeMega()">Recursos</a>
-    <a href="powergear.html">Powergear</a>
+
   </div>
   <div class="nav-right">
     <div class="nav-icons">
@@ -356,7 +357,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
   <div class="logo-wrap" id="footLogoWrap" style="gap:5px;align-items:center;">
     <div style="font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);text-align:center;">The Professional Space</div>
   </div>
-  <div class="foot-links"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="https://www.dialux.com/en-GB/dialux-members/world-leds-go" target="_blank" rel="noopener">DIALux Silver Member</a><a href="#" onclick="openBuyModal();showBuyStep('Form');return false;">Distribuidores</a></div>
+  <div class="foot-links"><a href="https://www.instagram.com/worldledsgo" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/company/worldledsgo" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.dialux.com/en-GB/dialux-members/world-leds-go" target="_blank" rel="noopener">DIALux Silver Member</a><a href="#" onclick="openBuyModal();showBuyStep('Form');return false;">Distribuidores</a></div>
   <div class="foot-copy">© 2026 World Leds Go</div>
 </footer>
 
@@ -464,7 +465,8 @@ function buildGalleryHTML(images){
   if(!p){ window.location.href = 'proyectos'; return; }
 
   document.getElementById('pageTitle').textContent = p.nombre + ' | Proyecto | World Leds Go';
-  document.getElementById('heroImg').src = p.imagen_principal;
+  var imgBase='https://wlg-backend.onrender.com/media/';
+  document.getElementById('heroImg').src = p.imagen_principal?(p.imagen_principal.startsWith('http')?p.imagen_principal:imgBase+p.imagen_principal):'';
   document.getElementById('heroImg').alt = p.nombre;
   document.getElementById('heroType').textContent = p.tipo_espacio || '';
   document.getElementById('heroTitle').textContent = p.nombre;
@@ -508,7 +510,7 @@ function buildGalleryHTML(images){
   others.sort(function(){ return 0.5 - Math.random(); });
   relatedWrap.innerHTML = others.slice(0,3).map(function(rp){
     return '<a class="proj-r-card" href="proyecto?proyecto='+encodeURIComponent(rp.nombre)+'">'
-      + '<img src="'+rp.imagen_principal+'" alt="'+escapeHtml(rp.nombre)+'" loading="lazy">'
+      + '<img src="'+(rp.imagen_principal?(rp.imagen_principal.startsWith('http')?rp.imagen_principal:'https://wlg-backend.onrender.com/media/'+rp.imagen_principal):'')+'" alt="'+escapeHtml(rp.nombre)+'" loading="lazy">'
       + '<div class="proj-r-overlay"></div>'
       + '<div class="proj-r-info"><div class="proj-r-type">'+escapeHtml(rp.tipo_espacio||'')+'</div><div class="proj-r-name">'+escapeHtml(rp.nombre)+'</div></div>'
       + '</a>';
