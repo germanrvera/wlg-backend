@@ -81,7 +81,7 @@ nav.scrolled{padding:12px 72px;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:.5px;background:var(--gold);transition:width .3s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);}
 .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}
+.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}.nav-cta{display:none;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
 
 /* HERO */
@@ -179,7 +179,7 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
 .nav-links a.active::after{width:100%;}
 
 /* NAV COMPRAR (outline variant) */
-.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:none;}
+.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:none;}.nav-cta-outline{display:none;}
 .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
 
 /* BUY MODAL */
@@ -258,7 +258,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 }
 
 /* MOBILE NAV */
-.nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:none;padding:4px;}
+.nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:none;padding:4px;}.nav-hamburger{margin-left:auto;}
 .nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white2);transition:transform .35s,opacity .35s;}
 .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-hamburger.open span:nth-child(2){opacity:0;}
