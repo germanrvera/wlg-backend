@@ -111,7 +111,7 @@ nav.scrolled{padding:12px 72px;}
 .logo-wrap{display:flex;flex-direction:column;gap:4px;align-items:center;}
 .logo-text{font-family:var(--serif);font-size:16px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--white);}
 .logo-sub{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
-.nav-links{display:flex;gap:40px;flex:1;justify-content:center;}
+.nav-links{display:none;}
 .nav-links a{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);text-decoration:none;transition:color .3s;position:relative;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:.5px;background:var(--gold);transition:width .3s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);}
@@ -154,6 +154,7 @@ nav.scrolled{padding:12px 72px;}
 .proj-cta{display:inline-flex;align-items:center;gap:12px;margin-top:20px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--white);}
 .proj-cta::after{content:'';display:block;width:20px;height:.5px;background:var(--gold);transition:width .3s;}
 .proj-card:hover .proj-cta::after{width:36px;}
+.proj-type-static{position:absolute;top:16px;right:16px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:rgba(237,233,226,.55);z-index:2;font-weight:300;}
 .proj-badge{position:absolute;top:20px;left:20px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:5px 12px;z-index:2;}
 .pc-1{grid-column:span 8;height:680px;}
 .pc-2{grid-column:span 4;height:680px;}
@@ -257,7 +258,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 }
 
 /* MOBILE NAV */
-.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:none;padding:4px;}
+.nav-hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:none;padding:4px;}
 .nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white2);transition:transform .35s,opacity .35s;}
 .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-hamburger.open span:nth-child(2){opacity:0;}
@@ -270,8 +271,8 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 .mobile-menu .m-cta{font-family:var(--sans);font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:40px;padding:14px 36px;border:.5px solid var(--gold);text-decoration:none;transform:translateY(20px);opacity:0;transition:color .25s,background .25s,transform .4s,opacity .4s;}
 .mobile-menu.open .m-cta{transform:translateY(0);opacity:1;transition-delay:.3s;}
 .mobile-menu .m-cta:hover{background:var(--gold);color:var(--white);}
-@media(max-width:900px){.nav-links{display:none;}.nav-cta{display:none;}.nav-hamburger{display:flex;}}
-@media(min-width:901px){.mobile-menu{display:none !important;}}
+.nav-cta{display:none;}.nav-cta-outline{display:none;}
+
 
 .page-transition{position:fixed;inset:0;background:var(--bg);z-index:9998;pointer-events:none;opacity:0;transition:opacity .3s ease;}
 
@@ -484,6 +485,7 @@ function render(){
   g.innerHTML=list.map(function(p){
     return '<a class="proj-card '+p.size+'" href="/proyecto?proyecto='+encodeURIComponent(p.name)+'">'+
       '<img src="'+p.img+'" alt="'+p.name+'" loading="lazy">'+
+      '<div class="proj-type-static">'+p.type+'</div>'+
       (p.badge?'<div class="proj-badge">'+p.badge+'</div>':'')+
       '<div class="proj-overlay"></div>'+
       '<div class="proj-info">'+
@@ -700,6 +702,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMobileM
   <a href="/recursos" onclick="closeMobileMenu()">Recursos</a>
   <a href="/experiencia" onclick="closeMobileMenu()">Laboratorio</a>
   <a href="powergear.html" onclick="closeMobileMenu()">Powergear</a>
+  <button type="button" class="m-cta" onclick="closeMobileMenu();openBuyModal()">Comprar</button>
   <a href="/contacto" class="m-cta" onclick="closeMobileMenu()">Contactar</a>
 </nav>
 
