@@ -30,12 +30,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);font-weight
 body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3;}
 
-/* CURSOR */
-.cursor{position:fixed;z-index:10000;pointer-events:none;mix-blend-mode:difference;}
-.cursor-dot{width:6px;height:6px;background:var(--white);border-radius:50%;transform:translate(-50%,-50%);}
-.cursor-ring{width:36px;height:36px;border:.5px solid rgba(237,233,226,.5);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s;}
-.cursor-ring.hover{width:54px;height:54px;border-color:var(--terra);}
-.cursor-dot.hidden,.cursor-ring.hidden{opacity:0;}
+
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:20px 72px;border-bottom:.5px solid rgba(237,233,226,.06);position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(8,8,8,.94);backdrop-filter:blur(20px);transition:padding .4s;}
@@ -50,11 +45,11 @@ nav.scrolled{padding:12px 72px;}
 .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
 .nav-right{display:flex;align-items:center;gap:4px;}
 .nav-icons{display:flex;align-items:center;margin-right:16px;}
-.nav-icon{background:none;border:none;color:var(--gray2);cursor:none;padding:10px;display:flex;align-items:center;transition:color .3s;}
+.nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .3s;}
 .nav-icon:hover{color:var(--white);}
 .nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
-.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:none;}
+.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
 .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
 
 /* BUY MODAL */
@@ -203,8 +198,6 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
 </style>
 </head>
 <body>
-<div class="cursor" id="cursorDot" style="top:0;left:0"><div class="cursor-dot"></div></div>
-<div class="cursor" id="cursorRing" style="top:0;left:0"><div class="cursor-ring"></div></div>
 
 <nav id="mainNav">
   <a href="/" class="logo-wrap" style="text-decoration:none;">
