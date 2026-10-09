@@ -94,16 +94,22 @@ WHITENOISE_ROOT = BASE_DIR / 'static_root'
 
 # Media files — Cloudflare R2
 if os.environ.get('R2_ACCESS_KEY_ID'):
+    _r2_account_id = os.environ.get('R2_ACCOUNT_ID', '')
+    _r2_endpoint = (
+        os.environ.get('R2_ENDPOINT_URL')
+        or (f'https://{_r2_account_id}.r2.cloudflarestorage.com' if _r2_account_id else '')
+    )
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    AWS_S3_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL')
+    AWS_S3_ENDPOINT_URL = _r2_endpoint
     AWS_ACCESS_KEY_ID = os.environ.get('R2_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME', 'wlg-archivos')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME', 'wlg-media')
     AWS_S3_REGION_NAME = 'auto'
-    AWS_DEFAULT_ACL = 'public-read'
+    AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_AUTH = False
     AWS_S3_FILE_OVERWRITE = False
-    MEDIA_URL = os.environ.get('R2_PUBLIC_URL', AWS_S3_ENDPOINT_URL + '/' + AWS_STORAGE_BUCKET_NAME + '/')
+    _r2_public = os.environ.get('R2_PUBLIC_URL', '')
+    MEDIA_URL = (_r2_public or (_r2_endpoint + '/' + AWS_STORAGE_BUCKET_NAME)).rstrip('/') + '/'
 else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
