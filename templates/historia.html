@@ -246,6 +246,20 @@ a.skip-link:focus{top:8px;}
   .logo-sub{display:none;}
   nav{padding:14px 20px;}
 }
+
+/* WLG_HAMBURGER_v1 */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;z-index:502;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--white);transition:transform .3s,opacity .3s;}
+.mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,8,.98);backdrop-filter:blur(24px);z-index:490;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0;opacity:0;pointer-events:none;transition:opacity .4s;padding:0;overflow:hidden;}
+.mobile-menu.open{opacity:1;pointer-events:all;}
+.mobile-menu a{font-size:clamp(28px,9vw,44px);font-weight:300;color:var(--white);text-decoration:none;letter-spacing:.04em;padding:10px 0;text-align:center;width:100%;display:block;transition:color .25s;}
+.mobile-menu a:hover,.mobile-menu a.active{color:var(--gold);}
+.mobile-menu-close{position:absolute;top:28px;right:28px;background:none;border:none;color:var(--white);font-size:28px;cursor:pointer;line-height:1;padding:4px;}
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
+}
+
 </style>
 </head>
 <body>
@@ -271,7 +285,16 @@ a.skip-link:focus{top:8px;}
     <button type="button" class="nav-cta-outline" onclick="openBuyModal()">Comprar</button>
     <a class="nav-cta" href="/contacto">Contactar</a>
   </div>
+  <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/familias" onclick="closeMobileMenu()">Productos</a>
+  <a href="/proyectos" onclick="closeMobileMenu()">Proyectos</a>
+  <a href="/novedades" onclick="closeMobileMenu()">Novedades</a>
+  <a href="/experiencia" onclick="closeMobileMenu()">Laboratorio</a>
+  <a href="/recursos" onclick="closeMobileMenu()">Recursos</a>
+</div>
 <div class="mega-wrap" id="megaProductos" onmouseenter="keepMega()" onmouseleave="closeMega()">
   <div class="mega-inner">
     <div>
@@ -731,6 +754,9 @@ function updateThemeIcons(){
   document.querySelectorAll('.icon-moon').forEach(function(el){el.style.display=isLight?'none':'';});
 }
 document.addEventListener('DOMContentLoaded',updateThemeIcons);
+
+function openMobileMenu(){var m=document.getElementById('mobileMenu');if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+function closeMobileMenu(){var m=document.getElementById('mobileMenu');if(m){m.classList.remove('open');document.body.style.overflow='';}}
 </script>
 </body>
 </html>
