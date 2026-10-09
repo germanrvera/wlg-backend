@@ -66,6 +66,7 @@ html[data-theme="light"] .mega-inner,
 html[data-theme="light"] .mobile-menu,
 html[data-theme="light"] footer,
 html[data-theme="light"] .ctrl-panel,
+html[data-theme="light"] .ctrl-toggle,
 html[data-theme="light"] .sliders-wrap,
 html[data-theme="light"] #loader{
   --bg:#080808;--bg2:#0e0e0e;--bg3:#141414;
@@ -298,6 +299,43 @@ html[data-theme="light"] body::before{opacity:.15;}
       flex-direction: column;
       align-items: flex-end;
       gap: 12px;
+    }
+    .ctrl-toggle {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: rgba(8,8,8,.85);
+      border: .5px solid rgba(237,233,226,.12);
+      backdrop-filter: blur(16px);
+      padding: 9px 18px 9px 14px;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+    }
+    .ctrl-toggle:hover { color: var(--white); border-color: rgba(201,169,110,.4); }
+    .ctrl-panel.open .ctrl-toggle { color: var(--gold); border-color: rgba(201,169,110,.5); }
+    .ctrl-toggle svg { opacity: .55; transition: opacity .2s; }
+    .ctrl-toggle:hover svg, .ctrl-panel.open .ctrl-toggle svg { opacity: 1; }
+    .ctrl-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height .38s cubic-bezier(.4,0,.2,1), opacity .28s;
+    }
+    .ctrl-panel.open .ctrl-body {
+      max-height: 520px;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Presets */
@@ -633,7 +671,21 @@ footer{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:40px 72px;disp
 </div>
 
 <!-- CONTROL PANEL -->
-<div class="ctrl-panel">
+<div class="ctrl-panel" id="ctrlPanel">
+
+  <button class="ctrl-toggle" onclick="document.getElementById('ctrlPanel').classList.toggle('open')" aria-label="Abrir controles">
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="1" x2="14" y2="1" stroke="currentColor" stroke-width="1"/>
+      <circle cx="10" cy="1" r="1.8" fill="var(--bg)" stroke="currentColor" stroke-width="1"/>
+      <line x1="0" y1="5" x2="14" y2="5" stroke="currentColor" stroke-width="1"/>
+      <circle cx="4" cy="5" r="1.8" fill="var(--bg)" stroke="currentColor" stroke-width="1"/>
+      <line x1="0" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1"/>
+      <circle cx="8" cy="9" r="1.8" fill="var(--bg)" stroke="currentColor" stroke-width="1"/>
+    </svg>
+    Iluminación
+  </button>
+
+  <div class="ctrl-body">
 
   <!-- Presets -->
   <div class="presets">
@@ -714,6 +766,8 @@ footer{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:40px 72px;disp
     </div>
 
   </div><!-- /sliders-wrap -->
+
+  </div><!-- /ctrl-body -->
 </div><!-- /ctrl-panel -->
 
 <a href="/familias" class="back-link">Ver todos los productos →</a>
