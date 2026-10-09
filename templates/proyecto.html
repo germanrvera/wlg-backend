@@ -26,10 +26,20 @@ html[data-theme="light"]{
   --rgb-text:28,25,22;
   --panel:rgba(244,241,236,.96);
 }
-html[data-theme="light"] nav{background:rgba(244,241,236,.94)!important;border-bottom-color:rgba(28,25,22,.12)!important;}
+html[data-theme="light"] nav,
+html[data-theme="light"] .mega-inner,
+html[data-theme="light"] .mobile-menu,
+html[data-theme="light"] footer,
+html[data-theme="light"] #loader{
+  --bg:#080808;--bg2:#0e0e0e;--bg3:#141414;
+  --white:#ede9e2;--white2:rgba(237,233,226,.6);
+  --gray:#948f86;--gray2:#b3aea5;
+  --gold:#c9a96e;
+  --rgb-text:237,233,226;
+  --panel:rgba(10,9,7,.9);
+}
+html[data-theme="light"] footer{background:#080808;}
 html[data-theme="light"] .search-overlay{background:rgba(244,241,236,.98)!important;}
-html[data-theme="light"] .mobile-menu{background:rgba(244,241,236,.98)!important;}
-html[data-theme="light"] .mega-inner{background:rgba(244,241,236,.97)!important;}
 html[data-theme="light"] .buy-modal{background:#f0ece5!important;border-color:rgba(28,25,22,.15)!important;}
 html[data-theme="light"] body::before{opacity:.15;}
 html{scroll-behavior:smooth;}
