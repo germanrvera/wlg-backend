@@ -114,7 +114,7 @@ nav.scrolled{padding:12px 72px;}
 .sidebar::-webkit-scrollbar-thumb{background:rgba(237,233,226,.08);}
 .side-section{padding:32px 28px 20px;}
 .side-label{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gray);margin-bottom:16px;}
-.side-opt{display:block;font-size:14px;color:var(--gray2);padding:7px 0;cursor:pointer;background:none;border:none;font-family:var(--sans);text-align:left;width:100%;transition:color .2s;letter-spacing:.04em;}
+.side-opt{display:block;font-size:14px;color:var(--gray2);padding:12px 0;cursor:pointer;background:none;border:none;font-family:var(--sans);text-align:left;width:100%;transition:color .2s;letter-spacing:.04em;min-height:44px;}
 .side-opt:hover{color:var(--white);}
 .side-opt.active{color:var(--white);}
 .side-opt.active::before{content:'';display:inline-block;width:12px;height:.5px;background:var(--gold);margin-right:10px;vertical-align:middle;}
@@ -173,7 +173,7 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
 .logo-img{height:48px;width:auto;display:block;mix-blend-mode:screen;opacity:.95;}
 .nav-right{display:flex;align-items:center;gap:4px;}
 .nav-icons{display:flex;align-items:center;margin-right:16px;}
-.nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .3s;}
+.nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .3s;min-width:44px;min-height:44px;justify-content:center;}
 .nav-icon:hover{color:var(--white);}
 .nav-links a.active{color:var(--white);}
 .nav-links a.active::after{width:100%;}
@@ -257,7 +257,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 }
 
 /* MOBILE NAV */
-.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:4px;}
 .nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white2);transition:transform .35s,opacity .35s;}
 .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-hamburger.open span:nth-child(2){opacity:0;}
