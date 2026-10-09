@@ -793,8 +793,9 @@ function nextSlide(){if(TOTAL)goSlide((cur+1)%TOTAL);}
 (function loadHeroSlides(){
   fetch('https://wlg-backend.onrender.com/api/hero-slides/')
     .then(function(r){return r.json();})
-    .then(function(slides){
-      if(!slides||!slides.length)return;
+    .then(function(data){
+      var slides=Array.isArray(data)?data:(data.results||[]);
+      if(!slides.length)return;
       var sl=document.getElementById('heroSlides');
       var dt=document.getElementById('heroDots');
       sl.innerHTML=slides.map(function(s,i){
