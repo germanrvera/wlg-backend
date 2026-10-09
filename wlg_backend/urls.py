@@ -9,6 +9,10 @@ urlpatterns = [
     path('health/', health_check, name='health'),
     path('admin/', admin.site.urls),
     path('api/', include('catalogo.urls')),
+    # Crawlers
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('sitemap.xml', TemplateView.as_view(template_name='sitemap.xml', content_type='application/xml')),
+    path('llms.txt', TemplateView.as_view(template_name='llms.txt', content_type='text/plain')),
     # Site pages
     path('', TemplateView.as_view(template_name='wlg_v8.html'), name='home'),
     path('familias/<slug:slug>', TemplateView.as_view(template_name='familia.html'), name='familia-detail'),

@@ -1,0 +1,42 @@
+# World Leds Go
+
+> Marca argentina de iluminación LED arquitectónica profesional. Sistemas de riel, iluminación lineal y artefactos para proyectos de arquitectura y diseño de interiores. Slogan: "Detalles vanguardistas en tus interiores".
+
+World Leds Go diseña y comercializa luminarias LED de alta prestación para arquitectos, diseñadores de interiores y proyectistas de iluminación en Argentina. Sus productos se especifican en proyectos residenciales, comerciales y de espacio público de primer nivel.
+
+## Páginas principales
+
+- [Inicio](https://wlgled.com.ar/): Presentación de la marca, hero slider con proyectos destacados y acceso al catálogo.
+- [Catálogo de productos](https://wlgled.com.ar/familias): Familias de luminarias LED con fichas técnicas, filtros por categoría y variantes por SKU.
+- [Proyectos](https://wlgled.com.ar/proyectos): Portfolio de proyectos arquitectónicos iluminados con productos WLG en Argentina.
+- [Novedades](https://wlgled.com.ar/novedades): Lanzamientos, anuncios y noticias de la marca.
+- [Laboratorio de Iluminación](https://wlgled.com.ar/experiencia): Visualizador interactivo 3D para explorar efectos lumínicos en tiempo real (Three.js).
+- [Recursos](https://wlgled.com.ar/recursos): Fichas técnicas, archivos IES y planos CAD descargables para proyectistas.
+- [Historia](https://wlgled.com.ar/historia): Historia, filosofía y valores de la empresa.
+- [Contacto](https://wlgled.com.ar/contacto): Formulario de contacto, localizador de distribuidores autorizados y portal de distribuidores.
+
+## API pública
+
+- [Familias de productos](https://wlg-backend.onrender.com/api/familias/): Catálogo completo en JSON con filtros técnicos por familia.
+- [Proyectos](https://wlg-backend.onrender.com/api/proyectos/): Portfolio de proyectos en JSON con imágenes y ficha técnica.
+- [Distribuidores](https://wlg-backend.onrender.com/api/distribuidores/): Red de distribuidores autorizados en Argentina.
+
+## Familias de productos
+
+**Sistemas de riel:** Galuy, Cetus, Lira, Orion
+**Iluminación lineal:** Petra, Sirio, Vega
+**Sistemas especiales:** Nova, Altair
+**Artefactos y apliques:** Lyra, Deneb, Castor
+**Exterior:** Rigel, Mira
+**Módulos:** Canopus, Pollux
+
+## Proyectos destacados
+
+La Rural (Buenos Aires, 2024), Movistar Arena VIP (Buenos Aires, 2024), Torre Bella (Palermo CABA, 2023), Parfumerie Recoleta (2023), La Rando (San Telmo, 2022).
+
+## Contacto
+
+- Sitio web: https://wlgled.com.ar
+- Instagram: https://www.instagram.com/worldledsgo
+- LinkedIn: https://www.linkedin.com/company/worldledsgo
+- DIALux Silver Member: https://www.dialux.com/en-GB/dialux-members/world-leds-go
