@@ -343,7 +343,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
 </div>
 <section class="nv-hero">
   
-  <h1 class="reveal reveal-delay-1">Noticias, <em>anuncios</em><br>y lanzamientos.</h1>
+  <h1 class="reveal reveal-delay-1" data-cfg="novedades_page_titulo">Noticias, <em>anuncios</em><br>y lanzamientos.</h1>
   <p class="reveal reveal-delay-2">Lo último de World Leds Go: nuevos productos, presencia en ferias y certificaciones, y novedades de la red de distribuidores.</p>
 </section>
 
@@ -615,6 +615,19 @@ function keepMega(){clearTimeout(_megaTimer);}
 (function(){
   var nav = document.getElementById('mainNav');
   if(nav) nav.addEventListener('mouseleave', closeMega);
+})();
+</script>
+<script>
+(function applyConfig(){
+  fetch('https://wlg-backend.onrender.com/api/config/')
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      document.querySelectorAll('[data-cfg]').forEach(function(el){
+        var k=el.getAttribute('data-cfg');
+        if(cfg[k]!==undefined)el.innerHTML=cfg[k];
+      });
+    })
+    .catch(function(){});
 })();
 </script>
 </body>

@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion
 
 
 class ProductoResource(resources.ModelResource):
@@ -80,6 +80,20 @@ class HeroSlideAdmin(admin.ModelAdmin):
             'fields': ('orden', 'activo')
         }),
     )
+
+
+@admin.register(Configuracion)
+class ConfiguracionAdmin(admin.ModelAdmin):
+    list_display = ['pagina', 'clave', 'valor_preview', 'descripcion']
+    list_filter = ['pagina']
+    search_fields = ['clave', 'valor', 'descripcion']
+    ordering = ['pagina', 'clave']
+    readonly_fields = ['clave']
+    fields = ['pagina', 'clave', 'descripcion', 'valor']
+
+    def valor_preview(self, obj):
+        return obj.valor[:60] + '...' if len(obj.valor) > 60 else obj.valor
+    valor_preview.short_description = 'Valor'
 
 
 @admin.register(Proyecto)

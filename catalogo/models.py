@@ -85,6 +85,31 @@ class HeroSlide(models.Model):
         return self.titulo
 
 
+class Configuracion(models.Model):
+    PAGINAS = [
+        ('home', 'Home'),
+        ('familias', 'Familias'),
+        ('proyectos', 'Proyectos'),
+        ('contacto', 'Contacto'),
+        ('recursos', 'Recursos'),
+        ('novedades', 'Novedades'),
+        ('global', 'Global'),
+    ]
+
+    clave = models.SlugField(max_length=80, unique=True, help_text='Identificador interno. No cambiar.')
+    valor = models.TextField(help_text='Texto visible. Podés usar <em>, <br> y <strong>.')
+    descripcion = models.CharField(max_length=200, blank=True, help_text='Dónde aparece este texto en el sitio.')
+    pagina = models.CharField(max_length=20, choices=PAGINAS, default='home')
+
+    class Meta:
+        verbose_name = 'Configuración de texto'
+        verbose_name_plural = 'Configuración de textos'
+        ordering = ['pagina', 'clave']
+
+    def __str__(self):
+        return f'{self.pagina} / {self.clave}'
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)

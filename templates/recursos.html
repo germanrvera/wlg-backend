@@ -402,7 +402,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 <div class="page-hero">
   <div class="page-breadcrumb"><a href="/">Inicio</a><span>·</span>Recursos</div>
   <div class="hero-inner">
-    <div class="page-title">Herramientas para<br>el <em>proyectista</em>.</div>
+    <div class="page-title" data-cfg="recursos_page_titulo">Herramientas para<br>el <em>proyectista</em>.</div>
     <div class="hero-desc">
       <p>Archivos fotometricos, planos CAD, fichas tecnicas y plugins de simulacion. Todo lo que necesitas para especificar con precision.</p>
     </div>
@@ -808,11 +808,24 @@ function keepMega(){clearTimeout(_megaTimer);}
   <a href="/novedades" onclick="closeMobileMenu()" onmouseenter="closeMega()">Novedades</a>
   <a href="/recursos" onclick="closeMobileMenu()" style="color:var(--gold)" onmouseenter="closeMega()">Recursos</a>
   <a href="/experiencia" onclick="closeMobileMenu()" onmouseenter="closeMega()">Laboratorio</a>
-  <a href="powergear.html" onclick="closeMobileMenu()">Powergear</a>
+  <a href="https://cpq-sigma.vercel.app" target="_blank" rel="noopener" onclick="closeMobileMenu()">Powergear</a>
   <button type="button" class="m-cta" onclick="closeMobileMenu();openBuyModal()">Comprar</button>
   <a href="/contacto" class="m-cta" onclick="closeMobileMenu()">Contactar</a>
 </nav>
 
 <div class="page-transition" id="pageTransition"></div>
+<script>
+(function applyConfig(){
+  fetch('https://wlg-backend.onrender.com/api/config/')
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      document.querySelectorAll('[data-cfg]').forEach(function(el){
+        var k=el.getAttribute('data-cfg');
+        if(cfg[k]!==undefined)el.innerHTML=cfg[k];
+      });
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
 </html>

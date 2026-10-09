@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion
 
 
 class ProductoSerializer(serializers.ModelSerializer):
@@ -38,6 +38,12 @@ class HeroSlideSerializer(serializers.ModelSerializer):
         model = HeroSlide
         fields = ['id', 'categoria', 'titulo', 'descripcion', 'cta_texto', 'cta_url',
                   'imagen', 'photo', 'alt', 'orden']
+
+
+class ConfiguracionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Configuracion
+        fields = ['clave', 'valor']
 
 
 class ProyectoSerializer(serializers.ModelSerializer):

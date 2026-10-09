@@ -1,6 +1,7 @@
 from rest_framework import viewsets, filters
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import FamiliaProducto, Proyecto, HeroSlide
+from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion
 from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer
 
 
@@ -16,6 +17,12 @@ class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
 class HeroSlideViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = HeroSlide.objects.filter(activo=True).order_by('orden')
     serializer_class = HeroSlideSerializer
+
+
+@api_view(['GET'])
+def config_view(request):
+    qs = Configuracion.objects.all()
+    return Response({item.clave: item.valor for item in qs})
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):

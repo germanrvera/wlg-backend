@@ -601,7 +601,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 <div class="section-divider reveal"><div class="divider-line"></div><div class="divider-mark">Buenos Aires · Argentina</div><div class="divider-line"></div></div>
 
 <div class="manifesto">
-  <div class="manifesto-q" id="manifestoQ"><span class="mw" style="transition-delay:0s">Cada</span> <span class="mw" style="transition-delay:0.07s">lumen</span> <span class="mw" style="transition-delay:0.14s">tiene</span> <span class="mw" style="transition-delay:0.21s">un</span> <span class="mw" style="transition-delay:0.29s">lugar.</span><br><span class="mw" style="transition-delay:0.37s">Nosotros</span> <span class="mw" style="transition-delay:0.45s">lo</span> <span class="mw" style="transition-delay:0.54s">encontramos.</span></div>
+  <div class="manifesto-q" id="manifestoQ" data-cfg="home_manifesto"><span class="mw" style="transition-delay:0s">Cada</span> <span class="mw" style="transition-delay:0.07s">lumen</span> <span class="mw" style="transition-delay:0.14s">tiene</span> <span class="mw" style="transition-delay:0.21s">un</span> <span class="mw" style="transition-delay:0.29s">lugar.</span><br><span class="mw" style="transition-delay:0.37s">Nosotros</span> <span class="mw" style="transition-delay:0.45s">lo</span> <span class="mw" style="transition-delay:0.54s">encontramos.</span></div>
   <div class="manifesto-sub reveal reveal-delay-2">World Leds Go</div>
 </div>
 
@@ -609,14 +609,14 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 <section class="stats-section reveal">
   <div class="stats-inner">
     <div class="stat-rule"></div>
-    <div class="stat-big">200<sup>+</sup></div>
-    <div class="stat-sub">Productos de iluminación LED profesional</div>
+    <div class="stat-big" data-cfg="home_stat_num">200<sup>+</sup></div>
+    <div class="stat-sub" data-cfg="home_stat_label">Productos de iluminación LED profesional</div>
   </div>
 </section>
 
 <section class="projects">
   <div class="proj-header reveal">
-    <div><div class="proj-title">Proyectos destacados</div></div>
+    <div><div class="proj-title" data-cfg="home_proyectos_titulo">Proyectos destacados</div></div>
     <a class="proj-viewall" href="/proyectos">Ver todos</a>
   </div>
   <div class="proj-grid">
@@ -635,7 +635,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 </div>
 
 <div class="newsletter reveal">
-  <div><div class="nl-title">Novedades para profesionales</div></div>
+  <div><div class="nl-title" data-cfg="home_nl_titulo">Novedades para profesionales</div></div>
   <div class="nl-form">
     <input class="nl-input" type="email" placeholder="Tu correo electrónico">
     <button class="nl-btn">Suscribirse</button>
@@ -985,7 +985,7 @@ function keepMega(){clearTimeout(_megaTimer);}
   <a href="/novedades" onclick="closeMobileMenu()">Novedades</a>
   <a href="/experiencia" onclick="closeMobileMenu()">Laboratorio</a>
   <a href="/recursos" onclick="closeMobileMenu()">Recursos</a>
-  <a href="powergear.html" onclick="closeMobileMenu()">Powergear</a>
+  <a href="https://cpq-sigma.vercel.app" target="_blank" rel="noopener" onclick="closeMobileMenu()">Powergear</a>
   <button type="button" class="m-cta" onclick="closeMobileMenu();openBuyModal()">Comprar</button>
   <a href="/contacto" class="m-cta" onclick="closeMobileMenu()">Contactar</a>
 </nav>
@@ -1016,5 +1016,18 @@ function keepMega(){clearTimeout(_megaTimer);}
   </div>
 </div>
 <div class="page-transition" id="pageTransition"></div>
+<script>
+(function applyConfig(){
+  fetch('https://wlg-backend.onrender.com/api/config/')
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      document.querySelectorAll('[data-cfg]').forEach(function(el){
+        var k=el.getAttribute('data-cfg');
+        if(cfg[k]!==undefined)el.innerHTML=cfg[k];
+      });
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
 </html>

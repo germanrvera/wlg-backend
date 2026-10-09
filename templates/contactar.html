@@ -427,7 +427,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 
 <div class="page-hero">
   <div class="page-breadcrumb"><a href="/">Inicio</a><span>·</span>Contactar</div>
-  <div class="page-title">Hablemos de<br>tu <em>proyecto</em>.</div>
+  <div class="page-title" data-cfg="contacto_page_titulo">Hablemos de<br>tu <em>proyecto</em>.</div>
 </div>
 
 <div class="contact-grid">
@@ -447,11 +447,11 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
           <div class="c-info-grid">
             <div>
               <div class="c-label">Dirección</div>
-              <div class="c-value">Av. Corrientes 1234, Piso 8<br>CABA, Buenos Aires</div>
+              <div class="c-value"><span data-cfg="contacto_direccion">Av. Corrientes 1234, Piso 8<br>CABA, Buenos Aires</span></div>
             </div>
             <div>
               <div class="c-label">Horario</div>
-              <div class="c-value">Lunes a Viernes<br>9:00 — 18:00 hs</div>
+              <div class="c-value"><span data-cfg="contacto_horario">Lunes a Viernes<br>9:00 – 18:00 hs</span></div>
             </div>
             <div>
               <div class="c-label">Teléfono</div>
@@ -940,11 +940,24 @@ function keepMega(){clearTimeout(_megaTimer);}
   <a href="/novedades" onclick="closeMobileMenu()" onmouseenter="closeMega()">Novedades</a>
   <a href="/recursos" onclick="closeMobileMenu()" onmouseenter="closeMega()">Recursos</a>
   <a href="/experiencia" onclick="closeMobileMenu()" onmouseenter="closeMega()">Laboratorio</a>
-  <a href="powergear.html" onclick="closeMobileMenu()">Powergear</a>
+  <a href="https://cpq-sigma.vercel.app" target="_blank" rel="noopener" onclick="closeMobileMenu()">Powergear</a>
   <button type="button" class="m-cta" onclick="closeMobileMenu();openBuyModal()">Comprar</button>
   <a href="/contacto" class="m-cta" onclick="closeMobileMenu()" style="color:var(--gold)">Contactar</a>
 </nav>
 
 <div class="page-transition" id="pageTransition"></div>
+<script>
+(function applyConfig(){
+  fetch('https://wlg-backend.onrender.com/api/config/')
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      document.querySelectorAll('[data-cfg]').forEach(function(el){
+        var k=el.getAttribute('data-cfg');
+        if(cfg[k]!==undefined)el.innerHTML=cfg[k];
+      });
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
 </html>

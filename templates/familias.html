@@ -683,7 +683,8 @@ function removeChip(key,val,btn){
     <a href="/proyectos" onmouseenter="closeMega()">Proyectos</a>
     <a href="/novedades" onmouseenter="closeMega()">Novedades</a>
     <a href="/experiencia" onmouseenter="closeMega()">Laboratorio</a>
-    <a href="/recursos" onmouseenter="closeMega()">Recursos</a>
+    <a href="/recursos" onmouseenter="closeMega()">Recursos</a>
+
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú" aria-expanded="false" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
   <div class="nav-right">
@@ -697,7 +698,7 @@ function removeChip(key,val,btn){
 <div class="page-hero">
   <div class="hero-left">
     <div class="page-breadcrumb"><a href="/">Inicio</a><span>·</span>Catálogo</div>
-    <div class="page-title">Catálogo de <em>productos</em></div>
+    <div class="page-title" data-cfg="familias_page_titulo">Catálogo de <em>productos</em></div>
   </div>
   <div class="hero-meta">
     <div class="hero-stat">
@@ -2145,11 +2146,24 @@ function keepMega(){clearTimeout(_megaTimer);}
   <a href="/novedades" onclick="closeMobileMenu()" onmouseenter="closeMega()">Novedades</a>
   <a href="/recursos" onclick="closeMobileMenu()" onmouseenter="closeMega()">Recursos</a>
   <a href="/experiencia" onclick="closeMobileMenu()" onmouseenter="closeMega()">Laboratorio</a>
-  <a href="powergear.html" onclick="closeMobileMenu()">Powergear</a>
+  <a href="https://cpq-sigma.vercel.app" target="_blank" rel="noopener" onclick="closeMobileMenu()">Powergear</a>
   <button type="button" class="m-cta" onclick="closeMobileMenu();openBuyModal()">Comprar</button>
   <a href="/contacto" class="m-cta" onclick="closeMobileMenu()">Contactar</a>
 </nav>
 
 <div class="page-transition" id="pageTransition"></div>
+<script>
+(function applyConfig(){
+  fetch('https://wlg-backend.onrender.com/api/config/')
+    .then(function(r){return r.json();})
+    .then(function(cfg){
+      document.querySelectorAll('[data-cfg]').forEach(function(el){
+        var k=el.getAttribute('data-cfg');
+        if(cfg[k]!==undefined)el.innerHTML=cfg[k];
+      });
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
 </html>
