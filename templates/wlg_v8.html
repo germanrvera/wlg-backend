@@ -490,6 +490,15 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 .nav-links a.mega-active{color:var(--white);}
 .nav-links a.mega-active::after{width:100%;}a.skip-link{position:absolute;top:-40px;left:16px;background:var(--gold);color:var(--bg);padding:8px 16px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;z-index:9999;transition:top .2s;}
 a.skip-link:focus{top:8px;}
+/* ─── LED LINE ─── */
+.led-line{display:block;height:1px;width:0;background:var(--gold);box-shadow:0 0 6px 1px var(--gold),0 0 18px 2px rgba(201,169,110,.35);transition:width 1.4s cubic-bezier(.4,0,.2,1),opacity .3s;}
+.led-line.lit{width:100%;}
+/* cat-card glow on hover */
+.cat-card{transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;}
+.cat-card:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(201,169,110,.25),0 8px 32px rgba(201,169,110,.12),0 0 60px rgba(201,169,110,.06);}
+/* proj-card glow */
+.proj-card{transition:box-shadow .4s;}
+.proj-card:hover{box-shadow:0 0 0 1px rgba(201,169,110,.2),0 0 40px rgba(201,169,110,.08);}
 /* WLG_RESPONSIVE_v1 */
 @media(max-width:760px){
   /* Nav */
@@ -638,6 +647,8 @@ a.skip-link:focus{top:8px;}
   </div>
 </div>
 
+<span class="led-line" id="ledLine1"></span>
+
 <section class="catalogue" id="main-content">
   <div class="cat-header reveal">
     <div>
@@ -665,6 +676,7 @@ a.skip-link:focus{top:8px;}
   </div>
 </section>
 
+<span class="led-line" id="ledLine2"></span>
 <div class="section-divider reveal"><div class="divider-line"></div><div class="divider-mark">Buenos Aires · Argentina</div><div class="divider-line"></div></div>
 
 <div class="manifesto">
@@ -681,6 +693,7 @@ a.skip-link:focus{top:8px;}
   </div>
 </section>
 
+<span class="led-line" id="ledLine3"></span>
 <section class="projects">
   <div class="proj-header reveal">
     <div><div class="proj-title" data-cfg="home_proyectos_titulo">Proyectos destacados</div></div>
@@ -770,6 +783,20 @@ a.skip-link:focus{top:8px;}
 
 
 window.addEventListener('scroll',function(){document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>80);});
+
+// ─── LED LINES ───────────────────────────────────────────
+(function(){
+  var lines=['ledLine1','ledLine2','ledLine3'];
+  var lio=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('lit');lio.unobserve(e.target);}
+    });
+  },{threshold:0.5});
+  lines.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)lio.observe(el);
+  });
+})();
 var revealEls=document.querySelectorAll('.reveal');
 var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.12});
 revealEls.forEach(function(el){io.observe(el);});
