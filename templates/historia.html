@@ -193,7 +193,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
 .search-result-info{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;background:linear-gradient(transparent,rgba(8,8,8,.92));}
 .search-result-type{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:5px;}
 .search-result-name{font-family:var(--serif);font-size:19px;font-weight:300;color:var(--white);}
-.search-result-meta{font-size:11px;letter-spacing:.05em;color:rgba(237,233,226,.45);margin-top:3px;}
+.search-result-meta{font-size:11px;letter-spacing:.05em;color:rgba(237,233,226,.55);margin-top:3px;}
 @media (max-width:760px){.search-results-grid{grid-template-columns:repeat(2,1fr);}}
 .search-no-results{font-family:var(--serif);font-size:32px;color:rgba(237,233,226,.15);padding:48px 0;}
 .mega-wrap{position:fixed;left:0;right:0;z-index:498;opacity:0;pointer-events:none;transition:opacity .22s ease;border-top:.5px solid rgba(237,233,226,.08);}
@@ -213,9 +213,12 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
 .mega-feat-title{font-size:14px;color:var(--white);margin-top:6px;font-weight:300;line-height:1.5;}
 .nav-links a.mega-active{color:var(--white);}
 .nav-links a.mega-active::after{width:100%;}
+a.skip-link{position:absolute;top:-40px;left:16px;background:var(--gold);color:var(--bg);padding:8px 16px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;z-index:9999;transition:top .2s;}
+a.skip-link:focus{top:8px;}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Saltar al contenido</a>
 
 <nav id="mainNav" onmouseenter="keepMega()">
   <a href="/" class="logo-wrap" style="text-decoration:none;">
@@ -231,7 +234,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
   </div>
   <div class="nav-right">
     <div class="nav-icons">
-      <button class="nav-icon" onclick="openSearch()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="nav-icon" onclick="openSearch()" aria-label="Buscar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
     </div>
     <button type="button" class="nav-cta-outline" onclick="openBuyModal()">Comprar</button>
     <a class="nav-cta" href="/contacto">Contactar</a>
@@ -337,7 +340,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
   </div>
 </div>
 
-<section class="story-hero">
+<section class="story-hero" id="main-content">
   <img id="heroImg" src="" alt="">
   <div class="story-hero-content">
     
