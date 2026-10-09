@@ -409,7 +409,7 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
 
 /* MOBILE NAV */
 .nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:4px;}
-.nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white2);transition:transform .35s,opacity .35s;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--white);transition:transform .35s,opacity .35s;}
 .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
 .nav-hamburger.open span:nth-child(2){opacity:0;}
 .nav-hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
@@ -428,6 +428,9 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
   .nav-cta{display:none;}
   .nav-cta-outline{display:none;}
   .nav-hamburger{display:flex;}
+  nav{padding:14px 20px;}
+  nav.scrolled{padding:10px 20px;}
+  .logo-sub{font-size:10px;letter-spacing:.12em;}
 }
 @media(min-width:901px){.mobile-menu{display:none !important;}.nav-hamburger{display:none !important;}}
 @media(max-width:760px){
