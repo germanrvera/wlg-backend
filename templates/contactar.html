@@ -318,7 +318,7 @@ button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-off
 .mobile-menu .m-cta{font-family:var(--sans);font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:40px;padding:14px 36px;border:.5px solid var(--gold);text-decoration:none;transform:translateY(20px);opacity:0;transition:color .25s,background .25s,transform .4s,opacity .4s;}
 .mobile-menu.open .m-cta{transform:translateY(0);opacity:1;transition-delay:.3s;}
 .mobile-menu .m-cta:hover{background:var(--gold);color:var(--white);}
-@media(max-width:900px){.nav-links{display:none;}.nav-cta{display:none;}.nav-cta-outline{display:none;}.nav-hamburger{display:flex;}}
+@media(max-width:900px){.nav-links{display:none;}.nav-cta{display:none;}.nav-cta-outline{display:none;}.nav-hamburger{display:flex;}.nav-hamburger{display:flex;}nav{padding:14px 20px;}}
 @media(min-width:901px){.mobile-menu{display:none !important;}.nav-hamburger{display:none !important;}}
 @media(max-width:760px){
   footer{flex-direction:column;align-items:flex-start;padding:40px 24px 36px;gap:28px;}
@@ -352,6 +352,9 @@ a.skip-link:focus{top:8px;}
 /* WLG_RESPONSIVE_v1 */
 @media(max-width:760px){
   nav{padding:14px 20px;}
+  .c-dist-item{grid-template-columns:1fr;gap:6px 0;padding:16px 0;}
+  .c-dist-city{margin-bottom:4px;}
+  .c-dist-addr[style*="text-align:right"]{text-align:left !important;margin-top:8px;}
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
