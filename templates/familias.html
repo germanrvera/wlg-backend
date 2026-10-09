@@ -599,8 +599,7 @@ footer{padding:40px 72px;display:flex;align-items:center;justify-content:space-b
 button:focus-visible,a:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px;border-radius:2px;}
 
 
-  .cursor{display:none;}
-}
+  }
 
 /* MOBILE NAV */
 .nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:4px;}
@@ -1184,37 +1183,7 @@ const PROJECTS_REF = [
   {name:'La Rando', location:'San Telmo, CABA', type:'Hospitality', products:'Gilam - Micro Cinor', img:''}
 ];
 
-// ─── CUSTOM CURSOR ───────────────────────────────────
-(function initCursor() {
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  const ringInner = ring.querySelector('.cursor-ring');
-  if (!dot || !ring) return;
-  window.addEventListener('mousemove', e => {
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest('button, a, input, textarea, [onclick], .fam-card, .filter-opt')) {
-      ringInner.classList.add('hover');
-    }
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest('button, a, input, textarea, [onclick], .fam-card, .filter-opt')) {
-      ringInner.classList.remove('hover');
-    }
-  });
-  document.addEventListener('mouseleave', () => {
-    dot.classList.add('hidden');
-    ring.classList.add('hidden');
-  });
-  document.addEventListener('mouseenter', () => {
-    dot.classList.remove('hidden');
-    ring.classList.remove('hidden');
-  });
-})();
+
 
 // ─── DEFENSIVE CLICK DELEGATION ───────────────────────
 // Some browsers/setups have been seen to drop inline onclick handlers on

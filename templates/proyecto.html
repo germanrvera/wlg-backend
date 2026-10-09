@@ -560,23 +560,6 @@ function buildGalleryHTML(images){
   });
 })();
 
-// ─── CURSOR ─────────────────────────────────────────
-(function initCursor(){
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  const ringInner = ring.querySelector('.cursor-ring');
-  if(!dot || !ring) return;
-  window.addEventListener('mousemove', function(e){
-    dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
-    ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-  });
-  document.addEventListener('mouseover', function(e){
-    if(e.target.closest('button, a, input, textarea, [onclick]')) ringInner.classList.add('hover');
-  });
-  document.addEventListener('mouseout', function(e){
-    if(e.target.closest('button, a, input, textarea, [onclick]')) ringInner.classList.remove('hover');
-  });
-})();
 
 window.addEventListener('scroll', function(){
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
