@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor
 
 
 class ProductoResource(resources.ModelResource):
@@ -94,6 +94,26 @@ class ConfiguracionAdmin(admin.ModelAdmin):
     def valor_preview(self, obj):
         return obj.valor[:60] + '...' if len(obj.valor) > 60 else obj.valor
     valor_preview.short_description = 'Valor'
+
+
+@admin.register(Distribuidor)
+class DistribuidorAdmin(admin.ModelAdmin):
+    list_display = ['ciudad', 'nombre', 'zona', 'tipo', 'telefono', 'activo', 'orden']
+    list_filter = ['activo', 'tipo', 'zona']
+    list_editable = ['activo', 'orden']
+    search_fields = ['nombre', 'ciudad', 'zona', 'direccion']
+    ordering = ['zona', 'ciudad', 'orden']
+    fieldsets = (
+        ('Identificación', {
+            'fields': ('nombre', 'tipo', 'activo', 'orden')
+        }),
+        ('Ubicación', {
+            'fields': ('ciudad', 'zona', 'direccion', 'url_mapa')
+        }),
+        ('Contacto', {
+            'fields': ('telefono',)
+        }),
+    )
 
 
 @admin.register(Proyecto)

@@ -1,8 +1,8 @@
 from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion
-from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer
+from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion, Distribuidor
+from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer, DistribuidorSerializer
 
 
 class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -23,6 +23,12 @@ class HeroSlideViewSet(viewsets.ReadOnlyModelViewSet):
 def config_view(request):
     qs = Configuracion.objects.all()
     return Response({item.clave: item.valor for item in qs})
+
+
+class DistribuidorViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Distribuidor.objects.filter(activo=True)
+    serializer_class = DistribuidorSerializer
+    pagination_class = None
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):

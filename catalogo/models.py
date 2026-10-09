@@ -110,6 +110,28 @@ class Configuracion(models.Model):
         return f'{self.pagina} / {self.clave}'
 
 
+class Distribuidor(models.Model):
+    TIPOS = [('Oficial', 'Oficial'), ('Autorizado', 'Autorizado')]
+
+    nombre = models.CharField(max_length=120)
+    ciudad = models.CharField(max_length=80)
+    zona = models.CharField(max_length=80, help_text='Provincia o región (para búsqueda)')
+    direccion = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=40, blank=True)
+    url_mapa = models.URLField(blank=True, help_text='URL de Google Maps')
+    tipo = models.CharField(max_length=20, choices=TIPOS, default='Autorizado')
+    activo = models.BooleanField(default=True)
+    orden = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Distribuidor'
+        verbose_name_plural = 'Distribuidores'
+        ordering = ['zona', 'ciudad', 'orden', 'nombre']
+
+    def __str__(self):
+        return f'{self.ciudad} — {self.nombre}'
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)

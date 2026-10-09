@@ -687,20 +687,17 @@ function selectType(btn, type){
   btn.classList.add('active');
 }
 
-var DISTRIBUIDORES = [
-  {ciudad:"Buenos Aires", zona:"CABA", nombre:"WLG Store Palermo", dir:"Thames 1830, Palermo", tel:"+54 11 4833-2200", mapa:"https://maps.google.com/?q=Thames+1830+Palermo+Buenos+Aires", tipo:"Oficial"},
-  {ciudad:"Buenos Aires", zona:"CABA", nombre:"Luminotecnia Belgrano", dir:"Av. Cabildo 2150, Belgrano", tel:"+54 11 4786-1100", mapa:"https://maps.google.com/?q=Av+Cabildo+2150+Belgrano+Buenos+Aires", tipo:"Autorizado"},
-  {ciudad:"Buenos Aires", zona:"GBA Norte", nombre:"WLG San Isidro", dir:"Av. Centenario 450, San Isidro", tel:"+54 11 4732-5500", mapa:"https://maps.google.com/?q=Av+Centenario+450+San+Isidro", tipo:"Autorizado"},
-  {ciudad:"Córdoba", zona:"Córdoba", nombre:"Luz Arquitectónica Cba", dir:"Av. Colón 450, Nueva Córdoba", tel:"+54 351 422-1800", mapa:"https://maps.google.com/?q=Av+Colon+450+Cordoba", tipo:"Oficial"},
-  {ciudad:"Córdoba", zona:"Córdoba", nombre:"Iluminar Cba", dir:"Av. Hipólito Yrigoyen 312", tel:"+54 351 469-3300", mapa:"https://maps.google.com/?q=Av+Hipolito+Yrigoyen+312+Cordoba", tipo:"Autorizado"},
-  {ciudad:"Rosario", zona:"Santa Fe", nombre:"Iluminación Profesional Sur", dir:"Av. Pellegrini 1200, Rosario", tel:"+54 341 449-7700", mapa:"https://maps.google.com/?q=Av+Pellegrini+1200+Rosario", tipo:"Oficial"},
-  {ciudad:"Mendoza", zona:"Mendoza", nombre:"WLG Cuyo", dir:"Av. San Martín 890, Ciudad", tel:"+54 261 420-6600", mapa:"https://maps.google.com/?q=Av+San+Martin+890+Mendoza", tipo:"Oficial"},
-  {ciudad:"Tucumán", zona:"Tucumán", nombre:"Lux Arquitectura NOA", dir:"Maipú 760, San Miguel de Tucumán", tel:"+54 381 430-1200", mapa:"https://maps.google.com/?q=Maipu+760+Tucuman", tipo:"Autorizado"},
-  {ciudad:"Salta", zona:"Salta", nombre:"Distribuidora Norte LED", dir:"Balcarce 550, Salta Capital", tel:"+54 387 422-4400", mapa:"https://maps.google.com/?q=Balcarce+550+Salta", tipo:"Autorizado"},
-  {ciudad:"Santa Fe", zona:"Santa Fe", nombre:"Ílux Santa Fe", dir:"Bv. Gálvez 1100, Santa Fe", tel:"+54 342 460-8800", mapa:"https://maps.google.com/?q=Bv+Galvez+1100+Santa+Fe", tipo:"Autorizado"},
-  {ciudad:"Mar del Plata", zona:"Buenos Aires", nombre:"Costa Luz LED", dir:"Av. Colón 3500, Mar del Plata", tel:"+54 223 495-2200", mapa:"https://maps.google.com/?q=Av+Colon+3500+Mar+del+Plata", tipo:"Autorizado"},
-  {ciudad:"Neuquén", zona:"Patagonia", nombre:"Patagonia Ilumina", dir:"Av. Argentina 560, Neuquén", tel:"+54 299 447-3300", mapa:"https://maps.google.com/?q=Av+Argentina+560+Neuquen", tipo:"Autorizado"}
-];
+var DISTRIBUIDORES = [];
+
+fetch('https://wlg-backend.onrender.com/api/distribuidores/')
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var items = Array.isArray(data) ? data : (data.results || []);
+    DISTRIBUIDORES = items.map(function(d){
+      return {ciudad:d.ciudad, zona:d.zona, nombre:d.nombre, dir:d.direccion, tel:d.telefono, mapa:d.url_mapa, tipo:d.tipo};
+    });
+  })
+  .catch(function(){});
 
 function renderDists(list){
   var container = document.getElementById("distResults");
@@ -715,7 +712,7 @@ function renderDists(list){
     html+="<div><div class='c-dist-name'>"+d.nombre+"<span class='c-dist-badge'>"+d.tipo+"</span></div>";
     html+="<div class='c-dist-addr'>"+d.dir+"</div>";
     html+="<div style='font-size:14px;color:var(--gray);margin-top:4px;'>"+d.tel+"</div></div>";
-    html+="<div class='c-dist-addr' style='text-align:right;'><a href='"+d.mapa+"' target='_blank' rel='noopener'>Ver mapa &rarr;</a></div>";
+    if(d.mapa){html+="<div class='c-dist-addr' style='text-align:right;'><a href='"+d.mapa+"' target='_blank' rel='noopener'>Ver mapa &rarr;</a></div>";}
     html+="</div>";
   }
   container.innerHTML=html;
