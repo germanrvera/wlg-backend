@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Catálogo de Iluminación LED | World Leds Go">
 <meta property="og:description" content="Catálogo completo de iluminación LED arquitectónica para proyectos profesionales: tiras, perfiles, track lights, módulos y sistemas de control.">
-<meta property="og:image" content="https://www.wlgled.com.ar/wp-content/uploads/2026/01/cover_rural.jpg">
+<meta property="og:image" content="">
 <meta property="og:locale" content="es_AR">
 <meta property="og:site_name" content="World Leds Go">
 <link rel="canonical" href="https://wlgled.com.ar/familias">
@@ -1134,11 +1134,11 @@ let currentFamily = null;
 
 // Proyectos reales (de proyectos.html) — se usan para mostrar "Proyectos relacionados" en cada familia
 const PROJECTS_REF = [
-  {name:'Movistar Arena VIP', location:'Buenos Aires', type:'Cultura', products:'Track LV - Cinor', img:'https://www.wlgled.com.ar/wp-content/uploads/2026/05/movistarvip2_cover.jpg'},
-  {name:'Torre Bella', location:'Palermo, CABA', type:'Residencial', products:'Jenny X Pro - Micro Runner', img:'https://www.wlgled.com.ar/wp-content/uploads/2026/03/cover_torre_bella1.jpg'},
-  {name:'Parfumerie', location:'Recoleta, CABA', type:'Retail', products:'Galuy - Track LV', img:'https://www.wlgled.com.ar/wp-content/uploads/2026/01/cover_parfumerie4.jpg'},
-  {name:'MG', location:'Buenos Aires', type:'Comercial', products:'Jenny - Cinor', img:'https://www.wlgled.com.ar/wp-content/uploads/2026/03/cover_mg.jpg'},
-  {name:'La Rando', location:'San Telmo, CABA', type:'Hospitality', products:'Gilam - Micro Cinor', img:'https://www.wlgled.com.ar/wp-content/uploads/2026/01/cover_rando.jpg'}
+  {name:'Movistar Arena VIP', location:'Buenos Aires', type:'Cultura', products:'Track LV - Cinor', img:''},
+  {name:'Torre Bella', location:'Palermo, CABA', type:'Residencial', products:'Jenny X Pro - Micro Runner', img:''},
+  {name:'Parfumerie', location:'Recoleta, CABA', type:'Retail', products:'Galuy - Track LV', img:''},
+  {name:'MG', location:'Buenos Aires', type:'Comercial', products:'Jenny - Cinor', img:''},
+  {name:'La Rando', location:'San Telmo, CABA', type:'Hospitality', products:'Gilam - Micro Cinor', img:''}
 ];
 
 // ─── CUSTOM CURSOR ───────────────────────────────────
@@ -2065,6 +2065,14 @@ window.addEventListener('scroll', function(){
 <script>
 
 var CATALOG_SEARCH=[];
+fetch('https://wlg-backend.onrender.com/api/familias/')
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var items=Array.isArray(data)?data:(data.results||[]);
+    CATALOG_SEARCH=items.map(function(f){
+      return {nombre:f.nombre,macro:f.tipo,skus:f.skus||0,photo:f.photo||'',ubicacion:f.filter_ubicacion||[],aplicacion:f.filter_aplicacion||[]};
+    });
+  }).catch(function(){});
 var activeUbicacion='todos',activeCategoria='todos';
 function openSearch(){var logoImg=document.getElementById('searchOverlayLogoImg');if(logoImg&&!logoImg.src){var navLogo=document.querySelector('.logo-img');if(navLogo)logoImg.src=navLogo.src;}document.getElementById('overlayInput').value='';document.getElementById('searchOverlay').classList.add('open');document.body.style.overflow='hidden';runOverlaySearch('');setTimeout(function(){document.getElementById('overlayInput').focus();},100);}
 function closeSearch(){document.getElementById('searchOverlay').classList.remove('open');document.body.style.overflow='';}

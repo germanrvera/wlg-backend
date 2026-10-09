@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Recursos Técnicos | World Leds Go">
 <meta property="og:description" content="Fichas técnicas, archivos CAD, fotometría IES y plugins de simulación para proyectistas y especificadores.">
-<meta property="og:image" content="https://www.wlgled.com.ar/wp-content/uploads/2026/01/cover_rural.jpg">
+<meta property="og:image" content="">
 <meta property="og:locale" content="es_AR">
 <meta property="og:site_name" content="World Leds Go">
 <link rel="canonical" href="https://wlgled.com.ar/recursos">
@@ -698,25 +698,15 @@ if (location.hash === '#descargas-tecnicas') {
 
 <script>
 
-var CATALOG_SEARCH=[
-  {nombre:'TIRAS LED ARQ',macro:'Tiras LED',skus:22,photo:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior","Exterior"],aplicacion:["Pared","Techo"]},
-  {nombre:'TIRAS LED HOGAR',macro:'Tiras LED',skus:8,photo:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Pared","Techo","Mueble"]},
-  {nombre:'PERFILES PORTALED',macro:'Tiras LED',skus:10,photo:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Pared","Techo","Mueble"]},
-  {nombre:'JENNY',macro:'Empotrados',skus:36,photo:'https://www.wlgled.com.ar/wp-content/uploads/2025/12/cover_jennyxpro.prueba-1.jpg',ubicacion:["Interior","Exterior"],aplicacion:["Techo","Pared"]},
-  {nombre:'FUENTES',macro:'Accesorios',skus:26,photo:'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:[]},
-  {nombre:'LÁMPARAS',macro:'Artefactos',skus:13,photo:'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Mesa","Techo"]},
-  {nombre:'ARTEFACTOS GU/AR',macro:'Artefactos',skus:6,photo:'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Techo","Pared"]},
-  {nombre:'KATAN',macro:'Empotrados',skus:6,photo:'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior","Exterior"],aplicacion:["Techo","Piso"]},
-  {nombre:'MICRO RUNNER',macro:'Rieles',skus:17,photo:'https://www.wlgled.com.ar/wp-content/uploads/2025/12/cover_micro_runner7.prueba.jpg',ubicacion:["Interior"],aplicacion:["Techo"]},
-  {nombre:'RUNNER X PRO',macro:'Rieles',skus:17,photo:'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Techo"]},
-  {nombre:'TRACK LV',macro:'Rieles',skus:7,photo:'https://www.wlgled.com.ar/wp-content/uploads/2025/12/tracklights_cover.prueba.jpg',ubicacion:["Interior"],aplicacion:["Techo"]},
-  {nombre:'TRACKLIGHTS',macro:'Rieles',skus:31,photo:'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Techo"]},
-  {nombre:'MÓDULOS LED',macro:'Empotrados',skus:13,photo:'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Techo","Pared"]},
-  {nombre:'WALLY',macro:'Apliques',skus:14,photo:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Pared"]},
-  {nombre:'LINEAR',macro:'Apliques',skus:14,photo:'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior"],aplicacion:["Pared"]},
-  {nombre:'EXTERIOR',macro:'Exterior',skus:12,photo:'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=800&auto=format&fit=crop&q=80',ubicacion:["Exterior"],aplicacion:["Piso","Pared"]},
-  {nombre:'SISTEMAS CONTROL',macro:'Accesorios',skus:10,photo:'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=800&auto=format&fit=crop&q=80',ubicacion:["Interior","Exterior"],aplicacion:[]}
-];
+var CATALOG_SEARCH=[];
+fetch('https://wlg-backend.onrender.com/api/familias/')
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var items=Array.isArray(data)?data:(data.results||[]);
+    CATALOG_SEARCH=items.map(function(f){
+      return {nombre:f.nombre,macro:f.tipo,skus:f.skus||0,photo:f.photo||'',ubicacion:f.filter_ubicacion||[],aplicacion:f.filter_aplicacion||[]};
+    });
+  }).catch(function(){});
 var activeUbicacion='todos',activeCategoria='todos';
 function openSearch(){var logoImg=document.getElementById('searchOverlayLogoImg');if(logoImg&&!logoImg.src){var navLogo=document.querySelector('.logo-img');if(navLogo)logoImg.src=navLogo.src;}document.getElementById('overlayInput').value='';document.getElementById('searchOverlay').classList.add('open');document.body.style.overflow='hidden';runOverlaySearch('');setTimeout(function(){document.getElementById('overlayInput').focus();},100);}
 function closeSearch(){document.getElementById('searchOverlay').classList.remove('open');document.body.style.overflow='';}
