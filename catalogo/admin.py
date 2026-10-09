@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable
 
 
 class ProductoResource(resources.ModelResource):
@@ -112,6 +112,24 @@ class DistribuidorAdmin(admin.ModelAdmin):
         }),
         ('Contacto', {
             'fields': ('telefono',)
+        }),
+    )
+
+
+@admin.register(RecursoDescargable)
+class RecursoDescargableAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'familia', 'tipo', 'tamano', 'activo', 'orden']
+    list_filter = ['activo', 'tipo', 'familia']
+    list_editable = ['activo', 'orden']
+    search_fields = ['nombre', 'familia']
+    ordering = ['familia', 'tipo', 'orden']
+    fieldsets = (
+        ('Identificación', {
+            'fields': ('nombre', 'familia', 'tipo', 'tamano', 'activo', 'orden')
+        }),
+        ('Archivo', {
+            'fields': ('archivo', 'url_externa'),
+            'description': 'url_externa tiene prioridad. Si no hay URL, se usa el archivo subido (va a R2).'
         }),
     )
 

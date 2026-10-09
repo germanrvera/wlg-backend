@@ -1,8 +1,8 @@
 from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion, Distribuidor
-from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer, DistribuidorSerializer
+from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable
+from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer, DistribuidorSerializer, RecursoDescargableSerializer
 
 
 class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -29,6 +29,14 @@ class DistribuidorViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Distribuidor.objects.filter(activo=True)
     serializer_class = DistribuidorSerializer
     pagination_class = None
+
+
+class RecursoDescargableViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = RecursoDescargable.objects.filter(activo=True)
+    serializer_class = RecursoDescargableSerializer
+    pagination_class = None
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nombre', 'familia', 'tipo']
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):

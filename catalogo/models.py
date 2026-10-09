@@ -132,6 +132,35 @@ class Distribuidor(models.Model):
         return f'{self.ciudad} — {self.nombre}'
 
 
+class RecursoDescargable(models.Model):
+    TIPOS = [('IES', 'IES / Fotometría'), ('CAD', 'CAD / DWG'), ('PDF', 'PDF / Ficha técnica'), ('BIM', 'BIM / Revit')]
+
+    nombre = models.CharField(max_length=200, help_text='Ej: Galuy — Fotometría 3000K 30°')
+    familia = models.CharField(max_length=120, help_text='Nombre de la familia. Usar "General" para catálogos y guías.')
+    tipo = models.CharField(max_length=10, choices=TIPOS)
+    tamano = models.CharField(max_length=20, blank=True, help_text='Ej: 2.4 MB')
+    archivo = models.FileField(upload_to='recursos/', blank=True, help_text='Se sube a R2 automáticamente.')
+    url_externa = models.URLField(blank=True, help_text='URL directa (tiene prioridad sobre el archivo subido).')
+    activo = models.BooleanField(default=True)
+    orden = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Recurso descargable'
+        verbose_name_plural = 'Recursos descargables'
+        ordering = ['familia', 'tipo', 'orden', 'nombre']
+
+    def __str__(self):
+        return f'{self.familia} — {self.nombre}'
+
+    @property
+    def url_descarga(self):
+        if self.url_externa:
+            return self.url_externa
+        if self.archivo:
+            return self.archivo.url
+        return ''
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)
