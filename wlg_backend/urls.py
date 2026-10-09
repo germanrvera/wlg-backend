@@ -14,7 +14,7 @@ urlpatterns = [
     path('sitemap.xml', TemplateView.as_view(template_name='sitemap.xml', content_type='application/xml')),
     path('llms.txt', TemplateView.as_view(template_name='llms.txt', content_type='text/plain')),
     # Site pages
-    path('', TemplateView.as_view(template_name='wlg_v8.html'), name='home'),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('familias/<slug:slug>', TemplateView.as_view(template_name='familia.html'), name='familia-detail'),
     path('familias', TemplateView.as_view(template_name='familias.html'), name='familias'),
     path('proyectos', TemplateView.as_view(template_name='proyectos.html'), name='proyectos'),
