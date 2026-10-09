@@ -301,6 +301,7 @@ a.skip-link:focus{top:8px;}
   <a href="/novedades" onclick="closeMobileMenu()">Novedades</a>
   <a href="/experiencia" onclick="closeMobileMenu()">Laboratorio</a>
   <a href="/recursos" onclick="closeMobileMenu()">Recursos</a>
+  <a href="#" onclick="closeMobileMenu();return false;">Powergear</a>
 </div>
 <div class="mega-wrap" id="megaProductos" onmouseenter="keepMega()" onmouseleave="closeMega()">
   <div class="mega-inner">
@@ -492,7 +493,7 @@ a.skip-link:focus{top:8px;}
 (function(){
   var navLogo = document.querySelector('#mainNav .logo-wrap img');
   var footWrap = document.getElementById('footLogoWrap');
-  if (navLogo && footWrap) footWrap.insertBefore(navLogo.cloneNode(true), footWrap.firstChild);
+  if (navLogo && footWrap) {var c=navLogo.cloneNode(true);c.style.height='36px';c.style.opacity='.7';footWrap.insertBefore(c,footWrap.firstChild);}
 })();
 </script>
 

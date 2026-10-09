@@ -1165,7 +1165,7 @@ function removeChip(key,val,btn){
 (function(){
   var navLogo = document.querySelector('#mainNav .logo-wrap img');
   var footWrap = document.getElementById('footLogoWrap');
-  if (navLogo && footWrap) footWrap.insertBefore(navLogo.cloneNode(true), footWrap.firstChild);
+  if (navLogo && footWrap) {var c=navLogo.cloneNode(true);c.style.height='36px';c.style.opacity='.7';footWrap.insertBefore(c,footWrap.firstChild);}
 })();
 </script>
 
