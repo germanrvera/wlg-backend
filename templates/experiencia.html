@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<script>!function(){var t=localStorage.getItem('wlg-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Laboratorio de Iluminación | World Leds Go</title>
@@ -44,13 +45,28 @@
     :root {
       --bg:    #080808;
       --white: #ede9e2;
-      --dim:   rgba(237,233,226,.55);
-      --dim2:  rgba(237,233,226,.18);
+      --dim:   rgba(var(--rgb-text),.55);
+      --dim2:  rgba(var(--rgb-text),.18);
       --gold:  #c9a96e;
       --gray2: #b3aea5;
       --panel: rgba(10,9,7,.9);
       --sans:  'Urbanist',sans-serif;
+      --rgb-text:237,233,226;
     }
+html[data-theme="light"]{
+  --bg:#f4f1ec;--bg2:#ede9e2;--bg3:#e4dfd6;
+  --white:#1c1916;--white2:rgba(28,25,22,.65);
+  --gray:#6b6560;--gray2:#5a5550;
+  --gold:#7a5a28;
+  --rgb-text:28,25,22;
+  --panel:rgba(244,241,236,.96);
+}
+html[data-theme="light"] nav{background:rgba(244,241,236,.94)!important;border-bottom-color:rgba(28,25,22,.12)!important;}
+html[data-theme="light"] .search-overlay{background:rgba(244,241,236,.98)!important;}
+html[data-theme="light"] .mobile-menu{background:rgba(244,241,236,.98)!important;}
+html[data-theme="light"] .mega-inner{background:rgba(244,241,236,.97)!important;}
+html[data-theme="light"] .buy-modal{background:#f0ece5!important;border-color:rgba(28,25,22,.15)!important;}
+html[data-theme="light"] body::before{opacity:.15;}
 
     html, body { width: 100%; height: 100%; overflow: hidden; }
 
@@ -98,7 +114,7 @@
       padding: 20px 72px;
       background: rgba(8,8,8,.72);
       backdrop-filter: blur(18px);
-      border-bottom: .5px solid rgba(237,233,226,.05);
+      border-bottom: .5px solid rgba(var(--rgb-text),.05);
     }
     .logo-wrap{display:flex;flex-direction:column;gap:4px;align-items:center;text-decoration:none;}
     .logo-img{height:40px;width:auto;display:block;mix-blend-mode:screen;opacity:.95;}
@@ -149,27 +165,27 @@
     .nav-icons{display:flex;align-items:center;margin-right:16px;}
     .nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .25s;min-width:44px;min-height:44px;justify-content:center;}
     .nav-icon:hover{color:var(--white);}
-    .nav-cta-outline{font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(237,233,226,.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
+    .nav-cta-outline{font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
     .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
     .nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:4px;}
-    .nav-hamburger span{display:block;width:22px;height:.5px;background:rgba(237,233,226,.6);transition:transform .35s,opacity .35s;}
+    .nav-hamburger span{display:block;width:22px;height:.5px;background:rgba(var(--rgb-text),.6);transition:transform .35s,opacity .35s;}
     .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
     .nav-hamburger.open span:nth-child(2){opacity:0;}
     .nav-hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
     .mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,8,.98);backdrop-filter:blur(24px);z-index:490;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0;opacity:0;pointer-events:none;transition:opacity .4s;}
     .mobile-menu.open{opacity:1;pointer-events:all;}
-    .mobile-menu a{font-size:44px;font-weight:300;color:rgba(237,233,226,.7);text-decoration:none;letter-spacing:.04em;padding:12px 0;transition:color .25s,transform .25s;transform:translateY(20px);opacity:0;}
+    .mobile-menu a{font-size:44px;font-weight:300;color:rgba(var(--rgb-text),.7);text-decoration:none;letter-spacing:.04em;padding:12px 0;transition:color .25s,transform .25s;transform:translateY(20px);opacity:0;}
     .mobile-menu.open a{transform:translateY(0);opacity:1;transition-delay:.1s;}
     .mobile-menu a:hover{color:var(--gold);}
     .mobile-menu .m-cta{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:40px;padding:14px 36px;border:.5px solid var(--gold);text-decoration:none;transform:translateY(20px);opacity:0;transition:color .25s,background .25s,transform .4s,opacity .4s;}
     .mobile-menu.open .m-cta{transform:translateY(0);opacity:1;transition-delay:.3s;}
     .mobile-menu .m-cta:hover{background:var(--gold);color:var(--white);}
     /* MEGA MENU */
-    .mega-wrap{position:fixed;left:0;right:0;z-index:498;opacity:0;pointer-events:none;transition:opacity .22s ease;border-top:.5px solid rgba(237,233,226,.08);}
+    .mega-wrap{position:fixed;left:0;right:0;z-index:498;opacity:0;pointer-events:none;transition:opacity .22s ease;border-top:.5px solid rgba(var(--rgb-text),.08);}
     .mega-wrap.open{opacity:1;pointer-events:all;}
     .mega-inner{background:rgba(8,8,8,.97);backdrop-filter:blur(24px);padding:48px 72px;display:grid;grid-template-columns:1fr 260px;gap:80px;align-items:start;}
     .mega-col-links{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-    .mega-link{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:.5px solid rgba(237,233,226,.06);font-size:13px;font-weight:300;color:var(--gray2);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
+    .mega-link{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:.5px solid rgba(var(--rgb-text),.06);font-size:13px;font-weight:300;color:var(--gray2);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
     .mega-link:hover{color:var(--white);}
     .mega-link::before{content:'';display:block;width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0;flex-shrink:0;transition:opacity .2s;}
     .mega-link:hover::before{opacity:1;}
@@ -181,7 +197,7 @@
     .mega-feat-img img{width:100%;height:100%;object-fit:cover;opacity:.75;filter:brightness(.9);transition:opacity .4s;}
     .mega-feat:hover .mega-feat-img img{opacity:.9;}
     .mega-feat-tag{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:18px;}
-    .mega-feat-title{font-size:14px;color:rgba(237,233,226,.6);margin-top:6px;font-weight:300;line-height:1.5;}
+    .mega-feat-title{font-size:14px;color:rgba(var(--rgb-text),.6);margin-top:6px;font-weight:300;line-height:1.5;}
     @media(max-width:900px){.nav-links{display:none;}.nav-cta{display:none;}.nav-hamburger{display:flex;}}
     @media(min-width:901px){.mobile-menu{display:none !important;}.nav-hamburger{display:none !important;}}
 
@@ -276,7 +292,7 @@
       text-transform: uppercase;
       color: var(--dim);
       background: none;
-      border: .5px solid rgba(237,233,226,.1);
+      border: .5px solid rgba(var(--rgb-text),.1);
       padding: 7px 18px;
       cursor: pointer;
       transition: color .2s, border-color .2s, background .2s;
@@ -297,7 +313,7 @@
       display: flex;
       align-items: flex-end;
       background: var(--panel);
-      border: .5px solid rgba(237,233,226,.07);
+      border: .5px solid rgba(var(--rgb-text),.07);
       backdrop-filter: blur(24px);
     }
 
@@ -307,7 +323,7 @@
       align-items: center;
       gap: 14px;
       padding: 20px 28px 16px;
-      border-right: .5px solid rgba(237,233,226,.05);
+      border-right: .5px solid rgba(var(--rgb-text),.05);
       position: relative;
       min-width: 120px;
     }
@@ -327,7 +343,7 @@
     }
     .zone-ctrl input[type=range]::-webkit-slider-runnable-track {
       width: 2px;
-      background: rgba(237,233,226,.1);
+      background: rgba(var(--rgb-text),.1);
       border-radius: 2px;
     }
     .zone-ctrl input[type=range]::-webkit-slider-thumb {
@@ -352,7 +368,7 @@
     }
     .zone-ctrl input[type=range]::-moz-range-track {
       width: 2px;
-      background: rgba(237,233,226,.1);
+      background: rgba(var(--rgb-text),.1);
     }
 
     /* Slider fill */
@@ -361,7 +377,7 @@
       top: 20px;
       width: 2px;
       height: 76px;
-      background: rgba(237,233,226,.08);
+      background: rgba(var(--rgb-text),.08);
       border-radius: 2px;
       overflow: hidden;
     }
@@ -467,7 +483,7 @@
       text-transform: uppercase;
       color: var(--dim);
       text-decoration: none;
-      border-bottom: .5px solid rgba(237,233,226,.12);
+      border-bottom: .5px solid rgba(var(--rgb-text),.12);
       padding-bottom: 3px;
       transition: color .2s, border-color .2s;
     }
@@ -523,6 +539,7 @@ a.skip-link:focus{top:8px;}
   <div class="nav-right">
     <div class="nav-icons">
       <button class="nav-icon" onclick="openSearch()" aria-label="Buscar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="nav-icon theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema" title="Cambiar tema"><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
     </div>
     <a class="nav-cta" href="/contacto">Contactar</a>
   </div>
@@ -1098,5 +1115,18 @@ function closeMobileMenu(){
 // Search stub (no-op for this page)
 function openSearch(){}
 </script>
+
+function toggleTheme(){
+  var isLight=document.documentElement.getAttribute('data-theme')==='light';
+  if(isLight){document.documentElement.removeAttribute('data-theme');localStorage.removeItem('wlg-theme');}
+  else{document.documentElement.setAttribute('data-theme','light');localStorage.setItem('wlg-theme','light');}
+  updateThemeIcons();
+}
+function updateThemeIcons(){
+  var isLight=document.documentElement.getAttribute('data-theme')==='light';
+  document.querySelectorAll('.icon-sun').forEach(function(el){el.style.display=isLight?'':'none';});
+  document.querySelectorAll('.icon-moon').forEach(function(el){el.style.display=isLight?'none':'';});
+}
+document.addEventListener('DOMContentLoaded',updateThemeIcons);
 </body>
 </html>
