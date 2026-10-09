@@ -145,23 +145,11 @@ html[data-theme="light"] body::before{opacity:.15;}
       text-transform: uppercase;
       color: var(--gray2);
       text-decoration: none;
-      transition: color .25s;
+      transition: color .25s, text-shadow .25s;
       position: relative;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: .5px;
-      background: var(--gold);
-      transition: width .25s;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active {
-      color: var(--gold);
-    }
-    .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover { color: var(--white); text-shadow: 0 0 18px rgba(201,169,110,.4), 0 0 6px rgba(201,169,110,.2); }
+    .nav-links a.active { color: var(--gold); text-shadow: 0 0 14px rgba(201,169,110,.5), 0 0 5px rgba(201,169,110,.25); }
     .nav-cta {
       font-size: 13px;
       font-weight: 400;
