@@ -1088,18 +1088,6 @@ function onResize() {
 }
 
 
-  window.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
-    requestAnimationFrame(loop);
-  })();
-})();
-
 // ── Start ─────────────────────────────────────────────────────────────────────
 init();
 updateLights();
