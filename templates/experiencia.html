@@ -178,7 +178,7 @@ html[data-theme="light"] body::before{opacity:.15;}
     .nav-cta-outline{font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
     .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
     .nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:4px;}
-    .nav-hamburger span{display:block;width:22px;height:.5px;background:rgba(var(--rgb-text),.6);transition:transform .35s,opacity .35s;}
+    .nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--white);transition:transform .35s,opacity .35s;}
     .nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
     .nav-hamburger.open span:nth-child(2){opacity:0;}
     .nav-hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
@@ -208,7 +208,16 @@ html[data-theme="light"] body::before{opacity:.15;}
     .mega-feat:hover .mega-feat-img img{opacity:.9;}
     .mega-feat-tag{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:18px;}
     .mega-feat-title{font-size:14px;color:rgba(var(--rgb-text),.6);margin-top:6px;font-weight:300;line-height:1.5;}
-    @media(max-width:900px){.nav-links{display:none;}.nav-cta{display:none;}.nav-cta-outline{display:none;}.nav-hamburger{display:flex;}}
+    @media(max-width:900px){
+  .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .nav-cta-outline{display:none;}
+  .nav-hamburger{display:flex;}
+  nav{padding:14px 20px;}
+  nav.scrolled{padding:10px 20px;}
+  .logo-sub{font-size:10px;letter-spacing:.12em;white-space:nowrap;}
+  .mega-wrap{display:none !important;}
+}
     @media(min-width:901px){.mobile-menu{display:none !important;}.nav-hamburger{display:none !important;}}
 
     /* ── SCENE TITLE ── */
