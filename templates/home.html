@@ -334,11 +334,13 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
 }
 .loader-logo.glow{animation:logoGlow 1.4s cubic-bezier(.4,0,.2,1) forwards;}
 .loader-logo.go{opacity:1;transform:translateY(0);}
-.loader-sub{font-size:22.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity .5s .4s;margin-top:14px;}
+.loader-sub{font-size:18px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity .5s .4s;margin-top:8px;}
 .loader-sub.go{opacity:1;}
-.loader-bar{width:160px;height:.5px;background:rgba(var(--rgb-text),.06);position:relative;overflow:hidden;margin-top:4px;}
-.loader-bar::after{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);transition:transform 1.1s cubic-bezier(.4,0,.2,1) .15s;}
+.loader-bar{width:280px;height:1.5px;background:rgba(237,233,226,.1);position:relative;overflow:hidden;margin-top:20px;}
+.loader-bar::after{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);transition:transform 1.2s cubic-bezier(.4,0,.2,1) .1s;}
 .loader-bar.go::after{transform:translateX(0);}
+.loader-pct{font-size:11px;letter-spacing:.14em;color:rgba(237,233,226,.28);font-family:var(--sans);font-weight:300;text-align:right;width:280px;margin-top:7px;opacity:0;transition:opacity .3s .15s;}
+.loader-pct.go{opacity:1;}
 
 
 /* CAT CARD OVERLAY */
@@ -538,6 +540,7 @@ a.skip-link:focus{top:8px;}
     <div class="loader-sub" id="loaderSub">The Professional Space</div>
   </div>
   <div class="loader-bar" id="loaderBar"></div>
+<div class="loader-pct" id="loaderPct">000</div>
 </div>
 
 <nav id="mainNav" onmouseenter="keepMega()">
@@ -777,9 +780,10 @@ a.skip-link:focus{top:8px;}
 // LOADER
 (function(){
   setTimeout(function(){
-    var l=document.getElementById('loaderLogo'),s=document.getElementById('loaderSub'),b=document.getElementById('loaderBar');
-    l.classList.add('go');s.classList.add('go');b.classList.add('go');
+    var l=document.getElementById('loaderLogo'),s=document.getElementById('loaderSub'),b=document.getElementById('loaderBar'),p=document.getElementById('loaderPct');
+    l.classList.add('go');s.classList.add('go');b.classList.add('go');if(p)p.classList.add('go');
     setTimeout(function(){l.classList.add('glow');},700);
+    if(p){var t0=Date.now(),dur=1150;(function tick(){var r=Math.min((Date.now()-t0)/dur,1);p.textContent=String(Math.floor(r*100)).padStart(3,'0');if(r<1)requestAnimationFrame(tick);})();}
   },60);
   setTimeout(function(){document.getElementById('loader').classList.add('hidden');},1700);
 })();
