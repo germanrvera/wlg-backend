@@ -523,6 +523,7 @@ a.skip-link:focus{top:8px;}
   /* Carousel outer: reduce left padding */
   .cat-carousel-outer{padding-left:24px;}
 }
+#ambient-glow{position:fixed;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.09) 0%,rgba(201,169,110,.04) 40%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);will-change:left,top;mix-blend-mode:screen;}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -1129,6 +1130,47 @@ function keepMega(){clearTimeout(_megaTimer);}
 </script>
 
 <script>
+// ─── PREMIUM FX ──────────────────────────────────────────────────────────
+(function(){
+  /* 1 ── AMBIENT LIGHT GLOW ── */
+  var g=document.createElement('div');
+  g.id='ambient-glow';
+  document.body.appendChild(g);
+  var gx=window.innerWidth/2,gy=window.innerHeight/2,tx=gx,ty=gy;
+  document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;});
+  (function tick(){gx+=(tx-gx)*.055;gy+=(ty-gy)*.055;g.style.left=gx+'px';g.style.top=gy+'px';requestAnimationFrame(tick);})();
+
+  /* 2 ── HERO PARALLAX ── */
+  var hx=0,hy=0,hlx=0,hly=0;
+  document.addEventListener('mousemove',function(e){
+    if(window.scrollY>window.innerHeight*.7)return;
+    hx=e.clientX/window.innerWidth-.5;
+    hy=e.clientY/window.innerHeight-.5;
+  });
+  (function heroTick(){
+    hlx+=(hx-hlx)*.045;hly+=(hy-hly)*.045;
+    if(window.scrollY<window.innerHeight*.8){
+      var img=document.querySelector('.hero-slide.active img');
+      if(img){img.style.transition='transform .25s ease-out';img.style.transform='scale(1.06) translate('+(hlx*-22)+'px,'+(hly*-12)+'px)';}
+    }
+    requestAnimationFrame(heroTick);
+  })();
+
+  /* 3 ── MAGNETIC BUTTONS ── */
+  var MAG='.nav-cta,.hero-btn',R=82,PULL=.3;
+  document.addEventListener('mousemove',function(e){
+    document.querySelectorAll(MAG).forEach(function(b){
+      var r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+      var dx=e.clientX-cx,dy=e.clientY-cy,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<R){var p=(1-d/R)*PULL;b.style.transition='transform .1s ease-out';b.style.transform='translate('+(dx*p)+'px,'+(dy*p)+'px)';}
+      else if(b.style.transform){b.style.transition='transform .45s ease-out';b.style.transform='';}
+    });
+  });
+  document.addEventListener('mouseleave',function(){
+    document.querySelectorAll(MAG).forEach(function(b){b.style.transition='transform .45s ease-out';b.style.transform='';});
+  });
+})();
+
 function toggleTheme(){
   var isLight=document.documentElement.getAttribute('data-theme')==='light';
   var btn=document.querySelector('.theme-toggle');
