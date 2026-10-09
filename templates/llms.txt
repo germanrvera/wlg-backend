@@ -1,4 +1,4 @@
-# World Leds Go
+﻿# World Leds Go
 
 > Marca argentina de iluminación LED arquitectónica profesional. Sistemas de riel, iluminación lineal y artefactos para proyectos de arquitectura y diseño de interiores. Slogan: "Detalles vanguardistas en tus interiores".
 
@@ -38,5 +38,5 @@ La Rural (Buenos Aires, 2024), Movistar Arena VIP (Buenos Aires, 2024), Torre Be
 
 - Sitio web: https://wlgled.com.ar
 - Instagram: https://www.instagram.com/worldledsgo
-- LinkedIn: https://www.linkedin.com/company/worldledsgo
+- LinkedIn: https://www.linkedin.com/company/world-leds-go
 - DIALux Silver Member: https://www.dialux.com/en-GB/dialux-members/world-leds-go
