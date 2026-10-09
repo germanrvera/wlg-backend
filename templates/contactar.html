@@ -696,6 +696,7 @@ fetch('https://wlg-backend.onrender.com/api/distribuidores/')
     DISTRIBUIDORES = items.map(function(d){
       return {ciudad:d.ciudad, zona:d.zona, nombre:d.nombre, dir:d.direccion, tel:d.telefono, mapa:d.url_mapa, tipo:d.tipo};
     });
+    renderDists(DISTRIBUIDORES);
   })
   .catch(function(){});
 
@@ -720,7 +721,7 @@ function renderDists(list){
 
 function searchDist(q){
   q=q.toLowerCase().trim();
-  if(!q){renderDists([]);document.getElementById("distEmpty").style.display="none";document.getElementById("distResults").innerHTML="";return;}
+  if(!q){renderDists(DISTRIBUIDORES);return;}
   var results=DISTRIBUIDORES.filter(function(d){
     return d.ciudad.toLowerCase().indexOf(q)>-1||d.zona.toLowerCase().indexOf(q)>-1||d.nombre.toLowerCase().indexOf(q)>-1||d.dir.toLowerCase().indexOf(q)>-1;
   });
