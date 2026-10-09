@@ -784,7 +784,7 @@ function toggleMobileMenu(){
   var btn=document.getElementById('navHamburger');
   var isOpen=menu.classList.contains('open');
   if(isOpen){closeMobileMenu();}
-  else{menu.classList.add('open');btn.classList.add('open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';
+  else{menu.classList.add('open');btn.classList.add('open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';document.body.style.overflowX='hidden';
     var links=menu.querySelectorAll('a');links.forEach(function(a,i){a.style.transitionDelay=(0.06*i+0.1)+'s';});}
 }
 function closeMobileMenu(){
