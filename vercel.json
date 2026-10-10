@@ -2,7 +2,7 @@
   "version": 2,
   "outputDirectory": "templates",
   "rewrites": [
-    { "source": "/", "destination": "/wlg_v8.html" },
+    { "source": "/", "destination": "/home.html" },
     { "source": "/familias", "destination": "/familias.html" },
     { "source": "/proyectos", "destination": "/proyectos.html" },
     { "source": "/contacto", "destination": "/contactar.html" },
