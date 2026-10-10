@@ -498,6 +498,13 @@ a.skip-link:focus{top:8px;}
 /* cat-card glow on hover */
 .cat-card{transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s;}
 .cat-card:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(201,169,110,.25),0 8px 32px rgba(201,169,110,.12),0 0 60px rgba(201,169,110,.06);}
+/* lanzamiento badge + cta */
+.cat-card--launch .cat-badge{display:block;}
+.cat-badge{display:none;}
+.cat-card--launch .cat-card-overlay{background:linear-gradient(to top,rgba(8,8,8,.55) 0%,transparent 100%);}
+.cat-card--launch .cat-card-cta{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--white);}
+.cat-card--launch .cat-card-cta::after{content:'';display:inline-block;width:12px;height:.5px;background:var(--gold);margin-left:10px;vertical-align:middle;transition:width .3s .1s;}
+.cat-card--launch:hover .cat-card-cta::after{width:22px;}
 /* proj-card glow */
 .proj-card{transition:box-shadow .4s;}
 .proj-card:hover{box-shadow:0 0 0 1px rgba(201,169,110,.2),0 0 40px rgba(201,169,110,.08);}
@@ -878,6 +885,34 @@ function slide(dir){
   document.getElementById('arrPrev').disabled=pos===0;
   document.getElementById('arrNext').disabled=pos>=MAX;
 }
+// ── LANZAMIENTOS en carrusel ──────────────────────────────────────────────
+fetch('https://wlg-backend.onrender.com/api/lanzamientos/')
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var items=Array.isArray(data)?data:(data.results||[]);
+    if(!items.length) return;
+    var carousel=document.getElementById('carousel');
+    var frag=document.createDocumentFragment();
+    items.forEach(function(item){
+      var card=document.createElement('div');
+      card.className='cat-card cat-card--launch';
+      card.setAttribute('onclick',"window.location.href='/novedades'");
+      card.innerHTML='<div class="cat-card-img">'+
+        '<span class="cat-badge">Nuevo Lanzamiento</span>'+
+        '<div class="cat-card-overlay"><span class="cat-card-cta">Descubrir</span></div>'+
+        '<img src="'+(item.foto||'')+'" alt="'+item.nombre+'" onerror="this.style.opacity=\'0\';this.parentElement.style.background=\'var(--bg3)\'">'+
+        '</div>'+
+        '<div class="cat-card-info">'+
+          '<div class="cat-card-type">'+item.tipo+'</div>'+
+          '<div class="cat-card-name">'+item.nombre+'</div>'+
+        '</div>';
+      frag.appendChild(card);
+    });
+    carousel.insertBefore(frag,carousel.firstChild);
+    CARDS=carousel.children.length;
+    MAX=Math.max(0,CARDS-Math.floor(VISIBLE));
+    document.getElementById('arrNext').disabled=MAX<=0;
+  }).catch(function(){});
 // Familias reales del catálogo (mismos datos que familias.html) — el buscador apunta directo al catálogo real
 var CATALOG_SEARCH=[];
 fetch('https://wlg-backend.onrender.com/api/familias/')

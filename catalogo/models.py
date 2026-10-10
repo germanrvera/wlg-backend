@@ -161,6 +161,66 @@ class RecursoDescargable(models.Model):
         return ''
 
 
+class Lanzamiento(models.Model):
+    titulo = models.CharField(max_length=120, blank=True, help_text='Override del nombre. Si vacío, usa el nombre de familia/producto.')
+    subtitulo = models.CharField(max_length=120, blank=True, help_text='Override del tipo. Si vacío, usa el tipo de familia/producto.')
+    familia = models.ForeignKey(
+        FamiliaProducto, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name='lanzamientos', verbose_name='Familia'
+    )
+    producto = models.ForeignKey(
+        Producto, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name='lanzamientos', verbose_name='Producto'
+    )
+    imagen = models.ImageField(upload_to='lanzamientos/', blank=True)
+    photo = models.URLField(blank=True, help_text='URL externa (tiene prioridad sobre imagen subida).')
+    orden = models.PositiveSmallIntegerField(default=0)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Lanzamiento'
+        verbose_name_plural = 'Lanzamientos'
+        ordering = ['orden']
+
+    def __str__(self):
+        return self.titulo or (self.familia.nombre if self.familia else '') or (self.producto.codigo if self.producto else f'Lanzamiento #{self.pk}')
+
+    @property
+    def nombre_display(self):
+        if self.titulo:
+            return self.titulo
+        if self.familia:
+            return self.familia.nombre
+        if self.producto:
+            return self.producto.descripcion or self.producto.codigo
+        return ''
+
+    @property
+    def tipo_display(self):
+        if self.subtitulo:
+            return self.subtitulo
+        if self.familia:
+            return self.familia.tipo
+        if self.producto:
+            return self.producto.familia.tipo
+        return ''
+
+    @property
+    def imagen_url(self):
+        if self.photo:
+            return self.photo
+        if self.imagen:
+            return self.imagen.url
+        if self.familia:
+            if self.familia.photo:
+                return self.familia.photo
+            if self.familia.imagen:
+                return self.familia.imagen.url
+        if self.producto and self.producto.imagen:
+            return self.producto.imagen.url
+        return ''
+
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)

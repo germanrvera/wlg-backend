@@ -1,8 +1,8 @@
 from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable
-from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer, DistribuidorSerializer, RecursoDescargableSerializer
+from .models import FamiliaProducto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable, Lanzamiento
+from .serializers import FamiliaProductoSerializer, ProyectoSerializer, HeroSlideSerializer, DistribuidorSerializer, RecursoDescargableSerializer, LanzamientoSerializer
 
 
 class FamiliaProductoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -37,6 +37,12 @@ class RecursoDescargableViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
     filter_backends = [filters.SearchFilter]
     search_fields = ['nombre', 'familia', 'tipo']
+
+
+class LanzamientoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Lanzamiento.objects.filter(activo=True).order_by('orden')
+    serializer_class = LanzamientoSerializer
+    pagination_class = None
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):

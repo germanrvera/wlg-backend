@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable, Lanzamiento
 
 
 class ProductoSerializer(serializers.ModelSerializer):
@@ -61,6 +61,25 @@ class RecursoDescargableSerializer(serializers.ModelSerializer):
 
     def get_url(self, obj):
         return obj.url_descarga
+
+
+class LanzamientoSerializer(serializers.ModelSerializer):
+    nombre = serializers.SerializerMethodField()
+    tipo = serializers.SerializerMethodField()
+    foto = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Lanzamiento
+        fields = ['id', 'nombre', 'tipo', 'foto', 'orden']
+
+    def get_nombre(self, obj):
+        return obj.nombre_display
+
+    def get_tipo(self, obj):
+        return obj.tipo_display
+
+    def get_foto(self, obj):
+        return obj.imagen_url
 
 
 class ProyectoSerializer(serializers.ModelSerializer):

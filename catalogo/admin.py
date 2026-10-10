@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable
+from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable, Lanzamiento
 
 
 class ProductoResource(resources.ModelResource):
@@ -132,6 +132,34 @@ class RecursoDescargableAdmin(admin.ModelAdmin):
             'description': 'url_externa tiene prioridad. Si no hay URL, se usa el archivo subido (va a R2).'
         }),
     )
+
+
+@admin.register(Lanzamiento)
+class LanzamientoAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'familia', 'producto', 'orden', 'activo']
+    list_editable = ['orden', 'activo']
+    list_filter = ['activo']
+    search_fields = ['titulo', 'familia__nombre', 'producto__codigo']
+    ordering = ['orden']
+    fieldsets = (
+        ('Contenido', {
+            'fields': ('titulo', 'subtitulo', 'orden', 'activo'),
+            'description': 'titulo y subtitulo son opcionales: si se dejan vacíos se toman del registro vinculado.'
+        }),
+        ('Vínculo — completar solo uno', {
+            'fields': ('familia', 'producto'),
+        }),
+        ('Imagen', {
+            'fields': ('imagen', 'photo'),
+            'description': 'photo (URL externa) tiene prioridad. Si vacío, usa la imagen de la familia/producto.'
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if not obj.familia and not obj.producto:
+            from django.contrib import messages
+            self.message_user(request, 'Debés vincular una familia o un producto.', level=messages.WARNING)
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(Proyecto)
