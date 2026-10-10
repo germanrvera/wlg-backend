@@ -60,9 +60,9 @@ nav.scrolled{padding:12px 72px;}
 .nav-icons{display:flex;align-items:center;margin-right:16px;}
 .nav-icon{background:none;border:none;color:var(--gray2);cursor:pointer;padding:10px;display:flex;align-items:center;transition:color .3s;min-width:44px;min-height:44px;justify-content:center;}
 .nav-icon:hover{color:var(--white);}.theme-toggle svg{transition:transform .4s cubic-bezier(.34,1.56,.64,1),color .25s;}.theme-toggle:hover svg{color:var(--gold);transform:rotate(18deg) scale(1.12);}.theme-toggle.spin svg{transform:rotate(360deg);transition:transform .5s cubic-bezier(.34,1.56,.64,1);}
-.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}
+.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);text-decoration:none;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
-.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;text-decoration:none;transition:all .3s;margin-right:10px;cursor:pointer;}
+.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);text-decoration:none;transition:all .3s;margin-right:10px;cursor:pointer;}
 .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
 .nav-hamburger{display:none;flex-direction:column;min-width:44px;min-height:44px;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
 .nav-hamburger span{display:block;width:22px;height:.5px;background:var(--white);}

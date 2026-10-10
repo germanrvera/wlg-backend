@@ -138,7 +138,7 @@ nav.scrolled{padding:12px 72px;}
 .nav-links a{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);text-decoration:none;transition:color .3s,text-shadow .3s;position:relative;}
 .nav-links a:hover{color:var(--white);text-shadow:0 0 18px rgba(201,169,110,.4),0 0 6px rgba(201,169,110,.2);}
 .nav-links a.active{color:var(--gold);text-shadow:0 0 14px rgba(201,169,110,.5),0 0 5px rgba(201,169,110,.25);}
-.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;text-decoration:none;transition:background .3s,color .3s;}
+.nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);text-decoration:none;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
 .page-hero{padding:72px 72px 56px;}
 .page-breadcrumb{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
@@ -205,7 +205,7 @@ footer{padding:48px 72px;display:flex;align-items:center;justify-content:space-b
 .nav-links a.active::after{width:100%;}
 
 /* NAV COMPRAR (outline variant) */
-.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
+.nav-cta-outline{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--white);background:none;border:.5px solid rgba(var(--rgb-text),.3);padding:10px 26px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);text-decoration:none;transition:background .3s,color .3s,border-color .3s;margin-right:10px;cursor:pointer;}
 .nav-cta-outline:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
 
 /* BUY MODAL */
