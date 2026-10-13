@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.utils.text import slugify
 from catalogo.models import FamiliaProducto, Proyecto
 
 
@@ -336,9 +337,10 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Cargando datos iniciales...'))
 
         for data in FAMILIAS_DATA:
-            familia, created = FamiliaProducto.objects.get_or_create(
-                nombre=data['nombre'],
+            familia, created = FamiliaProducto.objects.update_or_create(
+                slug=slugify(data['nombre']),
                 defaults={
+                    'nombre': data['nombre'],
                     'macro': data['macro'],
                     'tipo': data['tipo'],
                     'descripcion': data['descripcion'],
@@ -358,13 +360,6 @@ class Command(BaseCommand):
                 }
             )
             if not created:
-                # Update filter fields on existing records
-                for field in ['macro', 'tipo', 'descripcion', 'skus', 'photo',
-                              'filter_ct', 'filter_ip', 'filter_dim_sys', 'filter_cri',
-                              'filter_v', 'filter_w', 'filter_ubicacion', 'filter_aplicacion',
-                              'filter_montaje', 'has_dim', 'orden']:
-                    setattr(familia, field, data[field])
-                familia.save()
                 self.stdout.write(f'↺ Familia actualizada: {familia.nombre}')
             else:
                 self.stdout.write(f'✓ Familia creada: {familia.nombre}')
