@@ -152,6 +152,12 @@ class FamiliaProductoForm(forms.ModelForm):
         required=False,
         label='Potencia',
     )
+    w_range = forms.JSONField(
+        required=False,
+        label='Rango de potencia (W)',
+        help_text='Rango numérico [min, max] para búsquedas. Ej: [5, 40]',
+        initial=list,
+    )
 
     class Meta:
         model = FamiliaProducto
