@@ -155,6 +155,16 @@ nav.scrolled{padding:12px 72px;}
 .nav-cta{font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--white);padding:11px 28px;clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);text-decoration:none;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
 
+/* LETTERBOX */
+.hero-bar{position:absolute;left:0;right:0;height:13vh;background:#080808;z-index:6;pointer-events:none;transition:transform .9s cubic-bezier(.77,0,.18,1);}
+.hero-bar-top{top:0;}
+.hero-bar-bottom{bottom:0;}
+.hero-bar-top.lbx-out{transform:translateY(-100%);}
+.hero-bar-bottom.lbx-out{transform:translateY(100%);}
+
+/* GRAIN */
+.grain-overlay{position:fixed;inset:0;pointer-events:none;z-index:9997;opacity:.055;will-change:filter;}
+
 /* HERO */
 .hero{position:relative;height:100vh;overflow:hidden;background:#1a1a1a;}
 .hero-slides{position:absolute;inset:0;display:flex;transition:transform .9s cubic-bezier(.77,0,.18,1);}
@@ -652,6 +662,8 @@ a.skip-link:focus{top:8px;}
 
 <div class="hero">
   <div class="hero-slides" id="heroSlides"></div>
+  <div class="hero-bar hero-bar-top" id="lbxTop"></div>
+  <div class="hero-bar hero-bar-bottom" id="lbxBot"></div>
   <div class="hero-nav">
     <div class="hero-dots" id="heroDots"></div>
     <div class="hero-counter" id="heroCounter">— / —</div>
@@ -1220,6 +1232,36 @@ function updateThemeIcons(){
   document.querySelectorAll('.icon-moon').forEach(function(el){el.style.display=isLight?'none':'';});
 }
 document.addEventListener('DOMContentLoaded',updateThemeIcons);
+</script>
+
+<!-- GRAIN -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden;">
+  <filter id="cine-grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".72 .72" numOctaves="4" seed="0" stitchTiles="stitch" result="noise"/>
+    <feColorMatrix type="saturate" values="0" in="noise"/>
+  </filter>
+</svg>
+<div class="grain-overlay" id="grainLayer" style="background:#ede9e2;filter:url(#cine-grain);"></div>
+
+<script>
+(function(){
+  // Film grain
+  var ft = document.querySelector('#cine-grain feTurbulence');
+  if(ft){ var s=0; setInterval(function(){ ft.setAttribute('seed', s=(s+1)%200); }, 50); }
+
+  // Letterbox
+  var top = document.getElementById('lbxTop');
+  var bot = document.getElementById('lbxBot');
+  if(!top||!bot) return;
+  var open = false;
+  window.addEventListener('scroll', function(){
+    var out = window.scrollY > 80;
+    if(out === open) return;
+    open = out;
+    top.classList.toggle('lbx-out', out);
+    bot.classList.toggle('lbx-out', out);
+  }, {passive:true});
+})();
 </script>
 </body>
 </html>
