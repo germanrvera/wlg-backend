@@ -1121,7 +1121,7 @@ document.addEventListener('click', function(e) {
 
 // ─── FILTER UI ────────────────────────────────────────
 function buildFilterUI() {
-  const macros = [...new Set(CATALOG.map(f => f.tipo))].filter(Boolean);
+  const macros = [...new Set(CATALOG.flatMap(f => f.filter_aplicacion || []))].filter(Boolean).sort();
   const cts    = [...new Set(CATALOG.flatMap(f => f.filter_ct))];
   const ips    = [...new Set(CATALOG.flatMap(f => f.filter_ip))];
   const dims   = [...new Set(CATALOG.flatMap(f => f.filter_dim_sys))];
@@ -1158,7 +1158,7 @@ function renderFilterGroup(containerId, values, filterKey, sortFn) {
 
 function countMatching(key, val) {
   return CATALOG.filter(f => {
-    if (key === 'macro') return f.tipo === val;
+    if (key === 'macro') return (f.filter_aplicacion || []).includes(val);
     if (key === 'ct') return f.filter_ct.includes(val);
     if (key === 'ip') return f.filter_ip.includes(val);
     if (key === 'dim') return f.filter_dim_sys.includes(val);
@@ -1204,7 +1204,7 @@ function toggleAcc(btn) {
 
 // ─── FILTERING LOGIC ─────────────────────────────────
 function familyMatches(fam) {
-  if (filters.macro.size && !filters.macro.has(fam.tipo)) return false;
+  if (filters.macro.size && !(fam.filter_aplicacion || []).some(a => filters.macro.has(a))) return false;
   if (filters.ct.size && !fam.filter_ct.some(c => filters.ct.has(c))) return false;
   if (filters.ip.size && !fam.filter_ip.some(ip => filters.ip.has(ip))) return false;
   if (filters.dim.size && !fam.filter_dim_sys.some(d => filters.dim.has(d))) return false;
