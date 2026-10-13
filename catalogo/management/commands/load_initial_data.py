@@ -20,7 +20,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Pared', 'Techo', 'Arquitectónico', 'Comercial', 'Hospitality', 'Museos', 'Oficinas'],
         'filter_montaje': ['Aplicado', 'Embutido'],
         'has_dim': True,
-        'w_range': [4.8, 34.0],
         'orden': 1,
     },
     {
@@ -40,7 +39,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Pared', 'Techo', 'Mueble', 'Residencial', 'Decorativo'],
         'filter_montaje': ['Aplicado'],
         'has_dim': False,
-        'w_range': [4.4, 19.2],
         'orden': 2,
     },
     {
@@ -60,7 +58,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Pared', 'Techo', 'Mueble', 'Arquitectónico', 'Comercial', 'Residencial'],
         'filter_montaje': ['Embutido', 'Aplicado'],
         'has_dim': False,
-        'w_range': [],
         'orden': 3,
     },
     {
@@ -80,7 +77,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Pared', 'Arquitectónico', 'Comercial', 'Hospitality', 'Museos', 'Oficinas', 'Retail'],
         'filter_montaje': ['Embutido'],
         'has_dim': True,
-        'w_range': [5.0, 20.0],
         'orden': 4,
     },
     {
@@ -100,7 +96,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': [],
         'filter_montaje': [],
         'has_dim': False,
-        'w_range': [],
         'orden': 5,
     },
     {
@@ -120,7 +115,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Residencial', 'Comercial', 'Hospitality'],
         'filter_montaje': ['Aplicado'],
         'has_dim': True,
-        'w_range': [5.0, 15.0],
         'orden': 6,
     },
     {
@@ -140,7 +134,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Pared', 'Residencial', 'Comercial'],
         'filter_montaje': ['Aplicado'],
         'has_dim': False,
-        'w_range': [],
         'orden': 7,
     },
     {
@@ -160,7 +153,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Piso', 'Comercial', 'Hospitality', 'Museos', 'Oficinas', 'Residencial', 'Retail'],
         'filter_montaje': ['Embutido'],
         'has_dim': True,
-        'w_range': [3.0, 5.0],
         'orden': 8,
     },
     {
@@ -180,7 +172,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Comercial', 'Hospitality', 'Museos', 'Retail'],
         'filter_montaje': ['Embutido'],
         'has_dim': True,
-        'w_range': [2.0, 20.0],
         'orden': 9,
     },
     {
@@ -200,7 +191,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Arquitectónico', 'Comercial', 'Hospitality', 'Museos', 'Oficinas'],
         'filter_montaje': ['Suspendido', 'Aplicado'],
         'has_dim': True,
-        'w_range': [2.0, 30.0],
         'orden': 10,
     },
     {
@@ -220,7 +210,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Arquitectónico', 'Comercial', 'Residencial'],
         'filter_montaje': ['Suspendido', 'Aplicado'],
         'has_dim': False,
-        'w_range': [],
         'orden': 11,
     },
     {
@@ -240,7 +229,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Comercial', 'Hospitality', 'Museos', 'Oficinas', 'Retail'],
         'filter_montaje': ['Suspendido', 'Aplicado'],
         'has_dim': True,
-        'w_range': [3.0, 27.0],
         'orden': 12,
     },
     {
@@ -260,7 +248,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Techo', 'Pared', 'Arquitectónico', 'Comercial', 'Hospitality'],
         'filter_montaje': ['Embutido'],
         'has_dim': False,
-        'w_range': [],
         'orden': 13,
     },
     {
@@ -280,7 +267,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Pared', 'Comercial', 'Decorativo', 'Hospitality', 'Oficinas', 'Residencial'],
         'filter_montaje': ['Aplicado'],
         'has_dim': True,
-        'w_range': [20.0, 58.0],
         'orden': 14,
     },
     {
@@ -300,7 +286,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Pared', 'Arquitectónico', 'Comercial', 'Hospitality', 'Museos'],
         'filter_montaje': ['Aplicado'],
         'has_dim': True,
-        'w_range': [15.0, 60.0],
         'orden': 15,
     },
     {
@@ -320,7 +305,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': ['Piso', 'Pared', 'Paisajismo', 'Arquitectónico'],
         'filter_montaje': ['Aplicado', 'Embutido'],
         'has_dim': True,
-        'w_range': [3.0, 50.0],
         'orden': 16,
     },
     {
@@ -340,7 +324,6 @@ FAMILIAS_DATA = [
         'filter_aplicacion': [],
         'filter_montaje': [],
         'has_dim': False,
-        'w_range': [],
         'orden': 17,
     },
 ]
@@ -371,7 +354,6 @@ class Command(BaseCommand):
                     'filter_aplicacion': data['filter_aplicacion'],
                     'filter_montaje': data['filter_montaje'],
                     'has_dim': data['has_dim'],
-                    'w_range': data['w_range'],
                     'orden': data['orden'],
                 }
             )
@@ -380,7 +362,7 @@ class Command(BaseCommand):
                 for field in ['macro', 'tipo', 'descripcion', 'skus', 'photo',
                               'filter_ct', 'filter_ip', 'filter_dim_sys', 'filter_cri',
                               'filter_v', 'filter_w', 'filter_ubicacion', 'filter_aplicacion',
-                              'filter_montaje', 'has_dim', 'w_range', 'orden']:
+                              'filter_montaje', 'has_dim', 'orden']:
                     setattr(familia, field, data[field])
                 familia.save()
                 self.stdout.write(f'↺ Familia actualizada: {familia.nombre}')

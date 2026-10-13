@@ -25,7 +25,6 @@ class FamiliaProducto(models.Model):
     filter_aplicacion = models.JSONField(default=list)
     filter_montaje = models.JSONField(default=list)
     has_dim = models.BooleanField(default=False)
-    w_range = models.JSONField(default=list)
 
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)

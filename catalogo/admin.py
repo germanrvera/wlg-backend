@@ -152,13 +152,6 @@ class FamiliaProductoForm(forms.ModelForm):
         required=False,
         label='Potencia',
     )
-    w_range = forms.JSONField(
-        required=False,
-        label='Rango de potencia (W)',
-        help_text='Rango numérico [min, max] para búsquedas. Ej: [5, 40]',
-        initial=list,
-    )
-
     class Meta:
         model = FamiliaProducto
         fields = '__all__'
@@ -217,7 +210,7 @@ class FamiliaProductoAdmin(admin.ModelAdmin):
         }),
         ('Filtros — Especificaciones técnicas', {
             'fields': ('filter_ct', 'filter_ip', 'filter_dim_sys', 'filter_cri',
-                       'filter_v', 'filter_w', 'has_dim', 'w_range'),
+                       'filter_v', 'filter_w', 'has_dim'),
             'classes': ('collapse',),
         }),
     )
