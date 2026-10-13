@@ -330,7 +330,7 @@ document.querySelectorAll('.reveal').forEach(function(el){
         :'<div style="position:absolute;inset:0;background:linear-gradient(135deg,#141414,#0e0e0e);"></div>';
       var prods='';
       if(f.productos&&f.productos.length){
-        prods='<div class="fam-prods reveal"><div class="fam-prods-title">SKUs disponibles — '+f.productos.length+' referencias</div>'+
+        prods='<div class="fam-prods reveal"><div class="fam-prods-title">'+f.productos.length+' referencias disponibles</div>'+
           '<div class="fam-prods-grid">'+
           f.productos.map(function(p){
             return '<div class="fam-prod-card"><div class="fam-prod-code">'+p.cod+'</div><div class="fam-prod-desc">'+p.desc+'</div></div>';
