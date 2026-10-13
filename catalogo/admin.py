@@ -1,8 +1,161 @@
+from django import forms
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
 from .models import FamiliaProducto, Producto, Proyecto, HeroSlide, Configuracion, Distribuidor, RecursoDescargable, Lanzamiento
+
+
+# ── Choices para los filtros ────────────────────────────────────────────────
+
+APLICACION_CHOICES = [
+    ('Segmento de mercado', [
+        ('Arquitectónico', 'Arquitectónico'),
+        ('Comercial', 'Comercial'),
+        ('Decorativo', 'Decorativo'),
+        ('Hospitality', 'Hospitality'),
+        ('Museos', 'Museos'),
+        ('Oficinas', 'Oficinas'),
+        ('Paisajismo', 'Paisajismo'),
+        ('Residencial', 'Residencial'),
+        ('Retail', 'Retail'),
+    ]),
+    ('Superficie', [
+        ('Mueble', 'Mueble'),
+        ('Pared', 'Pared'),
+        ('Piso', 'Piso'),
+        ('Techo', 'Techo'),
+    ]),
+]
+
+UBICACION_CHOICES = [
+    ('Interior', 'Interior'),
+    ('Exterior', 'Exterior'),
+]
+
+MONTAJE_CHOICES = [
+    ('Aplicado', 'Aplicado'),
+    ('Embutido', 'Embutido'),
+    ('Suspendido', 'Suspendido'),
+]
+
+CT_CHOICES = [
+    ('2700K', '2700K'),
+    ('3000K', '3000K'),
+    ('4000K', '4000K'),
+    ('CCT/Dinámico', 'CCT / Dinámico'),
+]
+
+IP_CHOICES = [
+    ('IP20', 'IP20'),
+    ('IP33', 'IP33'),
+    ('IP44', 'IP44'),
+    ('IP65', 'IP65'),
+]
+
+DIM_CHOICES = [
+    ('1-10V', '1-10V'),
+    ('Casambi', 'Casambi'),
+    ('DALI', 'DALI'),
+    ('DMX', 'DMX'),
+    ('TRIAC', 'TRIAC'),
+    ('WiFi', 'WiFi'),
+]
+
+CRI_CHOICES = [
+    ('CRI≥80', 'CRI ≥ 80'),
+    ('CRI≥90', 'CRI ≥ 90'),
+    ('CRI≥95', 'CRI ≥ 95'),
+]
+
+V_CHOICES = [
+    ('12V', '12 V'),
+    ('24V', '24 V'),
+    ('36V', '36 V'),
+    ('48V', '48 V'),
+    ('220V', '220 V'),
+]
+
+W_CHOICES = [
+    ('<10 W', '< 10 W'),
+    ('10-20 W', '10–20 W'),
+    ('20-40 W', '20–40 W'),
+    ('>40 W', '> 40 W'),
+]
+
+
+# ── Campo personalizado que lee/escribe un JSONField como lista ─────────────
+
+class JSONMultipleChoiceField(forms.MultipleChoiceField):
+    widget = forms.CheckboxSelectMultiple
+
+    def prepare_value(self, value):
+        if isinstance(value, list):
+            return value
+        return super().prepare_value(value)
+
+    def to_python(self, value):
+        if not value:
+            return []
+        return list(value)
+
+    def valid_value(self, value):
+        return True  # acepta valores legacy fuera de las choices
+
+
+# ── Formulario personalizado para FamiliaProducto ───────────────────────────
+
+class FamiliaProductoForm(forms.ModelForm):
+    filter_aplicacion = JSONMultipleChoiceField(
+        choices=APLICACION_CHOICES,
+        required=False,
+        label='Categoría / Aplicación',
+        help_text='Segmento de mercado + tipo de superficie.',
+    )
+    filter_ubicacion = JSONMultipleChoiceField(
+        choices=UBICACION_CHOICES,
+        required=False,
+        label='Ubicación',
+    )
+    filter_montaje = JSONMultipleChoiceField(
+        choices=MONTAJE_CHOICES,
+        required=False,
+        label='Montaje',
+    )
+    filter_ct = JSONMultipleChoiceField(
+        choices=CT_CHOICES,
+        required=False,
+        label='Temperatura de color',
+    )
+    filter_ip = JSONMultipleChoiceField(
+        choices=IP_CHOICES,
+        required=False,
+        label='Protección IP',
+    )
+    filter_dim_sys = JSONMultipleChoiceField(
+        choices=DIM_CHOICES,
+        required=False,
+        label='Sistema de dimming',
+    )
+    filter_cri = JSONMultipleChoiceField(
+        choices=CRI_CHOICES,
+        required=False,
+        label='CRI',
+    )
+    filter_v = JSONMultipleChoiceField(
+        choices=V_CHOICES,
+        required=False,
+        label='Voltaje',
+    )
+    filter_w = JSONMultipleChoiceField(
+        choices=W_CHOICES,
+        required=False,
+        label='Potencia',
+    )
+
+    class Meta:
+        model = FamiliaProducto
+        fields = '__all__'
 
 
 class ProductoResource(resources.ModelResource):
@@ -38,6 +191,7 @@ class ProductoAdmin(ImportExportModelAdmin):
 
 @admin.register(FamiliaProducto)
 class FamiliaProductoAdmin(admin.ModelAdmin):
+    form = FamiliaProductoForm
     list_display = ['nombre', 'tipo', 'macro', 'orden', 'activo']
     list_filter = ['activo', 'tipo', 'has_dim']
     search_fields = ['nombre', 'descripcion', 'macro']
@@ -61,6 +215,9 @@ class FamiliaProductoAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
+
+    class Media:
+        css = {'all': ('admin/css/wlg_filter_checkboxes.css',)}
 
 
 @admin.register(HeroSlide)

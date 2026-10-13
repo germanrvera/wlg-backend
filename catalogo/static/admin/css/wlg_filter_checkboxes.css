@@ -1,0 +1,87 @@
+/* WLG Admin — checkbox grids para filtros de FamiliaProducto */
+
+/* Contenedor de cada grupo de checkboxes */
+.field-filter_aplicacion .checkboxselectmultiple,
+.field-filter_ubicacion .checkboxselectmultiple,
+.field-filter_montaje .checkboxselectmultiple,
+.field-filter_ct .checkboxselectmultiple,
+.field-filter_ip .checkboxselectmultiple,
+.field-filter_dim_sys .checkboxselectmultiple,
+.field-filter_cri .checkboxselectmultiple,
+.field-filter_v .checkboxselectmultiple,
+.field-filter_w .checkboxselectmultiple {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 8px 0;
+}
+
+/* Cada opción como pill */
+.field-filter_aplicacion .checkboxselectmultiple li,
+.field-filter_ubicacion .checkboxselectmultiple li,
+.field-filter_montaje .checkboxselectmultiple li,
+.field-filter_ct .checkboxselectmultiple li,
+.field-filter_ip .checkboxselectmultiple li,
+.field-filter_dim_sys .checkboxselectmultiple li,
+.field-filter_cri .checkboxselectmultiple li,
+.field-filter_v .checkboxselectmultiple li,
+.field-filter_w .checkboxselectmultiple li {
+    list-style: none;
+    margin: 0;
+}
+
+.field-filter_aplicacion .checkboxselectmultiple label,
+.field-filter_ubicacion .checkboxselectmultiple label,
+.field-filter_montaje .checkboxselectmultiple label,
+.field-filter_ct .checkboxselectmultiple label,
+.field-filter_ip .checkboxselectmultiple label,
+.field-filter_dim_sys .checkboxselectmultiple label,
+.field-filter_cri .checkboxselectmultiple label,
+.field-filter_v .checkboxselectmultiple label,
+.field-filter_w .checkboxselectmultiple label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 3px 0;
+}
+
+/* Optgroups (Segmento de mercado / Superficie) en filter_aplicacion */
+.field-filter_aplicacion .checkboxselectmultiple fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+}
+
+.field-filter_aplicacion .checkboxselectmultiple legend {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 4px;
+    padding: 0;
+}
+
+.field-filter_aplicacion .checkboxselectmultiple fieldset ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Acento al hacer hover sobre el label */
+.field-filter_aplicacion .checkboxselectmultiple label:hover,
+.field-filter_ubicacion .checkboxselectmultiple label:hover,
+.field-filter_montaje .checkboxselectmultiple label:hover,
+.field-filter_ct .checkboxselectmultiple label:hover,
+.field-filter_ip .checkboxselectmultiple label:hover,
+.field-filter_dim_sys .checkboxselectmultiple label:hover,
+.field-filter_cri .checkboxselectmultiple label:hover,
+.field-filter_v .checkboxselectmultiple label:hover,
+.field-filter_w .checkboxselectmultiple label:hover {
+    color: #c9a96e;
+}
