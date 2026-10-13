@@ -737,6 +737,16 @@ function removeChip(key,val,btn){
       </div>
     </div>
 
+    <!-- Aplicación -->
+    <div class="acc-group">
+      <button class="acc-head open" onclick="toggleAcc(this)">
+        Aplicación <div class="acc-arrow"></div>
+      </button>
+      <div class="acc-body open">
+        <div class="acc-inner" id="filter-aplic"></div>
+      </div>
+    </div>
+
     <!-- Ubicación -->
     <div class="acc-group">
       <button class="acc-head open" onclick="toggleAcc(this)">
@@ -1084,7 +1094,8 @@ let CATALOG = [];
 
 // ─── STATE ───────────────────────────────────────────
 function track(event, label) { /* analytics hook placeholder */ }
-const filters = { macro: new Set(), ct: new Set(), ip: new Set(), dim: new Set(), dimFilter: new Set(), cri: new Set(), w: new Set(), v: new Set(), ubicacion: new Set(), montaje: new Set(), color: new Set() };
+const SEGMENTOS = new Set(['Arquitectónico','Comercial','Decorativo','Hospitality','Museos','Oficinas','Paisajismo','Residencial','Retail']);
+const filters = { macro: new Set(), aplic: new Set(), ct: new Set(), ip: new Set(), dim: new Set(), dimFilter: new Set(), cri: new Set(), w: new Set(), v: new Set(), ubicacion: new Set(), montaje: new Set(), color: new Set() };
 const W_ORDER = ['<10 W','10–20 W','20–40 W','>40 W'];
 let searchQuery = '';
 let currentView = 'grid';
@@ -1121,7 +1132,9 @@ document.addEventListener('click', function(e) {
 
 // ─── FILTER UI ────────────────────────────────────────
 function buildFilterUI() {
-  const macros = [...new Set(CATALOG.flatMap(f => f.filter_aplicacion || []))].filter(Boolean).sort();
+  const allAplic = [...new Set(CATALOG.flatMap(f => f.filter_aplicacion || []))].filter(Boolean);
+  const macros = allAplic.filter(v => SEGMENTOS.has(v)).sort();
+  const aplics = allAplic.filter(v => !SEGMENTOS.has(v)).sort();
   const cts    = [...new Set(CATALOG.flatMap(f => f.filter_ct))];
   const ips    = [...new Set(CATALOG.flatMap(f => f.filter_ip))];
   const dims   = [...new Set(CATALOG.flatMap(f => f.filter_dim_sys))];
@@ -1133,6 +1146,7 @@ function buildFilterUI() {
   const colors = [...new Set(CATALOG.flatMap(f => f.productos.map(p => productoColor(p))))];
 
   renderFilterGroup('filter-macro', macros, 'macro');
+  renderFilterGroup('filter-aplic', aplics, 'aplic');
   renderFilterGroup('filter-ct', cts, 'ct');
   renderFilterGroup('filter-ip', ips, 'ip');
   renderFilterGroup('filter-dim', dims, 'dim');
@@ -1158,7 +1172,7 @@ function renderFilterGroup(containerId, values, filterKey, sortFn) {
 
 function countMatching(key, val) {
   return CATALOG.filter(f => {
-    if (key === 'macro') return (f.filter_aplicacion || []).includes(val);
+    if (key === 'macro' || key === 'aplic') return (f.filter_aplicacion || []).includes(val);
     if (key === 'ct') return f.filter_ct.includes(val);
     if (key === 'ip') return f.filter_ip.includes(val);
     if (key === 'dim') return f.filter_dim_sys.includes(val);
@@ -1205,6 +1219,7 @@ function toggleAcc(btn) {
 // ─── FILTERING LOGIC ─────────────────────────────────
 function familyMatches(fam) {
   if (filters.macro.size && !(fam.filter_aplicacion || []).some(a => filters.macro.has(a))) return false;
+  if (filters.aplic.size && !(fam.filter_aplicacion || []).some(a => filters.aplic.has(a))) return false;
   if (filters.ct.size && !fam.filter_ct.some(c => filters.ct.has(c))) return false;
   if (filters.ip.size && !fam.filter_ip.some(ip => filters.ip.has(ip))) return false;
   if (filters.dim.size && !fam.filter_dim_sys.some(d => filters.dim.has(d))) return false;
@@ -1403,7 +1418,7 @@ function renderActiveChips() {
   var chips = [];
   // Recorre todos los filtros activos (usa `filters`, los Sets correctos)
   var labelMap = {
-    macro:'Categoría', ubicacion:'Ubicación', montaje:'Montaje',
+    macro:'Categoría', aplic:'Aplicación', ubicacion:'Ubicación', montaje:'Montaje',
     ct:'Temperatura', ip:'IP', cri:'CRI', color:'Acabado',
     w:'Potencia', v:'Voltaje', dim:'Dimming'
   };
