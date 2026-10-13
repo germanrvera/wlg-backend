@@ -741,10 +741,10 @@ function removeChip(key,val,btn){
       </div>
     </div>
 
-    <!-- Categoría -->
+    <!-- Aplicación -->
     <div class="acc-group">
       <button class="acc-head open" onclick="toggleAcc(this)">
-        Categoría <div class="acc-arrow"></div>
+        Aplicación <div class="acc-arrow"></div>
       </button>
       <div class="acc-body open">
         <div class="acc-inner" id="filter-macro"></div>
@@ -1098,7 +1098,7 @@ let CATALOG = [];
 
 // ─── STATE ───────────────────────────────────────────
 function track(event, label) { /* analytics hook placeholder */ }
-const filters = { macro: new Set(), ct: new Set(), ip: new Set(), dim: new Set(), dimFilter: new Set(), cri: new Set(), w: new Set(), v: new Set(), ubicacion: new Set(), aplicacion: new Set(), montaje: new Set(), color: new Set() };
+const filters = { macro: new Set(), ct: new Set(), ip: new Set(), dim: new Set(), dimFilter: new Set(), cri: new Set(), w: new Set(), v: new Set(), ubicacion: new Set(), montaje: new Set(), color: new Set() };
 const W_ORDER = ['<10 W','10–20 W','20–40 W','>40 W'];
 let searchQuery = '';
 let currentView = 'grid';
@@ -1135,7 +1135,7 @@ document.addEventListener('click', function(e) {
 
 // ─── FILTER UI ────────────────────────────────────────
 function buildFilterUI() {
-  const macros = [...new Set(CATALOG.map(f => f.macro))].filter(m => m !== 'Accesorios');
+  const macros = [...new Set(CATALOG.map(f => f.tipo))].filter(Boolean);
   const cts    = [...new Set(CATALOG.flatMap(f => f.filter_ct))];
   const ips    = [...new Set(CATALOG.flatMap(f => f.filter_ip))];
   const dims   = [...new Set(CATALOG.flatMap(f => f.filter_dim_sys))];
@@ -1187,7 +1187,7 @@ function renderFilterGroup(containerId, values, filterKey, sortFn) {
 
 function countMatching(key, val) {
   return CATALOG.filter(f => {
-    if (key === 'macro') return f.macro === val;
+    if (key === 'macro') return f.tipo === val;
     if (key === 'ct') return f.filter_ct.includes(val);
     if (key === 'ip') return f.filter_ip.includes(val);
     if (key === 'dim') return f.filter_dim_sys.includes(val);
@@ -1234,7 +1234,7 @@ function toggleAcc(btn) {
 
 // ─── FILTERING LOGIC ─────────────────────────────────
 function familyMatches(fam) {
-  if (filters.macro.size && !filters.macro.has(fam.macro)) return false;
+  if (filters.macro.size && !filters.macro.has(fam.tipo)) return false;
   if (filters.ct.size && !fam.filter_ct.some(c => filters.ct.has(c))) return false;
   if (filters.ip.size && !fam.filter_ip.some(ip => filters.ip.has(ip))) return false;
   if (filters.dim.size && !fam.filter_dim_sys.some(d => filters.dim.has(d))) return false;
@@ -1249,15 +1249,13 @@ function familyMatches(fam) {
   if (filters.w.size && !fam.filter_w.some(w => filters.w.has(w))) return false;
   if (filters.v.size && !fam.filter_v.some(v => filters.v.has(v))) return false;
   if (filters.ubicacion.size && !fam.filter_ubicacion.some(u => filters.ubicacion.has(u))) return false;
-  if (filters.aplicacion.size && !fam.filter_aplicacion.some(a => filters.aplicacion.has(a))) return false;
   if (filters.montaje.size && !fam.filter_montaje.some(m => filters.montaje.has(m))) return false;
   if (searchQuery) {
     const q = searchQuery;
     const inNombre = fam.nombre.toLowerCase().includes(q);
     const inDesc = fam.desc.toLowerCase().includes(q);
-    const inMacro = (fam.macro || '').toLowerCase().includes(q);
-    const inAplicacion = (fam.filter_aplicacion || []).some(a => a.toLowerCase().includes(q));
-    if (!inNombre && !inDesc && !inMacro && !inAplicacion) return false;
+    const inTipo = (fam.tipo || '').toLowerCase().includes(q);
+    if (!inNombre && !inDesc && !inTipo) return false;
   }
   return true;
 }
@@ -1384,7 +1382,7 @@ function buildCards() {
   document.getElementById('resultCount').textContent = visible.length + (visible.length === 1 ? ' familia' : ' familias');
 
   visible.forEach(fam => {
-    const prodCount = groupProductos(fam.productos, fam.macro).filter(g => g.tipo !== 'accesorio').length;
+    const prodCount = groupProductos(fam.productos, fam.tipo).filter(g => g.tipo !== 'accesorio').length;
 
     const card = document.createElement('div');
     card.className = 'fam-card';
@@ -1393,7 +1391,7 @@ function buildCards() {
         <img class="img-product" src="${fam.photo}" alt="${fam.nombre}" loading="lazy">
         ${fam.photoApp ? `<img class="img-app" src="${fam.photoApp}" alt="${fam.nombre} — aplicación" loading="lazy">` : ''}
         <div class="fam-img-overlay"></div>
-        <span class="fam-macro-tag">${fam.macro}</span>
+        <span class="fam-macro-tag">${fam.tipo}</span>
       </div>
       <div class="fam-body">
         <div class="fam-name">${fam.nombre}</div>
@@ -1435,9 +1433,9 @@ function renderActiveChips() {
   var chips = [];
   // Recorre todos los filtros activos (usa `filters`, los Sets correctos)
   var labelMap = {
-    macro:'Categoría', ubicacion:'Ubicación', montaje:'Montaje',
+    macro:'Aplicación', ubicacion:'Ubicación', montaje:'Montaje',
     ct:'Temperatura', ip:'IP', cri:'CRI', color:'Acabado',
-    w:'Potencia', v:'Voltaje', dim:'Dimming', aplicacion:'Aplicación'
+    w:'Potencia', v:'Voltaje', dim:'Dimming'
   };
   Object.keys(filters).forEach(function(key) {
     if (key === 'dimFilter') return; // manejado por separado
@@ -1576,7 +1574,7 @@ function openDetail(famName) {
   }
 
   // Header
-  document.getElementById('dfsMacro').textContent = fam.macro;
+  document.getElementById('dfsMacro').textContent = fam.tipo;
   document.getElementById('dfsName').textContent = fam.nombre;
   document.getElementById('dfsDesc').textContent = fam.desc;
 
@@ -1604,14 +1602,14 @@ function openDetail(famName) {
   }
 
   // Related families (same macro)
-  const rel = CATALOG.filter(f => f.macro===fam.macro && f.nombre!==fam.nombre).slice(0,4);
+  const rel = CATALOG.filter(f => f.tipo===fam.tipo && f.nombre!==fam.nombre).slice(0,4);
   document.getElementById('dfsRelGrid').innerHTML = rel.map(r => {
-    const rCount = groupProductos(r.productos, r.macro).filter(g => g.tipo !== 'accesorio').length;
+    const rCount = groupProductos(r.productos, r.tipo).filter(g => g.tipo !== 'accesorio').length;
     return `<div class="dfs-rel-card" onclick="openDetail('${r.nombre}')">
       <img src="${r.photo}" alt="${r.nombre}" loading="lazy">
       <div class="dfs-rel-info"><div class="dfs-rel-name">${r.nombre}</div><div class="dfs-rel-count">${rCount} ${rCount===1?'producto':'productos'}</div></div>
     </div>`;
-  }).join('') || '<div style="font-size:13px;color:var(--gray);grid-column:1/-1;padding:8px 0">Sin familias relacionadas en esta categoría</div>';
+  }).join('') || '<div style="font-size:13px;color:var(--gray);grid-column:1/-1;padding:8px 0">Sin familias relacionadas</div>';
 
   // Open
   document.getElementById('detailFS').classList.add('open');
