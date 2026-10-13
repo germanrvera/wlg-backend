@@ -164,16 +164,6 @@ nav.scrolled{padding:12px 72px;}
 .filter-opt.active .fcheck{opacity:1;}
 .filter-count-badge{margin-left:auto;font-size:12px;color:var(--gray);}
 
-/* APPLICATION TILES — entrada rápida por uso */
-.app-tiles-section{padding:28px 72px 8px;border-bottom:.5px solid rgba(var(--rgb-text),.06);}
-.app-tiles-label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);margin-bottom:14px;}
-.app-tiles{display:flex;gap:10px;flex-wrap:wrap;}
-.app-tile{flex:1 1 150px;min-width:150px;background:var(--bg2);border:.5px solid rgba(var(--rgb-text),.08);padding:16px 18px;cursor:pointer;text-align:left;font-family:var(--sans);transition:border-color .2s,background .2s;}
-.app-tile:hover{border-color:rgba(201,169,110,.4);background:var(--bg3);}
-.app-tile.active{border-color:var(--gold);background:var(--bg3);}
-.app-tile-name{font-size:14px;color:var(--white2);letter-spacing:.04em;}
-.app-tile.active .app-tile-name{color:var(--white);}
-.app-tile-count{font-size:11px;color:var(--gray);margin-top:5px;letter-spacing:.06em;}
 
 /* ADVANCED FILTERS — specs técnicas agrupadas */
 .acc-group-advanced .acc-body.open{max-height:1400px;}
@@ -718,10 +708,6 @@ function removeChip(key,val,btn){
   </div>
 </div>
 
-<div class="app-tiles-section">
-  <div class="app-tiles-label">Buscar por aplicación</div>
-  <div class="app-tiles" id="appTiles"></div>
-</div>
 
 <!-- Mobile filter FAB -->
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeMobileSidebar()"></div>
@@ -1143,7 +1129,6 @@ function buildFilterUI() {
   const ws     = [...new Set(CATALOG.flatMap(f => f.filter_w))];
   const vs     = [...new Set(CATALOG.flatMap(f => f.filter_v))];
   const ubics  = [...new Set(CATALOG.flatMap(f => f.filter_ubicacion))];
-  const aplics = [...new Set(CATALOG.flatMap(f => f.filter_aplicacion))];
   const monts  = [...new Set(CATALOG.flatMap(f => f.filter_montaje))];
   const colors = [...new Set(CATALOG.flatMap(f => f.productos.map(p => productoColor(p))))];
 
@@ -1157,22 +1142,8 @@ function buildFilterUI() {
   renderFilterGroup('filter-v', vs, 'v', (a,b) => parseInt(a) - parseInt(b));
   renderFilterGroup('filter-ubicacion', ubics, 'ubicacion', (a,b) => (a==='Interior'?0:1) - (b==='Interior'?0:1));
   renderFilterGroup('filter-montaje', monts, 'montaje');
-  renderAppTiles(aplics);
 }
 
-function renderAppTiles(values) {
-  const el = document.getElementById('appTiles');
-  if (!el) return;
-  const sorted = [...values].sort();
-  el.innerHTML = sorted.map(v => {
-    const n = countMatching('aplicacion', v);
-    return `
-    <button class="app-tile" onclick="toggleFilter('aplicacion','${v}',this)" data-val="${v}">
-      <div class="app-tile-name">${v}</div>
-      <div class="app-tile-count">${n} ${n === 1 ? 'familia' : 'familias'}</div>
-    </button>`;
-  }).join('');
-}
 
 function renderFilterGroup(containerId, values, filterKey, sortFn) {
   const el = document.getElementById(containerId);
@@ -1221,7 +1192,6 @@ function clearFilters() {
   Object.values(filters).forEach(s => s.clear());
   searchQuery = '';
   document.querySelectorAll('.filter-opt').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.app-tile').forEach(b => b.classList.remove('active'));
   document.querySelector('.search-inline input').value = '';
   buildCards();
 }
@@ -1505,12 +1475,6 @@ function removeActiveChip(key, val) {
         btn.classList.remove('active');
       }
     });
-    // Desactivar app-tile si corresponde
-    if (key === 'aplicacion') {
-      document.querySelectorAll('.app-tile[data-val]').forEach(function(t) {
-        if (t.dataset.val === val) t.classList.remove('active');
-      });
-    }
   }
   buildCards();
 }
