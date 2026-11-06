@@ -111,8 +111,9 @@ nav.scrolled{padding:12px 72px;}
 .fam-prods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--dim2);}
 .fam-prod-card{background:var(--bg);padding:28px 24px;display:flex;flex-direction:column;gap:8px;transition:background .2s;}
 .fam-prod-card:hover{background:var(--bg3);}
-.fam-prod-code{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:400;}
-.fam-prod-desc{font-size:14px;font-weight:300;color:var(--dim);line-height:1.5;}
+.fam-prod-desc{font-size:14px;font-weight:400;color:var(--white);line-height:1.4;margin-bottom:10px;}
+.fam-prod-codes{display:flex;flex-wrap:wrap;gap:6px;}
+.fam-prod-code{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:400;background:rgba(var(--rgb-text),.05);padding:3px 8px;}
 
 /* EMPTY */
 .fam-empty{padding:80px 72px;text-align:center;color:var(--gray2);font-size:15px;letter-spacing:.06em;}
@@ -330,10 +331,12 @@ document.querySelectorAll('.reveal').forEach(function(el){
         :'<div style="position:absolute;inset:0;background:linear-gradient(135deg,#141414,#0e0e0e);"></div>';
       var prods='';
       if(f.productos&&f.productos.length){
+        var groups={};var gorder=[];
+        f.productos.forEach(function(p){if(!groups[p.desc]){groups[p.desc]=[];gorder.push(p.desc);}groups[p.desc].push(p.cod);});
         prods='<div class="fam-prods reveal"><div class="fam-prods-title">'+f.productos.length+' referencias disponibles</div>'+
           '<div class="fam-prods-grid">'+
-          f.productos.map(function(p){
-            return '<div class="fam-prod-card"><div class="fam-prod-code">'+p.cod+'</div><div class="fam-prod-desc">'+p.desc+'</div></div>';
+          gorder.map(function(desc){
+            return '<div class="fam-prod-card"><div class="fam-prod-desc">'+desc+'</div><div class="fam-prod-codes">'+groups[desc].map(function(c){return '<span class="fam-prod-code">'+c+'</span>';}).join('')+'</div></div>';
           }).join('')+
           '</div></div>';
       }else{
