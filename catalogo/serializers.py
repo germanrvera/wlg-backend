@@ -27,7 +27,26 @@ class FamiliaProductoSerializer(serializers.ModelSerializer):
 
     def get_productos(self, obj):
         qs = obj.items.filter(activo=True).order_by('orden', 'codigo')
-        return ProductoSerializer(qs, many=True).data
+        groups = {}
+        order = []
+        for p in qs:
+            if p.descripcion not in groups:
+                groups[p.descripcion] = []
+                order.append(p.descripcion)
+            groups[p.descripcion].append({
+                'cod': p.codigo,
+                'ct': p.ct or '',
+                'cri': p.cri or '',
+                'w': p.w or '',
+                'lm': p.lm or '',
+                'v': p.v or '',
+                'ip': p.ip or '',
+                'dim': p.dim or '',
+                'dim_sys': p.dim_sys or '',
+                'angulo': p.angulo or '',
+                'acabado': p.acabado or '',
+            })
+        return [{'desc': desc, 'variantes': groups[desc]} for desc in order]
 
     def get_skus(self, obj):
         return obj.items.filter(activo=True).count()

@@ -54,6 +54,18 @@ class Producto(models.Model):
     activo = models.BooleanField(default=True)
     orden = models.PositiveSmallIntegerField(default=0)
 
+    # Especificaciones técnicas
+    ct = models.CharField(max_length=60, blank=True, verbose_name='Temperatura de Color')
+    cri = models.CharField(max_length=20, blank=True, verbose_name='CRI')
+    w = models.CharField(max_length=20, blank=True, verbose_name='Potencia (W/M o W)')
+    lm = models.CharField(max_length=20, blank=True, verbose_name='Flujo (lm/M o lm)')
+    v = models.CharField(max_length=20, blank=True, verbose_name='Voltaje')
+    ip = models.CharField(max_length=20, blank=True, verbose_name='Protección IP')
+    dim = models.CharField(max_length=10, blank=True, verbose_name='Dimmable (Sí/No)')
+    dim_sys = models.CharField(max_length=60, blank=True, verbose_name='Sistema de Dimming')
+    angulo = models.CharField(max_length=20, blank=True, verbose_name='Ángulo')
+    acabado = models.CharField(max_length=40, blank=True, verbose_name='Acabado')
+
     class Meta:
         verbose_name = 'Producto'
         verbose_name_plural = 'Productos'
