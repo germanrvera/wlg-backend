@@ -1330,21 +1330,18 @@ function productPhoto(group, fam) {
 }
 
 function groupProductos(productos, macro) {
-  const map = new Map();
-  (productos || []).forEach(p => {
-    const key = productBaseKey(p.cod);
-    if (!map.has(key)) map.set(key, []);
-    map.get(key).push(p);
-  });
-  // Si la familia entera es de macro "Accesorios" (ej. FUENTES, SISTEMAS CONTROL),
-  // todo es "producto" propio de esa familia — no tiene sentido sub-clasificar accesorios ahí.
+  // La API devuelve [{desc, variantes:[cod,...]}] — ya agrupado por descripción.
+  // Expandimos a {cod, desc} por variante para mantener compatibilidad con productoColor y filtros.
   const skipSplit = macro === 'Accesorios';
-  return [...map.entries()].map(([key, items]) => ({
-    key,
-    nombre: productDisplayName(items),
-    items,
-    tipo: (!skipSplit && isAccessoryDesc(items[0].desc)) ? 'accesorio' : 'producto'
-  }));
+  return (productos || []).map(p => {
+    const items = (p.variantes || []).map(cod => ({ cod, desc: p.desc }));
+    return {
+      key: p.desc,
+      nombre: productDisplayName(items),
+      items,
+      tipo: (!skipSplit && isAccessoryDesc(p.desc)) ? 'accesorio' : 'producto'
+    };
+  });
 }
 
 // ─── CARD BUILDING ────────────────────────────────────
