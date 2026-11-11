@@ -1330,11 +1330,12 @@ function productPhoto(group, fam) {
 }
 
 function groupProductos(productos, macro) {
-  // La API devuelve [{desc, variantes:[cod,...]}] — ya agrupado por descripción.
-  // Expandimos a {cod, desc} por variante para mantener compatibilidad con productoColor y filtros.
   const skipSplit = macro === 'Accesorios';
   return (productos || []).map(p => {
-    const items = (p.variantes || []).map(cod => ({ cod, desc: p.desc }));
+    const items = (p.variantes || []).map(v => {
+      if (typeof v === 'string') return { cod: v, desc: p.desc };
+      return { ...v, desc: p.desc };
+    });
     return {
       key: p.desc,
       nombre: productDisplayName(items),

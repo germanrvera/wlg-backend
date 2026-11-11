@@ -335,7 +335,7 @@ document.querySelectorAll('.reveal').forEach(function(el){
         prods='<div class="fam-prods reveal"><div class="fam-prods-title">'+totalSkus+' referencias disponibles</div>'+
           '<div class="fam-prods-grid">'+
           f.productos.map(function(p){
-            return '<div class="fam-prod-card"><div class="fam-prod-desc">'+p.desc+'</div><div class="fam-prod-codes">'+p.variantes.map(function(c){return '<span class="fam-prod-code">'+c+'</span>';}).join('')+'</div></div>';
+            return '<div class="fam-prod-card"><div class="fam-prod-desc">'+p.desc+'</div><div class="fam-prod-codes">'+p.variantes.map(function(c){return '<span class="fam-prod-code">'+(c.cod||c)+'</span>';}).join('')+'</div></div>';
           }).join('')+
           '</div></div>';
       }else{

@@ -33,7 +33,19 @@ class FamiliaProductoSerializer(serializers.ModelSerializer):
             if p.descripcion not in groups:
                 groups[p.descripcion] = []
                 order.append(p.descripcion)
-            groups[p.descripcion].append(p.codigo)
+            groups[p.descripcion].append({
+                'cod': p.codigo,
+                'ct': p.ct or '',
+                'cri': p.cri or '',
+                'w': p.w or '',
+                'lm': p.lm or '',
+                'v': p.v or '',
+                'ip': p.ip or '',
+                'dim': p.dim or '',
+                'dim_sys': p.dim_sys or '',
+                'angulo': p.angulo or '',
+                'acabado': p.acabado or '',
+            })
         return [{'desc': desc, 'variantes': groups[desc]} for desc in order]
 
     def get_skus(self, obj):

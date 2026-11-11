@@ -8,6 +8,7 @@ python manage.py migrate --noinput
 
 echo "2. Loading initial data..."
 python manage.py load_initial_data
+python manage.py populate_productos
 
 echo "3. Creating admin user..."
 python manage.py create_admin
