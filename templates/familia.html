@@ -114,6 +114,8 @@ nav.scrolled{padding:12px 72px;}
 .fam-prod-desc{font-size:14px;font-weight:400;color:var(--white);line-height:1.4;margin-bottom:10px;}
 .fam-prod-codes{display:flex;flex-wrap:wrap;gap:6px;}
 .fam-prod-code{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:400;background:rgba(var(--rgb-text),.05);padding:3px 8px;}
+.fam-prod-specs{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;padding-top:10px;border-top:.5px solid var(--dim2);}
+.fam-prod-spec{font-size:10px;letter-spacing:.06em;color:var(--dim);padding:2px 7px;border:.5px solid var(--dim2);}
 
 /* EMPTY */
 .fam-empty{padding:80px 72px;text-align:center;color:var(--gray2);font-size:15px;letter-spacing:.06em;}
@@ -335,7 +337,16 @@ document.querySelectorAll('.reveal').forEach(function(el){
         prods='<div class="fam-prods reveal"><div class="fam-prods-title">'+totalSkus+' referencias disponibles</div>'+
           '<div class="fam-prods-grid">'+
           f.productos.map(function(p){
-            return '<div class="fam-prod-card"><div class="fam-prod-desc">'+p.desc+'</div><div class="fam-prod-codes">'+p.variantes.map(function(c){return '<span class="fam-prod-code">'+(c.cod||c)+'</span>';}).join('')+'</div></div>';
+            var vv=p.variantes;
+            var sh=[];
+            ['ct','cri','w','lm','v','ip','angulo','acabado'].forEach(function(k){
+              var v0=(vv[0]&&vv[0][k])||'';
+              if(v0&&vv.every(function(c){return(c[k]||'')==v0;})){sh.push(k==='cri'?'CRI '+v0:v0);}
+            });
+            var dv=(vv[0]&&vv[0].dim)||'';var ds=(vv[0]&&vv[0].dim_sys)||'';
+            if((dv==='Sí'||dv==='Si')&&vv.every(function(c){return(c.dim||'')==dv;})){sh.push('Dim.'+(ds?' '+ds:''));}
+            var specsHtml=sh.length?'<div class="fam-prod-specs">'+sh.map(function(s){return '<span class="fam-prod-spec">'+s+'</span>';}).join('')+'</div>':'';
+            return '<div class="fam-prod-card"><div class="fam-prod-desc">'+p.desc+'</div><div class="fam-prod-codes">'+vv.map(function(c){return '<span class="fam-prod-code">'+(c.cod||c)+'</span>';}).join('')+'</div>'+specsHtml+'</div>';
           }).join('')+
           '</div></div>';
       }else{
