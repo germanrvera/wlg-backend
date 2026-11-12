@@ -1,0 +1,60 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Importar Productos desde Excel{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Inicio</a>
+  &rsaquo; <a href="{% url 'admin:catalogo_producto_changelist' %}">Productos</a>
+  &rsaquo; Importar desde Excel
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>Importar Productos desde Excel</h1>
+
+<div style="max-width:620px;">
+  <p>
+    Subí el archivo <strong>WLG_Productos_para_SAP.xlsx</strong> (hoja <code>Productos</code>).
+    Todos los productos existentes serán actualizados; los nuevos serán creados.
+    Los productos de las secciones no reconocidas (ej. <em>Productos discontinuos</em>) se omiten.
+  </p>
+
+  <table class="help" style="margin-bottom:1.2em;border-collapse:collapse;font-size:.9em;">
+    <thead>
+      <tr>
+        <th style="padding:.3em .8em;border-bottom:1px solid #ddd;text-align:left;">Columna en el Excel</th>
+        <th style="padding:.3em .8em;border-bottom:1px solid #ddd;text-align:left;">Campo en la base de datos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for xl, db in cols %}
+      <tr>
+        <td style="padding:.2em .8em;font-family:monospace;">{{ xl }}</td>
+        <td style="padding:.2em .8em;">{{ db }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="2" style="padding:.2em .8em;">Código Lista → codigo &nbsp;|&nbsp; Sección → familia &nbsp;|&nbsp; Descripción → descripcion &nbsp;|&nbsp; CT → ct &nbsp;|&nbsp; CRI → cri &nbsp;|&nbsp; W/M o W → w &nbsp;|&nbsp; Lm/M o Lm → lm &nbsp;|&nbsp; V → v &nbsp;|&nbsp; IP → ip &nbsp;|&nbsp; Dim. → dim &nbsp;|&nbsp; Sist. Dim. → dim_sys &nbsp;|&nbsp; Ang. → angulo &nbsp;|&nbsp; Acabado → acabado</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="margin-bottom:1em;">
+      <label for="excel_file" style="display:block;font-weight:bold;margin-bottom:.4em;">
+        Archivo Excel (.xlsx):
+      </label>
+      <input type="file" id="excel_file" name="excel_file" accept=".xlsx"
+             style="border:1px solid #ccc;padding:.4em;border-radius:4px;width:100%;">
+    </div>
+    <div>
+      <input type="submit" value="Importar" class="default"
+             style="padding:.5em 1.5em;font-size:1em;cursor:pointer;">
+      &nbsp;
+      <a href="{% url 'admin:catalogo_producto_changelist' %}" style="color:#666;">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

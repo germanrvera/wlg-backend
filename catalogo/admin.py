@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import admin
+from django.urls import path, reverse
+from django.utils.html import format_html
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -186,6 +188,25 @@ class ProductoAdmin(ImportExportModelAdmin):
     search_fields = ['codigo', 'descripcion']
     list_editable = ['activo']
     ordering = ['familia__orden', 'orden', 'codigo']
+
+    def get_urls(self):
+        from .admin_views import import_excel_view
+        custom = [
+            path(
+                'import-excel/',
+                self.admin_site.admin_view(import_excel_view),
+                name='catalogo_producto_import_excel',
+            ),
+        ]
+        return custom + super().get_urls()
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['import_excel_url'] = reverse('admin:catalogo_producto_import_excel')
+        return super().changelist_view(request, extra_context=extra_context)
+
+    class Media:
+        pass
 
 
 @admin.register(FamiliaProducto)
